@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box">
+        <div class="wrapper">
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <ul>
+            <li>0</li>
+            <li>1</li>
+            <li>2</li>
+        </ul>
+        <input type="text" value="" id="oInput">
+    </div>
+    <script src="jQuery3.3.1.js"></script>
+    <script>
+        // 添加属性
+        // attr();//特性和属性都可添加至元素行间，底层封装的原生js中元素都有的方法getAttribute();/setAttribute();
+        // prop();//添加特性可添加至元素行间，其也可以成功添加属性，但属性并不能添加至元素行间，添加至缓存
+        // data();//添加属性，常用来添加自定义属性，无论是特性还是属性都不会添加至元素行间，只能添加至缓存
+        $(".box").attr("src","test");//添加
+        $(".box").attr("src");//获取
+        $(".box").removeAttr("src");//移除
+
+        $(".box").data("src","dkld")
+        $(".box").data("src")
+        $(".box").removeData("src");
+
+        $(".box").prop("class","test")
+        $(".box").prop("class")
+        $(".wrapper").removeProp("test");
+
+
+        // css类
+        // addClass();//添加类名(其是在原有基础上添加,若是attr()添加class类名会直接替换)
+        $(".box").addClass("rapper");
+        $(".box").addClass("rapper parent");//等同于 $(".box").addClass("rapper").addClass("parent")
+        $(".box").removeClass();//删除所有class类名
+        $(".box").removeClass("rapper");//若是写入参数，删除指定类名，若是没有参数，代表删除所有类名
+        // toggleClass();//切换clss类名，有此类名则删除，没有则添加
+        $("ul li").toggleClass("active");  
+        // css();//添加css样式
+        $("ul li:eq(1)").css("background","black")
+        // 若添加多个css样式，链式调用或者写成对象的形式
+        $("ul li").eq(1).css({
+            "background-color": "blue",
+            "bacground": "yellow",
+            "width": "120px"
+        })//属性名不加引号也可以(不加引号，若是-需要变为小驼峰形式，若是加引号，直接使用-即可)
+
+     
+
+        // html(); text(); val();
+        // html();text();此方法会将元素内容清空后添加
+        $("ul").html("<li><div>3</div></li>");//底层封装原生js方法innerHTML(); 其可以解析html标签
+        $("ul").text("<li><div>3</div></li>");//底层封装innerText();其不能解析标签
+        $("div").html();//获取
+        $("div").html("");//但凡有内容便是写入(即使是空串/空格等)，同理text();val();也是如此
+        // val();获取表单元素的value值，可读可写；
+        $("input").val();
+      
+        
+
+        // 位置：offset(); position(); scrollTop(); scrollLeft();
+        // offset();返回对象{left:xx;top:xx},其是相对于视口的位置
+        $("ul li:first").offset().left;
+        // position();返回对象{left:xx;top:xx},其是相对父元素的位置偏移
+        $("ul li:first").position().left;
+        $("ul li:first").scrollTop();//可读可写，返回或设置匹配元素的滚动条的垂直位置
+
+
+
+        // 尺寸 width();height(); innerWidth();innerHeight(); outerWidth();outerHeight();
+        $("div").width();//获取元素宽
+        $("div").height();//获取元素高
+        // 内宽度/内高度：可读可写，区别于原生js,原生js中表示可视区宽/高
+        $("div").innerHeight();//content+padding;写入参数后刷新显示
+        $("div").innerWidth();//content+padding;
+        // 外宽度/外高度：
+        $("div").outerWidth();//content+padding+border
+        $("div").outerHeight();
+        // 若有第二个参数，其表示外宽度/高度包含margin;
+        $("div").outerHeight(true);//content+padding+border+margin,获取到元素包含margin的宽/高
+        $("div").outerHeight(200,true);//设置的时候content+padding+border+margin为200
+
+
+        // 过滤
+        eq(); hasClass(); filter(); is();
+        $("ul li").eq(1).css();//eq(index) -->> 此写法也OK：$("ul li:eq(1)")
+        $("li").hasClass("one");//判断是否有该类名，返回布尔值
+        $("ul li").filter(".one");//返回类名为one的li
+        $("li").filter(function(index,item){})//参数可传入函数，函数参数1为索引，参数2为本身
+        $("ul li:first").is(".one");//返回布尔值
+
+
+
+        // jQuery核心函数
+        $("div>p").css();
+        $("document.body").css("background","black");
+        // $(callback);//括号内可写入函数，表示立即执行函数
+        $(function(){console.log("jQuery")});//jQuery
+        // 遍历元素：each(callback);
+        $("li").each(function(index,ele){
+            $(ele).data("test")
+            $(ele).data("test",index)
+        })
+        $('li').length;//li的长度
+        $("li").selector = "li";//返回选择器选中的元素  (jQuery3.2.1可用)
+        // index(selector);返回选择器选中元素在ul中的索引值
+        $("ul").index($("li two"));
+        // get(value);//get();不传入参数表示取到所有匹配元素
+        $("ul li").get(5);//get(index) 返回dom元素
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>纯函数</title>
+</head>
+<body>
+    <script>
+        // 纯函数：不依赖、不修改其作用域之外的变量 -> 虽然可避免bug，但其的适用性不高，灵活性较差，更侧重“思想”
+
+        // demo1
+        // 不是纯函数 -> 依赖外界变量num
+        var num = 18;
+        function compare(x){
+            return x > num;
+        }
+        // 纯函数
+        function compare(x){
+            return x>20
+        }
+
+        // demo2
+        var arr = [];
+        function add(_arr){
+            var obj = {name: 'hua'};
+            // _arr.push(obj);//修改了外部变量 -> 非纯函数
+
+            var newArr = [];
+            newArr.push(obj);
+            return newArr
+        }
+        // add(arr);
+        var newArr = add(arr);
+        var newnewArr = arr.concat(newArr);  
+        // 补充：操作引用值，建议深度克隆一份，不要直接操作原引用值，容易出现bug
+    </script> 
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- form表单->提交给后台(默认GET提交，参数拼接在URL上)->name/value值很重要 -->
+    <!-- 所谓提交表单便是提交的name/value值，input等输入框中用户输入的内容便是value值 -->
+    <form action="" method="">
+        <!-- required:表示必填 -->
+        <!-- 
+            placeholder与value的区别：placeholder是HTML5的新属性，输入框未输入内容时的提示信息，value聚焦点是表单提交的值，虽然其也有提示信息的功能，但placeholder更加专业;(两者样式也稍有差异)，都设置时vlaue起作用
+         -->
+        text:<input type="text" name="username" value="uName" required>
+        password:<input type="password" name="password" value="pWord">
+        <!-- 单选 -->
+        Male<input type="radio" name="sex" value="male">
+        Female<input type="radio" name="sex" value="female">
+        <!-- 复选 -->
+        basketball:<input type="checkbox" name="sport" value="basket">
+        baseball:<input type="checkbox" name="sport" value="base">
+        tennis:<input type="checkbox" name="sport" value="tenis">
+        <!-- type为image:点击图片其会直接提交表单 -->
+        <input type="image" src="http://img5.imgtn.bdimg.com/it/u=1149511854,1959083729&fm=26&gp=0.jpg" alt="paul" align=right>
+        <!-- 
+            提交:
+            1.type为submit以及button按钮点击后提交表单内容(name/value值)[button标签默认type="submit"，省略不写] 
+            2.type类型为button点击后不会提交表单，其就是普通的按钮而已(应用场景也很多，需要没有默认提交行为的按钮)；
+            3.input框都有value属性,type为submit/button/reset,如果没有value值，其表示的便是提交/无内容/重置，当有value值，即使是空，其也是value的内容
+            4.<button></button>标签没有value值，直接写在标签体内即可 
+        -->
+        <input type="submit" value="">
+        <input type="button">
+        <button></button>
+        <input type="reset">
+
+
+        <!-- 下拉框:selected:默认选中(应用场景便是下拉框，应用到单选/复选框无效)； multiple:表示可多个选中(window操作系统中按住ctrl选择多个选项) -->
+        <select name="" id="">
+            <option value="">哈登</option>
+            <option value="" selected>保罗</option>
+            <option value="">威少</option>
+        </select>
+        <select name="" id="" multiple>
+            <option value="">哈登</option>
+            <option value="">保罗</option>
+            <option value="">威少</option>
+        </select>
+
+        <!-- 多行文本textarea:可拖拽控制大小 -->
+        <textarea name="" id="" cols="30" rows="10"></textarea>
+
+        <!-- 
+            <label>标签为input元素定义标注(input元素都可以)
+        -->
+        <label for="male">男</label>
+        <input type="radio" name="sex" id="male">
+    </form>  
+</body>
+</html>

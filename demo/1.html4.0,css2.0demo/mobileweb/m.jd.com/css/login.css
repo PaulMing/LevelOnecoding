@@ -1,0 +1,192 @@
+*{
+    margin:0;
+    padding:0;
+    text-decoration:none;
+}
+html,body{
+    width:100%;
+    height:100%;
+}
+.loginpage{
+    width:414px;
+    height:736px;
+    background-color:#ffffff;
+    margin:50px auto;
+    border:1px solid rgb(104,104,104);
+}
+.loginpage .login-head{
+    width:414px;
+    height:44px;
+    background-color: rgb(249, 249, 249);
+    border-bottom-color: rgb(187, 187, 187);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+.loginpage .login-head .log-head-le{
+    float:left;
+    /* display:inline-block; */
+    width:44px;
+    height:44px;
+    text-align:center;
+    line-height:44px;
+  
+
+}
+.loginpage .login-head .log-head-le img{
+    width:22px;
+    height:22px;
+    vertical-align:middle;
+}
+.loginpage .login-head .log-head-rig{
+    float:left;
+    /* display:inline-block; */
+    width:340px;
+    height:44px;
+    text-align:center;
+    line-height:44px;
+    font-size:17px;
+    color:rgb(97,97,97);
+}
+.loginpage .login-main{
+    width:414px;
+    height:550.5px;
+}
+.loginpage .login-main .log-main-top{
+    width:414px;
+    height:44px;
+    display:flex;
+    border-bottom-color: rgb(215, 215, 215);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+.loginpage .login-main .log-main-top div{
+    width:207px;
+    height:44px;
+}
+.loginpage .login-main .log-main-top div span{
+    display:block;
+    width:84px;
+    height:16px;
+    padding:13px 10px 13px 10px;
+    font-size:14px;
+    font-weight:400;
+    color:rgb(51,51,51);
+    border-bottom:2px solid rgb(242,48,48);
+    margin-left:50px;
+}
+
+.loginpage .login-main .log-main-midd{
+    width:374px;
+    height:485.5px;
+    padding:0px 20px 20px 20px;
+}
+.loginpage .login-main .log-main-midd .log-username,
+.loginpage .login-main .log-main-midd .log-password{
+    width:364px;
+    height:47px;
+    padding:0 5px 0 5px;
+    border-bottom-color: rgb(215, 215, 215);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+.loginpage .login-main .log-main-midd .log-username div,
+.loginpage .login-main .log-main-midd .log-password div{
+    display:inline-block;
+    width:60px;
+    height:48px;
+    font-size:14px;
+    color:rgb(51,51,51);
+    line-height:48px;
+}
+.loginpage .login-main .log-main-midd .log-username input,
+.loginpage .login-main .log-main-midd .log-password input{
+    width:274px;
+    height:18px;
+    border:none;
+}
+.loginpage .login-main .log-main-midd .log-button{
+    margin-top:30px;
+    display:block;
+    width:374px;
+    height:45px;
+    background-color:rgb(221, 215, 215);
+    font-size:14px;
+    font-weight:400;
+    text-align:center;
+    line-height:46px;
+    color:rgb(132,134,137);
+    border-radius:2px;
+    /* border:1px solid rgb(132, 134, 137); */
+}
+.loginpage .login-main .log-main-midd .log-onestep{
+    display:block;
+    width:374px;
+    height:45px;
+    font-size:14px;
+    font-weight:400;
+    text-align:center;
+    line-height:46px;
+    color:rgb(242,48,48);
+    border:1px solid rgb(242,48,48);
+    border-radius:2px;
+    margin-top:12px;
+}
+.loginpage .login-main .log-main-midd .quick-nav{
+    width:374px;
+    height:22px;
+    margin-top:20px;
+}
+.loginpage .login-main .log-main-midd .quick-nav .quick-nav-le{
+    float:left;
+    font-size:14px;
+    color:rgb(51,51,51);
+    
+}
+.loginpage .login-main .log-main-midd .quick-nav .quick-nav-rig{
+    float:right;
+    font-size:14px;
+    color:rgb(51,51,51);
+}
+.loginpage .login-main .log-main-midd .quick-nav .quick-nav-le i,
+.loginpage .login-main .log-main-midd .quick-nav .quick-nav-rig i{
+    display:inline-block;
+    width:22px;
+    height:22px;
+    vertical-align:middle;
+}
+.loginpage .login-main .log-main-midd .separ_area{
+    margin-top:70px;
+    font-size:14px;
+    color:rgb(191,191,191);
+
+}
+
+.loginpage .login-main .log-main-midd .login-icon{
+    width:414px;
+    height:44px;
+    margin-top:30px;
+    vertical-align: middle;
+
+   
+}
+.loginpage .login-main .log-main-midd .login-icon a{
+    display:inline-block;
+    width:22px;
+    height:22px;
+    padding:0 10px 0 10px;
+    margin-left:100px;
+   
+}
+.loginpage .login-main .log-main-midd  .agreement-tips{
+    width:374px;
+    height:30px;
+    margin-top:30px;
+    font-size:14px;
+    color:rgb(51,51,51);
+    text-align:center;
+    line-height:30px;
+}
+
+
+
+

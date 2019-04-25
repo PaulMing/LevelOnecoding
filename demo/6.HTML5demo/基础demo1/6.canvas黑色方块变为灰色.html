@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas{
+            border: 1px solid #000;
+           
+        }
+    </style>
+</head>
+<body>
+    <canvas width='500' height='500'></canvas>
+    <img  id="pic" src="" alt="">
+    <script>
+        var oCanvas = document.getElementsByTagName('canvas')[0];
+        var ctx = oCanvas.getContext('2d');
+        // 制作图层
+        var width = oCanvas.width;
+        var height = oCanvas.height;
+
+        ctx.fillRect(0,0,100,100);
+        var pixel = ctx.getImageData(0,0,100,100);
+        var data = pixel.data;
+        var col = pixel.width;
+        var row = pixel.hegiht;
+        for(var i=0; i<row; i++){
+            // 获取上一行所有数据的个数
+            var c = i*col*4;
+            for(var j=0; j<col; j++){
+                data[c + j*4 + 3] = 128;
+            }
+        }
+        // 把处理过的像素信息放回到画布中
+        ctx.putImageData(pixel,100,100);
+
+
+
+
+    </script>
+</body>
+</html>
+        
+
+
+    
+
+       

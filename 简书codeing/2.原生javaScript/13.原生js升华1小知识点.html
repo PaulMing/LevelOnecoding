@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style src></style>
+</head>
+<body>
+    <script>
+        // 1、渲染引擎：生成RanderTree;结构化标签不显示内容的也不存在，一切都是节约性能的机制，构建后，就进行布局计算，然后绘制 其 到页面；
+        // IE4/IE5那时候有大型站点啦？
+
+        /*三种标准模式：
+        1.<!DOCTYPE html>//html5
+        2.<!DOCTYPE HTML PUBLIC" -//W3C//DTD HTML 4.01//EN""http://www.w3.org/TR/html4/strict.dtd">
+        3.<!DOCTYPE html PUBLIC"-//W3C//DTD XHTML 1.0 Stricct//EN""http://www.w3.org/TR//xhtml1//DTD/xhtml1-strict.dtd"> */
+
+
+
+        // ie6版本的怪异模式比较明显，怪异模式的盒子模型；
+        // console.log(document.compatMode);//CSS1Compat//BackCompat
+        // 不写，写错就是怪异模式，怪异模式谷歌差异不大，IE差异稍大一些，例如怪异模式下的盒子模型；
+        // 淘宝现在不兼容ie8以下，提示升级页面；  IE浏览器到底有没有人用？
+        // [2016年1月12日，微软公司宣布于这一天停止对IE 8/9/10三个版本的技术支持，用户将不会再收到任何来自微软官方的IE安全更新；作为替代方案，微软建议用户升级到IE 11或者改用Microsoft Edge浏览器]
+
+
+
+        /* 2、label
+        <p>
+            <label for="demo">username</label>
+            <input type="text" id="demo">
+        </p>
+        var oLabel = document.getElementsByTagName('label')[0];
+        var oInput = doucment.getElementById('demo');
+        //onclick 事件中的this指向为dom元素；
+        oLabel.onclick = function(){
+            console.log(this);
+        }
+        oInput.onclick = function(){
+            console.log(this);
+        }
+
+
+        // this指向dom 元素
+        // 单向绑定关系，点击label标签，两个都绑定了； */
+
+        // 3.属性和特性；
+
+        //   <input type="text" value="aaa" id="demo" data="">
+
+        // //  天生就有的称为特性，JS中的DOM对象 === input 内的特性是一一对应，映射关系；type id  value;
+        //   var oInput = document.getElementsBytagName[0];
+        //   如果不写value，直接oInput.value = 10; 是可以赋值的，但是不会添加到行间样式；但是添加上去的了，value有值；
+
+
+        //   属性通过对象.不能取到，undefined 不报错，赋值可以但是不会添加到行间样式；
+
+
+        //   setAttribut();      getAttribute();
+        //     给行间样式进行添加可以，取到也可以，但是属性即使添加后，也不能通过对象.的方式取值
+
+        //     jquery封装方法：  attr(); prop();
+        //     底层封装，attr(); setAttribute();和getAttribute();
+
+        //     平时我们都称为属性，但是特性是可以映射的，但其也是属性；
+        
+    //    4.图片预加载和懒加载： 一般配合使用；既可以提升用户体验，又可以提高浏览器的性能，节约浏览器的资源；
+    //     监控滑轮事件
+    //     不当判断当前div的位置
+    //     采取预加载；
+    //     把图片正式的添加到页面之中，
+
+    //     整个过程中先是懒加载，然后是预加载，预加载就不需要图片一点点进行加载，用户体验不好，采用预加载的模式更好；
+
+    //     懒加载+预加载的方式来解决此类需求，图片的展示和布局，瀑布流；
+
+    //     5.Math.random()应用，   Math 是个对象，有很多属性和方法；
+
+    //     Math  math  Window  window
+
+    // 抽奖
+    // var num = Math.random()*100;
+    // if(num <=1){
+    //     console.log("一等奖");
+    // }else if(num <=2){
+    //     console.log("二等奖");
+    // }else if(num <=3){
+    //     console.log("三等奖");
+    // }else{
+    //     console.log("谢谢回顾");
+    // }
+
+
+
+
+        /* 5.Math.random();   [0,1)  左闭右开区间；
+        12~36之间的范围，
+        12+ 24*Math.random();
+        12*Math.random();
+        24*Math.random():
+
+        应用场景还是很多的：抽奖、数组中sort()结合使用，乱序；
+
+
+        Math.ceil(3.28);// 向上取整 4
+        Math.floor(5.55);// 向下取整 5
+        Math.round(6.88);//四舍五入 7 */
+
+
+        // 6.文档碎片，虚拟DOM；
+
+        // 就是一个框，容器，
+
+        // 最初是希望解决性能问题，减少重绘和重排，例如下式，但多次实际测试中发现，其并没有提高多少性能；高级框架为解决性能问题，提出了一个虚拟DOM；
+        // 虚拟DOM 自己定义一个构造函数，当然也可以添加一些算法，然后此构造函数与元素的DOMTree进行一个简单的映射关系，不直接操作DOMTree,以免发生重绘和重排，操作虚拟的DOM来提高性能；
+
+        // 使用字符串拼接也可以；节约些性能的；
+        
+        // 7.封装byclassname;  不同浏览器对其的支持性不同；
+
+        // 8.debugger;
+
+
+        var div = document.getElementsByTagName("div");
+        debugger;
+        div.style.opacity = 0.8;
+
+
+
+
+
+
+
+
+
+
+        
+        
+        
+    </script>
+    
+</body>
+</html>

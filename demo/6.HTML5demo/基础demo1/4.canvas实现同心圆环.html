@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas{
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas width='1000' height='1000'>dfa</canvas>
+    <script>
+        // 巧妙利用“canvas填充”
+        var oCanvas = document.getElementsByTagName('canvas')[0];
+        var ctx = oCanvas.getContext('2d');
+        // 径向渐变 -> 实现同心圆
+        var bg = ctx.createRadialGradient(200,200,100,200,200,200);
+        bg.addColorStop(0,'#fff');//首个参数范围0~1
+        bg.addColorStop(0.5,'#000');
+        bg.addColorStop(1,'#fff');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0,0,500,500);
+
+        // 线性渐变 -> 实现“快元素变化”
+        // var bg = ctx.createLinearGradient(0,0,0,100);
+        // bg.addColorStop(0,'#000');//首个参数范围0~1
+        // bg.addColorStop(1,'#fff');
+        // ctx.fillStyle = bg;
+        // ctx.fillRect(0,0,500,500);
+        // ctx.fillRect(200,100,500,500);//有bug， 这样就不行    
+    </script>   
+</body>
+</html>

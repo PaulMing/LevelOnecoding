@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 内部迭代器：函数内部定义完成迭代规则，外部直接调用接口即可
+        Array.prototype.forEach(); jQuery.each();等
+
+        // 外部迭代器：函数执行后返回迭代对象，该对象必须显示调用API遍历元素，调用复杂度增加，但灵活性增强
+        let arr = [1,2,3];
+        function OuterIterator (arr) {
+            let curIndex = 0;
+            let next = () => {
+                return {
+                    value: arr[curIndex],
+                    done: arr.length == ++curIndex
+                }
+            }
+            return {
+                next
+            }
+        };
+        let oIt = OuterIterator(arr);
+        console.log(oIt.next());//{value: 1, done:false}
+        console.log(oIt.next());//{value: 2, done:false}
+        console.log(oIt.next());//{value: 3, done:true}
+
+        
+
+        // 迭代器只能迭代有“迭代接口”的数据,例如：数组、字符串、arguments、Set、Map、NodeList等，这些数据原型链上都有Symbol.iterator属性，若其它数据也想使用迭代器遍历，可手动添加Symbol.iterator属性，添加后，其便具有“迭代接口”
+
+        /*
+          Symbol();其就是一个函数，参数必须是字符串，即使不是字符串，也会隐式调用toString();
+             1.其是特殊的数据结构，也被称为第7种数据结构Symbol;(前6种：原始值[number,string,boolean,undefined,null]、引用值[对象])
+             2.其可作为对象的属性;
+             3.其有静态属性Symbol.iterator 
+        */
+        let os = Symbol('abc');
+        console.log(os);//Symbol('abc');//其就是函数，并不是构造函数创建对象
+        console.log(typeof os);//symbol ->特殊的数据类型
+        // Symbol();作为对象属性名，若相同其不会进行覆盖
+        let a = 'type';
+        let os = Symbol('abc');
+        let os1 = Symbol('abc');
+        let obj = {
+            [a]: 'small',
+            [a]: 'big',
+            [os]: 'harde',
+            [os1]: 'harden'
+        }
+        // 特殊现象：Symbol();参数必须是字符串，若不是字符串则隐式调用toString();但是若显示调用toString();其最终显示的是toString()函数中return的值
+        let os3 = Symbol({
+            name: 'curry',
+            toString: function () {
+                return 'skr'
+            }          
+        });
+        console.log(os3);//Symbol(skr);
+
+
+
+        // 静态属性Symbol.iterator ->等同于Symbol(Symbol.iterator)
+        console.log(Symbol.iterator, Symbol('Symbol.iterator'));//Symbol(Symbol.iterator) Symbol(Symbol.iterator)
+        // 手动添加迭代接口，使其可迭代
+        let obj = {
+            0: 'a',
+            1: 'b',
+            2: 'c',
+            length: 3
+        };
+        console.log([...obj]);//报错 Uncaught TypeError: obj is not iterable
+        let obj1 = {
+            0: 'a',
+            1: 'b',
+            2: 'c',
+            length: 3,
+            [Symbol.iterator]: function () {
+                    let curIndex = 0;
+                    let next = () => {
+                        return {
+                            value: this[curIndex],
+                            done: this.length == ++curIndex,
+                        }
+                    }
+                    return {
+                        next
+                    }
+                }
+        };
+        console.log([...obj1]);//["a", "b"]
+        for(let prop in obj1){
+            console.log(prop);//0 1 2 length;
+        }
+     
+    </script>
+</body>
+</html>

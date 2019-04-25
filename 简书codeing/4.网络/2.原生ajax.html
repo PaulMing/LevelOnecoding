@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+        1、请求数据的方式：
+
+        web的传统模型：客户端向服务器端发送请求，服务器返回整个页面；
+
+        Ajax模型：数据在客户端与服务器端之间独立传输，达到局部刷新的效果；
+
+        客户端发送请求最初使用的是form表单，缺点便是每次发送请求，服务器返回整个页面，浏览器便需要重新渲染/刷新页面，用户体验不好；(例如：登录注册页面中，输入用户名，当验证手机号的时候，必然是发送请求到服务器端，查询该手机号是否在数据库中，服务器端响应后返回整个页面，之前填写的用户名需要再次填写，用户体验不好，登录注册页面也不能把手机号放到首栏，违反产品逻辑)
+
+        谷歌地图的横空出世(局部刷新页面的效果)，Ajax这种请求数据的方式开始被人们所关注 ~  [Ajax也算革命性技术，javaScript脚本语言也从"玩具语言"变为更受关注重视的语言]，目前浏览器请求数据基本都使用Ajax,百度的登录搜索框，百度/高德地图等；
+
+        2、Ajax：(Asynchronous javascript and xml),用JavaScript以异步的形式操作xml，现在操作的都是json数据格式(最初数据交换格式是xml, 目前使用json数据格式，其就是对象的形式来传输，相比于对象的区别：属性必须加双引号，属性值布尔类型/number类型不用加引号)  [ajax：异步请求数据，局部刷新效果，同时严格遵循浏览器的同源策略]
+
+        - - ->>> ajax的使用场景是客户端向服务器端发送请求，个人电脑配置服务器环境来进行相关的测试，在此使用的是wampserver，一款Apache web服务器；
+
+        3、wampserver: windows Apache Mysql PHP集成安装环境，其就是一款服务器，由于不用配置服务器环境，个人电脑使用很便捷；[服务器都需要进行配置使用，不配置使用其就是机箱而已] [直接下载安装即可使用，不需要配置]
+  
+        使用过程：下载安装到本地后，找到www目录文件：D:\wampserver\www; www文件夹下的文件表示的便是服务器上的文件，但直接在浏览器打开：file:///D:/wampserver/www/index.html;其是file协议，表示的仍然是本地文件，需要将www前的都换成是localhost便可表示该文件是在本地服务器上的文件，http://localhost/index.html; 之后便可模拟请求数据的过程了，但还有一点很重要，ajax是严格遵循同源策略的，所以整个模拟过程都必须在www文件夹下进行；[localhost表示的便是域名，也可以换成本机的IP地址，也是完全OK的，URL中的http协议隐藏了]
+
+        4、手动封装ajax：[日常开发中提到的ajax对象，代码实现过程中是调用的方法创建的对象，准确的说ajax是请求数据的方式]
+        
+        */
+
+        /* 
+        5、补充form表单提交数据：
+
+        <form method="GET/POST" action="" enctype=""></form>
+
+        enctype: 表单提交数据的编码格式(内容格式)：application/x-www-form-urlencoded;//默认值，可省略不写，表示表单发送前编码所有字符； multipart/form-data;//表示不对字符编码，包含文件上传控件的表单中必须使用该值，不可省略； <input type="file">
+        
+        */   
+    </script>   
+</body>
+</html>

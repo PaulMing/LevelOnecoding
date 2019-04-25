@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas{
+            /* width: 300px;
+            height: 300px; */
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        canvas：
+        (1).最早在safari中使用
+        (2).IE9之前不兼容
+    -->
+    <!-- 
+        宽/高可直接设置，但其不等同是行内样式;
+        <style>中设置或行间设置的权重高，元素也此确定宽/高，但是画笔是以canvas标签上直接设置的宽/高参考的:css像素
+        聚焦点便是直接在标签上设置宽/高，其就是画布，标签中写内容无效果
+    -->
+    <canvas width='500' height='500'>dfa</canvas>
+    <script>
+        // canvas 只是创建了画布，其它所有操作都是集中在js中进行的
+        // ctx.lineWidth;/strokeStyle;/fillStyle;//设置的都为全局样式 -> 设置多个会有覆盖现象(聚焦点：新路径会覆盖)
+        var oCanvas = document.getElementsByTagName('canvas')[0];
+        var ctx = oCanvas.getContext('2d');//画笔 -> css像素
+        ctx.moveTo(100,100);//画笔移动到该点
+        ctx.lineTo(200,100);//绘制直线
+        ctx.lineTo(200,200);
+        ctx.lineWidth = 10;//线宽
+        ctx.strokeStyle = 'red';//线颜色
+        ctx.stroke();//描边
+        ctx.beginPath();//另起路径
+        ctx.moveTo(100,100);
+        ctx.lineTo(200,200);
+        ctx.lineTo(200,100);
+        ctx.strokeStyle = 'green';
+        ctx.closePath();//闭合路径
+        ctx.fill();//填充 -> 默认黑色
+        ctx.fillStyle = 'red';//填充颜色
+        ctx.stroke();
+        ctx.globalAlpha = 0.2;//设置透明色
+
+
+        // 绘制三角形 
+        ctx.lineWidth = 20;
+        ctx.moveTo(100,50);
+        ctx.lineTo(100,100);
+        ctx.lineTo(50,100);
+        ctx.closePath();
+        ctx.strokeStyle = 'red';
+        ctx.stroke();
+        ctx.fill();
+
+        // 绘制矩形 (起始x,y, 宽，高)
+        // 方法1
+        ctx.rect(100,100,200,100);
+        ctx.stroke();
+        // 方法2/3 ->其可直接绘制矩形，省略ctx.stroke();
+        ctx.fillRect(x,y,dx,dy);
+        ctx.strokeRect(x,y,dx,dy);
+        // 橡皮擦
+        // 清除矩形 -> 推广 -> 其可以清除画布(矩形)
+        ctx.clearRect(x,y,dx,dy);
+
+        // 绘制弧形
+        // arc(圆心坐标x,y,半径,起始弧度,终止弧度,顺时针0/逆时针1)
+        // 水平为0deg -> 逆时针为0deg/90deg/180deg/270deg/360deg -> canvas中必须使用Math.PI,而不是deg
+        ctx.arc(100,100,50,0,Math.PI*2,0);//绘制圆形
+        ctx.stroke();//不要省略该方法 -> 容易遗漏
+
+        // 绘制弧形“怪物缺口”
+        ctx.moveTo(100,100);
+        ctx.arc(100,100,50,0, Math.PI/4,1);
+        ctx.closePath();
+        ctx.stroke();
+        // 开口方向不同
+        ctx.beginPath();
+        ctx.moveTo(300,300);
+        ctx.arc(300,300,50,0, 7*Math.PI/4,0);
+        ctx.closePath();
+        ctx.stroke();
+
+
+        // 绘制圆角
+        ctx.arcTo(x1,y1,x2,y2,r);//再设置一点，三个点 -> 以r为半径的圆形做“点和点相连直线”的切线即可绘制圆角
+        // 绘制圆角矩形
+        ctx.moveTo(100,110);
+        ctx.arcTo(100,200,200,200,10);
+        ctx.arcTo(200,200,200,100,10);
+        ctx.arcTo(200,100,100,100,10);
+        ctx.arcTo(100,100,100,200,10);
+        ctx.stroke();
+
+
+        // 贝塞尔曲线
+        // 二次贝塞尔曲线
+        ctx.quadraticCurveTo(x1,y1,ex,ey);//x1,y1;控制点;//ex,ey;结束点
+        // 三次贝塞尔曲线
+        ctx.bezierCurveTo(x1,y1,x2,y2,ex,ey);//x1,y1,x2,y2;控制点//ex,ey;结束点
+        // 测试
+        ctx.moveTo(100,100);
+        //ctx.quadraticCurveTo(200,300,400,200);
+        ctx.bezierCurveTo(200,300,400,200,450,250);
+        ctx.stroke();
+
+
+
+
+        // 关于坐标轴
+        // 坐标轴默认 -> 画布左上角为(0,0)
+        ctx.translate(100,100);//坐标轴移动到(100,100);
+        // 多次translate();坐标轴“叠加移动”
+        // 测试
+        ctx.translate(100,100); 
+        ctx.fillRect(0,0,200,100);
+        ctx.translate(-100,-100);
+        ctx.fillStyle = 'red';
+        ctx.fillRect(0,0,100,50);
+
+        // 缩放 -> 注：先使用scale();方法， 再绘制矩形才有效果
+        ctx.scale(2, 0.5);//必须写两个参数，分别表示元素水平、垂直缩放
+        ctx.fillRect(0,0,100,100);
+
+        // 旋转 -> 绕着z轴顺时针旋转; -> 注：先使用rotate();方法，再绘制矩形才有效果
+        ctx.rotate(Math.PI/4);
+        ctx.fillRect(0,0,100,100);
+
+        // save();//保存坐标轴状态     restore();//获取最近的save状态,获取后此save状态消失
+        // save();保存的状态存储在“栈”中 -> 每次restore();都将之前的save状态拿出“栈区”，下次restore();获取下一个save状态
+        ctx.save();
+        ctx.translate(100,100);
+        ctx.save();
+        ctx.rotate(Math.PI/4);
+        ctx.fillRect(0,0,100,100);
+        ctx.restore();
+        ctx.fillStyle = 'red';
+        ctx.fillRect(0,0,50,50);
+        ctx.restore();
+        ctx.fillRect(0,0,50,50);
+
+        // 设置坐标轴的变换
+        // setTransform(a,b,c,d,e,f);//参数为: 水平缩放、水平倾斜、垂直倾斜、垂直缩放、水平移动、垂直移动
+        ctx.setTransform();
+        ctx.transform(a,b,c,d,e,f);//在之前的基础上变换
+
+
+
+        // 关于填充 ~
+        // 填充图案
+        ctx.createPattern(image,"repeat");
+        // 首个参数：image对象、canvas元素、video元素(有图形的)
+        // repeat/repeat-x/repeat-y/no-repeat
+        var img = new Image();
+        img.src = './img/pic.jpg';
+        img.onload = function(){
+            var bg = ctx.createPattern(img,'no-repeat');
+            ctx.fillStyle = bg;
+            ctx.fillRect(0,0,400,400);
+        }
+
+        // 填充canvas元素
+        var oCanvas2 = document.getElementsByTagName('canvas')[1];
+        var bg = ctx.createPattern(oCanvas2,'repeat');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0,0,400,400);
+
+        // 其也可以填充“渐变色” ->  线性渐变
+        var bg = ctx.createLinearGradient(0,0,500,500);
+        bg.addColorStop(0,'red');//首个参数范围0~1
+        bg.addColorStop(0.5,'green');
+        bg.addColorStop(1,'yellow');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0,0,500,500);
+        // 径向渐变
+        var bg = ctx.createRadialGradient(250,250,100,250,250,250);
+        bg.addColorStop(0,'red');//首个参数范围0~1
+        bg.addColorStop(0.5,'green');
+        bg.addColorStop(1,'yellow');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0,0,500,500);
+
+
+
+        // 设置阴影
+        // 盒子阴影
+        ctx.shadowColor = 'red';
+        ctx.shadowBlur = 10;//模糊程度/模糊半径
+        ctx.shadowOffsetX = 10;//x轴偏移
+        ctx.shadowOffsetY = 10;//y轴偏移
+        ctx.fillRect(0,0,500,500);
+        // 文字阴影
+        ctx.shadowColor = 'red';
+        ctx.shadowBlur = 10;//模糊程度/模糊半径
+        ctx.shadowOffsetX = 10;//x轴偏移
+        ctx.shadowOffsetY = 10;//y轴偏移
+        ctx.font = '50px sans-serif';//不嫩直接写50px，其是字符串
+        ctx.fillStyle = 'green';//填充文字颜色
+        ctx.fillText('hello world',100,100);//文字内容，文字起始位置
+        // ctx.strokeText('hello world',100,100);//等同于ctx.fillText();但其没有填充色
+        // ctx.measureText('hello world');//了解，基本不使用
+
+        // 线段样式 
+        // 线段两头：ctx.lineCap="butt";/"round";/"square"
+        ctx.moveTo(100,100);
+        ctx.lineTo(200,200);
+        ctx.lineWidth = 20;
+        ctx.lineCap = "round";//butt默认值，square:两头加"方形帽子"，round:两头加“圆形帽子” -> 同之前相比，长度增加
+        ctx.stroke();
+        // 链接点：ctx.lineJoin="miter";/"round";/"bevel"
+        ctx.lineWidth = 20;
+        ctx.moveTo(100,50);
+        ctx.lineTo(100,100);
+        ctx.lineTo(50,100);
+        ctx.closePath();
+        ctx.strokeStyle = 'red';
+        ctx.lineJoin='miter';//默认值 //round:斜接点较圆  bevel:把衔接点处较尖的部分剪掉
+        // 当为miter时 -> 其可利用miterLimit属性来控制衔接部分的长度，如果超出，变为bevel
+        ctx.miterLimit = 10;//实际计算是limit*lineWidth/2; -> 了解即可
+        ctx.stroke();
+
+
+
+        // 裁剪
+        // ctx.clip();//当前路径外的区域不再绘制 -> clip()前可用save();方法保存，后续通过restore();方法恢复
+        ctx.arc(200,200,50,0,2*Math.PI,0);    
+        ctx.fill();
+        ctx.save();
+        ctx.clip();
+        ctx.restore();
+        ctx.fillStyle = 'red';
+        ctx.fillRect(200,200,100,100);
+
+        // 合并 -> 新像素和原像素的合并方式
+        // ctx.globalCompositeOperation = 'source-over';//默认值 w3c标准
+        // 共11值, 常用source-over;//后出现的盖在之前上面  destination-over;//后出现的在之前的下面  copy;//后出现的保留，前出现的消失     
+        ctx.fillStyle = "red";
+        ctx.fillRect(100,100,100,100);
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = 'green';
+        ctx.arc(180,180,50,0,Math.PI*2);
+        ctx.fill();
+
+ 
+
+        // 绘制图片
+        var img = new Image();
+        img.src = './img/pic.jpg';
+        img.onload = function(){
+            // 填充图案
+            // var bg = ctx.createPattern(img,'no-repeat');
+            // ctx.fillStyle = bg;
+            // ctx.fillRect(0,0,400,400);
+            
+            // 绘制图片 -> 图片onload后才能绘制，同填充图案相同
+            // 首个参数：image/canvas/video
+            // 三个参数: 0,0位置开始绘制图片
+            ctx.drawImage(img, 0,0);
+            // 五个参数： 0,0, -> 起始位置坐标   100,100 -> 绘制的图片大小
+            ctx.drawImage(img, 0,0,100,100,);
+            // 九个参数：0,0到100,100开始截取图片 -> 然后从150,150位置开始，宽为200,高为200,绘制图片
+            ctx.drawImage(img, 0,0,100,100,150,150,200,200);
+        }
+
+        // 绘制图片后可将canvas内容导出
+        // canvas.toDataURL();//canvas元素上的方法 -> 同源策略的限制
+
+        // 获取canvas像素信息
+        // ctx.getImageData(x,y,dx,dy);//从x,y开始，宽度为dx, 高度为dy -> 获取到的是像素点 -> 每个像素点包含rgba四个值
+        // ctx.putImageData(imgData,x,y);//将图像数据放回到画布上
+        // ctx.createImageData(w,h);//创建新的空白ImageData对象;//一般不使用
+
+
+
+
+        // 命中检测
+        // 判断过程 -> 基于“非零绕数准则” -> 某点画射线，其与路径相交的点来判断：若是小人从左手到右手的方向同路径方向一致，其就+1，不一致，其就-1，同理判断每个交点，之后相加，若大于0，其便在路径内，小于0，其不在路径内；
+        // chrome 与 safari 不同，chrome浏览器首先判断是否能形成闭合路径，若是不能，直接返回false; 若是可以，再按照“非零绕数准则”判断   
+        // 判断是否在路径内
+        ctx.moveTo(100,100);
+        ctx.lineTo(120,200);
+        ctx.lineTo(200,150);
+        ctx.stroke();
+        console.log(ctx.isPointInPath(120,130));//true -> chrome
+        // 判断是否在线上
+        ctx.beginPath();
+        ctx.moveTo(200,200);
+        ctx.lineTo(200,300);
+        console.log(ctx.isPointInStroke(200,250));//true */
+
+    
+    </script>
+</body>
+</html>

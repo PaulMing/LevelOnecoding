@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .demo{
+            width: 100px;
+            height: 100px;
+            background: red;
+            /* transition: transform 6s; */
+            position: absolute;
+            left: 0;
+            top: 0;
+            /* 同时执行，其沿着向量的方向执行 */
+            /* 区别于transform，其是多个函数依次执行 */
+            transition: top 3s, left 10s;      
+        }
+        .demo:hover{
+            left: 400px;
+            top: 400px;
+            /* transform: translate( 400px, 400px); */
+        }  
+
+        /* 原先写法 */
+        div:hover{
+            transform: xx;
+        }
+        /* GPU加速 标准方法will-change */
+        div:hover{
+            -webkit-will-change: transform;
+            will-change: transform;
+            transform: xx;
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- 
+        CSS3动画性能优化:
+        1.CSS3动画利用底层硬件能力(GPU加速),相比于JS动画效果(其还需要解析),其的执行速度更快,用户体验更好,但其耗费性能大
+        //例如:物块移动 -> 使用定位top:200px; left:200px; 其也可以使用translate();以及translate3d();实际3d物块移动过程确实更加“平滑” ->耗费性能大,所以实现同样的效果,建议使用定位的方式
+        2.动画元素尽量不要出现在文档流中,减少页面重排、重绘
+        3.box-shadows与背景渐变色，这两个属性极其影响性能，能避免尽量避免(最多使用上两处)
+        4.动画执行过程中闪烁(常发生在动画开始的时候) -> 使用css的hack模式便可解决(兼容性问题)
+        5.transition动画聚集“起、始”状态,设置后元素状态改变才触发;animation动画聚焦“变化的节点，即关键帧，其设置上后便会触发”
+    -->
+
+     <!-- 
+        实现块元素居中：
+        (1).常规
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -50px;
+        margin-top: -50px;
+
+        (2).使用translate(50%,50%);//其是以中心点为基准，50%为元素自身的50% -> 区别于left:50%(其是父元素的一半)
+        //适用场景：子元素未设置宽/高，其也可实现居中
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        translate(-50%,-50%);
+        //transfrom: translateX(-50%),translateY(-50%);//适合场景元素未设置宽/高，其用自动计算
+
+        (3).弹性盒子 -> 其可让子元素居中， 上述(1)(2)是元素自己实现居中
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        (4).margin: 0 auto;//元素设置宽/高
+     -->
+     <div class="demo"></div>
+</body>
+</html>

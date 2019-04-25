@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 输入一个矩阵，按照从外向里以顺时针的顺序以此打印出每一个数字，例如：如果输入如下4*4矩阵，
+    [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]] -->
+    <script>
+        function printArr(arr){
+            // 方向：
+            var direction = {
+                'RIGHT':{
+                    row: 0,
+                    col: +1,
+                },
+                'Down':{
+                    row: +1,
+                    col: 0,
+                },
+                'LEFT':{
+                    row: 0,
+                    col: -1,
+                },
+                'UP': {
+                    row: -1,
+                    col: 0,
+                }
+            }
+            // 行数
+            var rowLen = arr.length;
+            // 列数
+            var colLen = arr[0].length;
+            // 四个拐点
+            var maxRow = arr.length -1;
+            var maxCol = arr[0].length - 1;
+            var minRow = 0;
+            var minCol = 0;
+            
+
+            //打印当前的位置
+            var nowRow = 0; 
+            var nowCol = 0;
+            var result = [];
+            // 当前的方向
+            var nowDirection = direction.RIGHT;
+            // 解决极端情况的；
+            if(colLen == 1){
+                for(var i=0; i<rowLen; i++){
+                    result.push(arr[i][0]);
+                }
+                return result;
+            }
+            for(var i=0; i<rowLen*colLen;i++){
+                result.push(arr[nowRow][nowCol]);
+                // 下一次打印的位置；
+                nowRow = nowRow + nowDirection.row;
+                nowCol = nowCol + nowDirection.col;
+                //判断右上角拐点：
+                if(nowDirection == direction.RIGHT && nowCol == maxCol && nowRow == minRow){
+                    nowDirection = direction.DOWN;
+                }else if(nowDirection == direction.DOWN && nowCol == maxCol && nowRow == maxRow){
+                    nowDirection = direction.LEFT;
+                }else if(nowDirection == direction.LEFT && nowCol == minCol && nowRow == maxRow){
+                    nowDirection = direction.UP;
+                }else if(nowDirection == direction.UP && nowCol == minCol && nowRow == minRow){
+                    nowDirection = direction.RIGHT;              
+                }else if(nowRow == minRow + 1 && nowCol == minCol){
+                    minRow ++;
+                    minCol ++;
+                    maxRow --;
+                    maxCol --;
+                    nowDirection = direction.RIGHT;
+                }
+
+            }
+            return result;
+        }
+        console.log(printArr([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]] ));
+
+
+        // 解法2： 按圈打印；
+    
+    
+    </script>
+</body>
+</html>

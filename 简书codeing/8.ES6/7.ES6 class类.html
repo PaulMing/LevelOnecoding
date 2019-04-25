@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 面向对象：抽象能力，面向过程构建大型项目有点不够用，，当然也是可以构建大型项目的
+        // 面向对象中前期学习就比较难，抽象能力要求高，这也是为什么后台语言比较难，js是多范式语言，其是基于对象的，构造函数，原型，原型链
+
+
+
+        // ES5构造对象：构造函数、私有属性、公有属性/原型属性、私有属性/公有属性继承
+        // ES6/7 class类创建对象底层封装ES5语法 -> 语法糖 ->作用：简化代码，书写便捷，不用再写大量的原型、原型链继承代码
+        // ES3/5 class保留字 -> ES6关键字
+
+        class Plane{
+            // 对象私有属性
+            constructor (name) {
+                this.name = name || '普通飞机';
+                this.blood = 100;
+            }
+            // 原型上的方法(公有属性)
+            fly () {
+                console.log('fly');
+            }
+            // ES6/7不支持公有的非方法属性
+            // type = "small"//报错 -> 私有属性的另一种写法，省略this.xxx = xx;//ES6不支持，ES7支持
+
+            // ES6静态属性只支持方法形式，不支持非方法属性 -> ES7都支持
+            // 静态属性便是“构造函数”自身上的属性
+            // static alive = 20;//报错
+            static alive () {
+                return true;
+            }
+        }
+        var op = new Plane();
+        op.fly();
+        console.log(Plane.alive());
+        console.log(typeof Plane);//'function' ->验证了class类底层实现便是“构造函数”
+
+        // class类继承：公有属性、静态属性直接继承，私有属性继承需借助super();实现
+        class SmallPlane extends Plane{
+            constructor (name) {
+                super(name);//继承私有属性使用super(); -> 底层实现 Plane.apply();借用构造函数实现继承
+                this.logo = 'small';
+            }
+            attack () {
+                console.log('kakaka');
+            }
+        }
+        var smallPlane = new SmallPlane('small飞机');
+        console.log(smallPlane.name);
+        console.log(smallPlane.fly());
+        console.log(smallPlane.attack());
+        console.log(SmallPlane.alive());//静态属性继承到了该类自身上
+
+
+
+        // 其与ES5区别：
+        // 1.class类等同于构造函数，但其不能直接函数执行，必须使用new关键字，而且类名必须大写[ES5中实际大小写都OK，开发规范] -> new Plane(); Plane();//报错
+        // 2.Plane.prototype 不能枚举
+        // 3.新增静态属性
+      
+    </script>
+</body>
+</html>

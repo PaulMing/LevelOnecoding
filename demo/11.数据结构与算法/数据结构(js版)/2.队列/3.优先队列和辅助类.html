@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 封装
+        var Queue = function(){
+            var items = [];
+            // 入队
+            this.enqueue = function(ele){
+                items.push(ele);
+            }
+            // 出队
+            this.dequeue = function(){
+                return items.shift();
+            }
+            // 查看队列头
+            this.front = function(){
+                return items[0]
+            }
+            // 检查队列是否为空
+            this.isEmpty = function(){
+                return items.length === 0;
+            }
+            // 队列大小
+            this.size = function(){
+                return items.length;
+            }
+        }
+     
+        // 优先队列 -> 借助辅助类实现，聚焦点“入队”时位置
+        // 应用场景：机场登机VIP会员
+        var PriorityQueue = function(){
+            var items = [];
+            // 辅助类   priority:优先级
+            var QueueItem = function(element,priority){
+                this.element = element
+                this.priority = priority
+            }
+            this.enqueue = function(element,priority){
+                var queueItem = new QueueItem(element,priority)
+                var added = false
+                for(var i = 0 ; i < items.length ; i++){
+                    if(queueItem.priority > items[i].priority){
+                        items.splice(i,0,queueItem)
+                        added = true
+                        break
+                    }
+                }
+                if(!added){
+                    items.push(queueItem)
+                }
+            }
+            this.getItems = function(){
+                return items
+            }
+        }
+        var pq = new PriorityQueue()
+        pq.enqueue('harden',10)
+        pq.enqueue('curry',12)
+        
+        
+    </script>
+</body>
+</html>

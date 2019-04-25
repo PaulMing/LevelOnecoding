@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    
+    
+    
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script>
+        var oBox = document.getElementById('box');
+
+        function bindEvent(){
+            oBox.onmouseenter = function(e){
+               get(e,'in');
+            }
+            oBox.onmouseleave = function(e){
+                get(e,'out');
+            }
+        }
+
+
+        function get(event,state){
+            var d = getDer(event);
+            var dir = '';
+        switch(d){
+            case 0:
+                dir = '-top';
+                break;
+            case 1:
+                dir = '-right';
+                break;
+            case 2:
+                dir = '-bottom';
+                break;
+            case 3:
+                dir = '-left';
+                break;
+            }
+            console.log(state + dir);
+        }
+
+
+        function getDer(event){
+            var d;
+            var w = oBox.offsetWidth;
+            var h = oBox.offsetHeight;
+            var l = oBox.offsetLeft;
+            var t = oBox.offsetTop;
+            var x = (event.clientX - l - w/2)*(w>h?(h/w):1);
+            var y = (event.clientY - t - h/2)*(h>w?(w/h):1);
+            d = (Math.round((Math.atan2(y,x) * (180/Math.PI) + 180)/90)+3)%4;
+            // console.log(d);
+            return d;
+
+        }
+        bindEvent();
+
+
+
+
+
+
+
+    
+    
+    
+    </script>
+</body>
+</html>

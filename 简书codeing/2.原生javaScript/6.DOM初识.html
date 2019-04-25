@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        <script>
+   
+        // DOM:Document Object Model 
+        // 文档对象模型，一系列方法的集合形成了DOM
+        // 其是操作HTML和xml的，css样式谁也操作不了，没有东西可以操作css,DOM间接操作html行内样式来操作css
+
+        // xml --->  xhtml ---> html
+        // xml 和 html 类似的东西；
+        // xml 可以自定义标签，之前常用于数据库存储数据的格式，如今数据库存储数据使用json的格式；
+
+        // css hover 本质上就是onmouseover 事件实现的 ；
+
+        // DOM选择元素
+        // document:对象，代表着整个文档，html就是其的根标签
+        document.getElementById("");//单独一个
+        // 实际开发中使用id标识标签的情况不多，一般都是模块的总称命名为id,id多作为顶级模块使用,选择器中多用class
+        document.getElementsByTagName('div');//展示形式就是数组，即使只有一个标签，也是数组[]（实际其是类数组，有length,测试：没有数组自带的方法）(以后遇到的基本都是类数组)
+        document.getElementsByClassName("");//类数组
+        document.getElementsByName("");//只针对部分有name属性的元素(表单、表单元素（表单里的组件）、img、iframe)
+        // <input name="fruit">
+        // var div = document.getElementsByName('fruit');
+        
+        
+        // 两者选择元素的方式：css选择器即可
+        document.querySelector('div>ul>li');//选出的是一个，在ie7和ie7以下的版本中没有
+        document.querySelectorAll('');//选出的是类数组，在ie7和ie7以下的版本中没有
+        //缺点：上述两者虽然便捷，但选出的元素不是实时的，相当于拿到的副本，后续有操作，但不影响原先（实时=动态，非实时就是静态）；[不推荐使用]
+
+
+        // Element:元素，
+        // 查找元素（也叫选择器，选择HTML元素 ,都是document下的方法）
+       
+    //     [实际开发中使用id标识标签的情况不多，一般都是模块的总称命名为id,id多作为顶级模块使用,选择器中多用class]
+        
+     
+    //     ,<div id="container"></div>,选择器中多用class,]
+    //     document.getElementsByTagName('div');
+    //     document.getElementsByClassName();//兼容性不好
+
+    //     document.getElementsByName();
+
+    //    document.querySelector('');//里面填写css选择器,选出的是一个；
+    //    document.querySelectorAll();//里面选出的是一组；
+    // //    缺点：上述两者选出的元素不是实时的；（实时=动态）；非实时就是静态，
+    // var div = 
+    // demo.remove()
+
+
+
+
+
+
+
+
+    /* 
+    遍历节点树：node:节点，
+    parentNode    父节点（最顶端的parentNode为#document，不可能有浏览器、操作系统）（一个元素只有一个父节点）
+    childNodes    子节点们
+    firstChild    第一个子节点
+    lastChild     最后一个子节点
+    nextSibling   后一个兄弟节点(可不是元素节点) 
+    previousSlibing  前一个兄弟节点 
+    textNode 文本节点
+    */
+    // 节点类型：元素节点、属性节点、文本节点、注释节点、document节点、documentFragment节点
+    <div>
+      520
+      
+      <strong></strong>
+      <span></span>
+      <span></span>
+    </div>
+    var div = document.getElementsByTagName('div')[0];
+    console.log(div.childNodes)//NodeList(9) [text, comment, text, strong, text, span, text, span, text]
+ 
+    /* 基于元素节点树的遍历：
+    parentElement  返回当前元素的父元素节点
+    children   返回当前元素的元素子节点
+    node.childElementCount === node.children.length  当前元素节点的子节点个数
+    firstElementChild   第一个元素节点
+    lastElementChild  返回最后一个元素节点
+    nextElementSibling/previousElementSibling  返回后一个、前一个兄弟元素节点； */
+
+
+    // 遍历节点数：所有浏览器都兼容，遍历元素节点数：除了children以为，ie9以下都不兼容， 节点数兼容性更好，遍历元素节点数更灵活，实际开发中基本都不使用，也就用：childNodes   children 
+        //基本每个节点都有四个属性,一个方法；
+        nodeName: //标签的nodeName:以大写形式表示，并且只读，不可写（不可赋值）
+        nodeValue://Text节点或Comment节点才有该属性，可读写；
+        nodeType://分辨节点的类型，返回数字来判断类型，只读；
+        //节点类型：元素节点 ---1 、属性节点 ---2、文本节点 ---3、注释节点 ---8、document节点 ---9、documentFragment节点（文档碎片节点）  ---11；
+        attributes://Element节点的属性集合
+                 <div id="abc" class="demo"></div>
+                 //class="demo" class:属性，demo:属性值；
+
+        // 方法：Node.hasChildNodes();//是否有子节点，判断结果 boolean; 
+
+        //  <!-- 查找元素的方法：1、get... 2.querySelector  3.基于关系，节点、元素节点 -->
+
+ /* document  文档对象
+ console.log(Document)//function Document(){},其是构造函数但不能new它，不能构造对象，留给系统自己new对象的，
+ 实际：document就是Document的对象
+ 测试:  Document.prototype.abc = "abc"
+       console.log(document.abc);//"abc"
+
+
+DOM结构树：一系列的继承关系；
+var div = document.getElementsByTagName('div')[0];
+// 这样写也不会出错，那个是在document整个文档中找div，这个是div下的span标签
+var span = div.getElementsByTagName('span')[0];
+div.getElementsByClassName('') 也能使用； 
+// *通配符选择器，也是标签选择器，js中可以使用下式，代表选中所有的标签
+var div = document.getElementsByTagName('*')[0];
+
+
+document.body    document.head指代着获取head标签
+document.documentElement 代表着HTML
+
+
+
+
+var i = document.getElementsByTageName('i')[0];
+function retParent(elem,n){
+
+    while(elem && n){
+        elem = elem.parentElement;
+        n--;
+    }
+    return elem;
+}
+
+
+// 封装一个函数，实现myChildren功能，解决以前部分浏览器的兼容性问题
+// 本质就是区分出节点和元素节点，遍历节点的方法浏览器都兼容
+Element.prototype.myChildren = function(){
+    var child = this.childNodes;
+    var len = child.length;
+    var arr = [];
+    for(var i=0; i<len; i++){
+        if(child[i].nodeType ==1){
+            arr.push(child[i])
+        }
+    }
+    return arr;
+}
+
+封装函数，返回元素e的第n层祖先元素节点
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 增：创建完成后可以多处使用
+// 创建元素节点：
+var div = document.createElement('');
+// 创建文本节点：
+var text = document.createTextNode('');
+// 创建注释节点：
+ document.createComment();
+// 创建文档碎片节点：
+ document.createDocumentFragment();
+// 创建元素，但还没添加至页面；
+var div = document.createElement('div');
+// 添加到body节点下，任何元素节点都有appendChild()；
+document.body.appendChild(div);
+
+
+
+//  插入：
+// 1.appendChild(div);（无引号，其是添加子元素节点）任何元素都有该方法；
+// 注：appendChid();不仅可以将新创建的元素添加到某节点上，也可以实现将页面已存在的元素添加到某节点
+var div = document.createElement('div');
+document.body.appendChild(div);
+// 页面已有元素添加到某节点下，类似于“剪切操作”
+var address = document.getElementsByTageName('address')[0];
+var span = document.getElementsByTagName('span')[0];
+address.appendChild(span);
+
+// 2.insertBefore(a,b);该方法必须有两个参数；
+ ParentNode.insertBefore(a,b);
+//  按下式理解：
+//  div.insertBefore(a,b); ------->>>>>  div.insert a  before b;
+var address = document.getElementsByTagName('address')[0];
+var i = document.getElementsByTagName('i')[0];
+address.appendChild(i);
+var div = document.createElement('div');
+address.insertBefore(div,i);
+
+
+
+
+// 删除：
+// 1.parentNode.removeChild();//页面不显示，但并未彻底销毁；
+div.removeChild(i);//剪下来可以将其赋给一个变量
+ var kol = div.removeChild(i);
+// 2.元素调用remove();该方法任何元素都有,彻底清除掉；
+div.remove();
+// 替换
+replaceChild(new , origin);
+div.replaceChild(i,strong);
+
+
+
+
+// 元素节点上的属性：
+innerHTML/innerText;
+// 这两个属性赋值的时候，是全覆盖，里面的内容就清空了
+// innerHtml:获取html里面的内容，可读可取
+   div.innerHTML="hellojs";
+// 如果写入标签，这时候是自动识别的，分的清样式和结构；
+   div.innerHTML="<span style='background-color:red;colr:#ccc;'><span>"
+div.innerText=""; //火狐浏览器没有该属性，有textContent效果一样，老版本IE不好使
+
+// 节点上的方法:
+setAttribute(); / getAttribute();
+// 行间属性操作
+// 设置属性，第一个参数是属性名，第二个参数是属性值；
+div.setAttribute("id",'only');//<div id="only"></div>
+// 取行间属性的值，参数为属性名
+div.getAttribute('id')//only
+// 补充：获取属性值可以直接使用：  div.classname   div.id ;[.classname:可读不可写；.id可读可写]
+
+
+
+var div = document.createElement('div');
+document.body.appendChild(div);
+div.setAttribute('class','example');
+var p = document.createElement('p');
+div.appendChild(p);
+p.innerHTML="hellojs";
+p.setAttribute("class","slogan");
+
+// var text = document.createTextNode('hellojs');
+// p.appendChild(text);
+
+
+
+ */
+ //1、封装函数、返回元素e的第n层祖先元素节点
+ function retParent(elem, n) {
+            while (elem && n) {
+                elem = elem.parentElement;
+                n--;
+            }
+        }
+        return elem;
+
+        //2、封装函数，实现myChildren功能，解决以前部分浏览器的兼容性问题；
+        // children 的浏览器兼容性问题
+        // 本质就是区分出节点和元素节点，遍历节点的方法浏览器都兼容
+        Element.prototype.myChildren = function () {
+            var child = this.childNodes;
+            var len = child.length;
+            var arr = [];
+            for (var i = 0; i < len; i++) {
+                if (child[i].nodeType == 1) {
+                    arr.push(child[i])
+                }
+            }
+            return arr;
+        }
+        //3、封装hasChildren()方法，不可用children属性；(判断是否有元素节点)
+        // 节点都有hasChildNodes（）方法，其是判断是否有节点；
+        Element.prototype.myChildren = function () {
+            var child = this.childNodes;
+            var len = child.length;
+            var arr = [];
+            for (var i = 0; i < len; i++) {
+                if (child[i].nodeType == 1) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        // 4、封装函数，返回元素的e的第n个兄弟元素节点，n为正，返回后面的兄弟元素节点，n为负，返回前面的，n为0，返回自己；
+        function retSibling(e, n) {
+            while (e && n) {
+                if (n > 0) {
+                    if (e.nextElementSibling) {
+                        e = e.nextElementSibling;
+                    } else {
+                        for (e = e.nextSibling; e && e.nodeType != 1; e = e.nextSibling)
+                            n--;
+                    }
+                } else {
+                    if (e.previousElementSibling) {
+                        e = e.previousElementSibing;
+                    } else {
+                        for (e = e.previousSibling; e && e.nodeType != 1; e = e.previousSibling);
+                    }
+                    n++;
+                }
+            }
+            return e;
+        }
+
+        // 笔面试题：
+        // 5、封装函数insertAfter(); 功能类似insertBefore();
+        // insertAfter() 与 insertBefore(); 相互转化
+        Element.prototype.insertAfter = function (targetNode, afterNode) {
+            var beforeNode = afterNode.nextElementSibling;
+            if (beforeNode == null) {
+                this.appendChild(targetNode);
+            }
+            this.insertBefore(targetNode, beforeNode);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        
+
+      </script>
+</body>
+</html>

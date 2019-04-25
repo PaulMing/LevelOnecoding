@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 1、javascript的发展历程
+        c c++
+        编译性语言：生成一个可执行文件，然后执行这个文件.java 
+        优点：快（系统类底层东西，游戏引擎等）
+        不足：移植性不好，（不跨平台）
+
+        解释性语言：翻译一句，执行一行；带<>的都是 js. php
+        优点：跨平台，跨浏览器；
+        不足：稍微慢一些；
+        .java  javac  编译 .class  jvm  -解释执行
+        同步
+        异步：一起进行就是异步；
+        下载就是加载；
+        单线程：同一时间只能做一件事；如何实现同一时间完成多件事情尼，
+        只能是 跳转速度快一些了； 轮转时间片： 类似吃饭 -->
+
+    变量命名小驼峰规则；
+    <!-- 算术运算符  :最基本都是从左到右运行 -->
+    <script type="text/javascript">
+        // 1/0 Infinity   Number;
+        // -1/0 -Infinity  Number;
+        // NaN   Not a Number;
+
+        var a = 1;
+        var b = a++ + 1;
+        document.write(a);//2;
+        document.write(b);//2;
+
+        var a = 1;
+        var b = ++a + 1;
+        document.write(a);//2
+        document.write(b);//3
+
+        var a = 1;
+        var b = a-- + --a;
+        document.write(b);//b=0   a=-1;
+        // 例子1
+        var a = (10 * 3 - 4 / 2 + 1) % 2;
+        b = 3;
+        b %= a + 3;
+        document.write(a++);//1    先打印出a再++
+        document.write(--b);//2
+
+        var a = 0;
+        a %= 5;
+        document.write(a); //0  0求余任何数都为0；
+
+
+        // 例子2
+        var a = 123;
+        var b = 234;
+        var c = a;
+        a = b;
+        b = c;
+        document.write(a);
+        document.write(b);
+
+        // a = a+b;
+        // b = a-b;
+        // a = a-b;
+        // document.write(a);
+        // document.write(b);
+
+
+        // 比较运算符 > < >= <= ==  !=比较的目的就是判断对错，结果为布尔值；
+        // 不止是数字可以进行比较，字符串也可以进行比较；比较的是ascii码，一共128位；
+        var a = "c" > "d";
+        document.write(a);//false;
+
+        var c = undefined == undefined;
+        var d = infinity == infinity;
+        var e = NaN == NaN;
+
+        document.write(c);//true;
+        document.write(d);//true;
+        document.write(e);//false; NaN不等于任何东西包括自己，
+
+        // 逻辑运算符  && || ！   用处很大，
+        // &&运算符先看第一个表达式转换为布尔值的结果，如果结果为真，就看第二个表达式转换为布尔值的结果，然后如果只有两个表达式的话，只看到第二个表达式，就可以返回该表达式的值了，即如果第一个表达式的布尔值为真时直接返回第二个值就OK（无论是字符串、数字、还是比较表达式 函数，语句都可以都看作是一个表达式；）；如果第一个表达式转换为布尔值的结果为false，则返回第一个的值，记得是值，不是true或false；true或false只是判断是否要判断第二个表达式；
+        // undefined, null ,NaN, "" 0, false  六个值的布尔值都为false；
+        var a = 0 && 1 && 1;
+        document.write(a);//0
+        var b = 1 && false && 1;
+        document.write(b);//false;
+
+        // 起短路作用，短路语句，进行判断类似与IF else， data && fn(data);
+        0 && document.write("hello world");
+        2 > 1 && document.write("hello world");
+
+        // &  | 与运算或运算，二进制进行运算，在实际开发中基本不用；
+
+        // ||  找到真的表达式然后返回，碰到真的就返回，若是都是假的就返回最后一个假的值；
+        div.onclick = function (e) {
+            // 处理兼容性很灵活；
+            var event = e || window.event;
+
+        }
+        // ！ 先变为布尔值再取反；
+        var a = !123;
+        document.wirte(a);
+
+
+
+        // 语句
+        if (条件) {
+
+        }
+        if (1 > 0 && 8 > 9) {
+            document.write("hello world");
+        }//判断逻辑运算符的结果要灵活，这时候用到全真才为真，有假即为假
+
+        if (90 < score < 100) {
+        }
+        if (80 < score < 90) {
+        }
+        if (score > 90 && score < 100) {
+        }//相比前两种，使用&&运算符更合适
+
+        // 循环语句
+        for (var i = 0; i < 10; i++) {
+
+
+        }
+
+
+        // while循环，底层机制就是for循环，括号内无前后，只有中间的语句
+        while (i < 10) {
+        }
+        for (; i < 10;) {
+        }
+        // do  while 循环 技术开发中很少用
+        var i = 0;
+        do {
+            document.write("a");
+        } while (i < 10)
+
+
+
+
+        // 例子 编程：找规律然后转化为程序语言；
+        var n = parseInt(window.prompt("input"));
+        var mul = 1;
+        for (var i = 0; i < n; i++) {
+            mul *= 2;
+
+        }
+        document.write(mul);
+
+        // n的阶乘
+        var n = (n - 1)(n - 2)
+
+        //条件语句补充 switch语句,break，continue,
+        // switch语句判断时候采取的是即使找到了输出后，依旧会把之后的内容进行输出；（会一直往下漏）
+        // break,在语句中使用，停止跳出循环；
+        // continue 终止当前循环，进行下一次循环
+        var n = "a";
+        switch (n) {
+            case 1:
+                console.log("a");
+            case 2:
+                console.log("b");
+            case true:
+                console.log("c");
+        }
+
+
+        // 初始引用值 数组array 、对象
+        var arr = [1, 3, 45, 6, 7, "abc", undefined];
+        for (var i = 0; i < arr.length; i++) {
+            console.log(arr[i]);
+
+        }
+
+        var obj = {
+            lastName: "dong",
+            age: 40,
+
+
+
+
+
+        }
+
+        //  typeof();  返回数据类型，可以返回6个值，number string boolean object undefined function  基本上泛泛的引用值都返回object； var num = {} ,空对象，   var  num = null,最早是代替空对象占位的，虽然是原始值，但返回依旧是object,有历史遗留问题，
+        var num = 123;
+        console.log(type(num));
+
+        var num = "2" - "1";
+        console.log(typeof (num) + ":" + num);// number:1;
+
+        // 类型转换：
+        //显示类型转换：
+        // Number() 转换为数字；Number(null)//0   Number(undefined)//NaN   Number("a")//NaN,不会转化为Ascii值什么的，同时Number("123")//123    Number("123abc")//NaN, 所以看着能转化为数字的就转换为数字，看重转化不了的就不能转换；
+        // parseInt()把里面的数转换为整数； parseInt("123.9")//123  第二,有两个参数 parseInt(demo, 基低);以目标基低为进制转换为10进制；parseInt(demo, 2);  parseInt(123.9abc)//123 (砍断原则，从数字位开始到数字位结束)，，parseInt("100px"),之后经常用到取像素值；
+        // parseFloat("123.9abc"),123.9  从数字位开始都小数点后一位停止；
+        // String(); 转化为字符串
+        // Boolean();   转换为布尔类型； undefined, null ,NaN, "" 0, false  六个值的布尔值都为false；其他为true；
+        // toString(); 使用时候调用该方法，但undefined, null不能调用该方法；
+        var demo = 10;
+        var num = demo.toString(8);//将10目标进制转换为8进制；与parseInt()基低进制相反；
+        //例子 将10101010进制转换为16进制，先转换为10进制，再转换为16进制；
+        var num = 10101010;
+        var test = parseInt(num, 2);
+        console.log(test.toString(16));
+
+
+        // 隐式类型转换
+        //isNaN();判断里面的数据是否是NaN,结果为true、false//实际判断过程是先转换为Number();然后再和NaN进行比对
+        //        isNaN(NaN); // true  NaN==NaN//false;  NaN===NaN//false;
+        // ++  --  +、-（正、负）隐式转换为Number();
+        // - */  % 调用的是number()类型；求模(摩尔)；
+        //+ 加号 ：普通+号隐式调用Number类型, 与字符串连接隐式调用的是String（）类型，起连接作用；
+        // && || ！内部也是判断的是boolean()类型；
+        //<  >  <= >=  隐式转换为Number()类型;
+        var a = "3" > 2;//true;调用Number();
+
+        //特殊：
+        //== !=  特殊的一个：undefined==null  //true;
+        var a = 1 == true;//从右面执行，1==true;隐式转换为number类型，true；console.log(a);//true;
+        // 不发生类型转换的，=== 绝对等于 ！== 绝对不等于   但有个最特殊的就是NaN === NaN //false;
+
+        //如果有变量没定义就使用，会报错，not defined 没有定义；     undefined 未定义；
+        //只有下面这种情况，直接使用变量（没有定义前）不会报错；
+        console.log(typeof (a)); undefined;
+        //console.log(typeof(typeof(a)));  值却为string类型，因为typeof(a) 值为undefined ，但是为string类型，typeof()返回的那六个值都是string类型；
+
+
+
+
+        //升华例子2：
+        (window.foo || (window.foo = "bar"));
+        求window.foo //"bar"
+        // 先执行括号内，再执行||运算符 ===>>> "bar"
+
+        // 补充：
+        (window.foo || window.foo = "bar");//报错(属性错误赋值方式)
+        // 先执行||再执行赋值，(var a = 1||2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

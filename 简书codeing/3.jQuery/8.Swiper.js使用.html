@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/css/swiper.min.css">
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.2/js/swiper.min.js"></script>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">Slide 1</div>
+            <div class="swiper-slide">Slide 2</div>
+            <div class="swiper-slide">Slide 3</div>
+        </div>
+        <!--导航按钮(可选) -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <!--分页器(可选)-->
+        <div class="swiper-pagination"></div>   
+        <!-- 滚动条(可选) -->
+        <div class="swiper-scrollbar"></div>
+    </div>
+    <script>
+        var mySwiper = new Swiper ('.swiper-container', {
+            direction: 'horizontal',//轮播方向 ->vertical:垂直
+            loop: true,//是否循环轮播
+            initialSlide: 1,//index,根据索引确定初始化时展示的图片
+            speed: 4000,//滑动速度：图片自动滑动开始到结束的时间(单位：ms),默认3000毫秒
+            autoplay: 300,//自动切换时间
+            grabCursor: true,//手势(默认值false) ->true:鼠标覆盖轮播图出现“手掌”形状，拖动时指针变为“抓手”形状
+            // 前进后退按钮 ->不设置，有结构有样式但无行为
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },  
+            // nextButton: '.swiper-button-next',
+            // prevButton: '.swiper-button-prev',
+            // 分页器
+            pagination: {
+                el: '.swiper-pagination',
+            },  
+            // pagination '.swiper-pagination',
+            // paginationClickable: true,
+            // 滚动条
+            scrollbar: {
+                el: '.swiper-scrollbar',
+            },
+        })        
+    </script> 
+</body>
+</html>

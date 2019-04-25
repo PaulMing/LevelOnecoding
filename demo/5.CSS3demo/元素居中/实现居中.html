@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div{
+            /* margin: auto;等同于margin: auto 0,不写默认值为0，可实现水平居中，垂直方向不会居中 */
+            /* 单独设置margin: auto auto只能实现水平居中，不能实现垂直居中 */
+           
+            background: red;
+            width: 200px;
+            height: 200px;
+            /* 此种居中方式底层：其水平默认100%, 垂直默认子元素撑开，因此margin:auto，水平可居中，垂直没效果，但当你进行posititon:absolute,top:xx系列，由于撑开了，因此margin:auto,水平垂直都实现了居中 */
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div >dfa</div>
+</body>
+</html>

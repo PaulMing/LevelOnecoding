@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box, .box1 {
+            width: 400px;
+            height: 400px;
+            border: 1px solid #000;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <div class="box1"></div>
+    <script src="./echarts.js"></script>
+    <script src="./jquery.js"></script>
+    <script>
+        var myChart = echarts.init(document.getElementsByClassName('box')[0]);
+        // 指定图表的配置项和数据
+        var myChart1 =  echarts.init(document.getElementsByClassName('box1')[0]);
+        var allData = []
+        function getData() {
+            $.ajax({
+                type: 'GET',
+                url: './data.json',
+                success: function (req) {
+                    console.log(req)
+                    var data = req;
+                    data.sort(compare);
+                    allData = data;
+                    renderBar(data)
+                } 
+            });
+        }
+        function compare(a, b) {
+            return a.num - b.num
+        }
+        getData();
+        // 使用刚指定的配置项和数据显示图表。
+        function renderBar(data) {
+            var option = {
+                title: {
+                    text: '2016~2018销量',
+                    subtext: '渡一服装'
+                },
+                xAxis: {
+                    data: []
+                },
+                yAxis: {
+                    type: 'value',
+                    nameGap: 400,
+                    splitNumber: 3,
+                },
+                series: [{
+                    name: '销量',
+                    type: 'bar',
+                    data: []
+                }]
+            };
+            data.forEach(function (item, index) {
+                option.xAxis.data.push(item.name);
+                console.log(option.xAxis.data)
+                option.series[0].data.push(item.num);
+            });
+            myChart.setOption(option);
+            myChart.on('click', function (params) {
+                var dataIndex = params.dataIndex;
+                var pieData = allData[dataIndex];
+                console.log(pieData)
+                renderPie(pieData.year);
+            })
+        }
+        
+        function renderPie(data) {
+            console.log(data);
+            var option = {
+                title : {
+                    text: '某站点用户访问来源',
+                    subtext: '纯属虚构',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: function (name) {
+                        console.log(name);
+                        return ''
+                    }
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: []
+                },
+                series : [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:[],
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        },
+                        areaStyle: {
+                            color: '#000'
+                        }
+                    }
+                ]
+            };
+            data.forEach(function (item, index) {
+                option.legend.data.push(item.y);
+                option.series[0].data.push({
+                    value: item.num,
+                    name: item.y,
+                    
+                });
+            });
+            myChart1.setOption(option);
+        }
+
+    </script>
+</body>
+</html>

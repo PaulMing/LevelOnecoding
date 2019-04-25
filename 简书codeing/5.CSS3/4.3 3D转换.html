@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width: 500px;
+            height: 500px;
+            border: 1px solid #ccc; 
+            margin: 100px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* 3D空间 */
+            transform-style:preserve-3d;
+            /* 景深 */
+            perspective: 600px;
+        }
+        .demo{
+            width: 100px;
+            height: 100px;
+            background: red;
+            /* transform: perspective(600px) rotatex(30deg); */
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        // 3d旋转过程中-> 元素在旋转，坐标轴也会随之旋转
+        // 设置在父元素
+        transform-style:flat/preserve-3d;//flat默认值->父元素不保留3D位置;preserve-3d:父元素将保留其/子元素3D位置 ->注意:设置该属性后,子元素若设置溢出overflow:hidden;便会导致preserve-3d失效 
+        //景深: perspective:600px;//默认值none ->可理解为人距离显示器的距离
+        //视角: perspective-origin: top;//默认值为50% 50%; ->我们看到的都是效果图，就是物块在页面上的投影
+
+        //设置在子元素
+        transform-style:flat/preserve-3d;
+        transform: perspective(600px);
+        perspective-origin: xx;
+        backface-visibility: hidden/visible;//运动过程中，是否展示元素背面
+     -->
+     <div class="wrapper">
+         <div class="demo"></div>
+         <div class="demo"></div>
+     </div>
+</body>
+</html>

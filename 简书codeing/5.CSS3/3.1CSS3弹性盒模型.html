@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .demo{
+            width: 350px;
+            border: 2px solid #ccc;
+            margin: 100px auto;
+            display: flex;
+        }
+        .left{
+            display: inline-block;
+            width: 100px;
+            height: 200px;
+            background: red;
+            flex-shrink: 0;
+            flex-grow: 1;
+            flex-basis: 200px;
+            order: 0;
+        }
+        .middle{
+            display: inline-block;
+            width: 100px;
+            height: 200px;
+            background: green;
+            flex-shrink: 0;
+            flex-grow: 1;
+            order: -1;
+        }
+        .right{
+            display: inline-block;
+            width: 100px;
+            height: 200px;
+            background: blue;
+            flex-shrink: 0;
+            flex-grow: 1;
+            order: 2;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        伸缩容器: 父元素 
+        伸缩项目: 其下的子元素
+        主轴: 伸缩容器的主轴 -> 伸缩项目沿此轴进行布局(默认)
+        侧轴(交叉轴)：与主轴垂直的轴，取决于主轴
+
+        伸缩容器属性
+        display: flex/inline-flex;//聚焦点:该弹性盒子与后面的元素如何排列 ->等同于display:block/inline-block;
+        flex-flow: flex-direction flex-wrap;//伸缩流 复合属性
+        flex-direction: row(默认)/column/row-reverse/column-reverse;//主轴方向
+        flex-wrap: nowrap(默认)/wrap/wrap-reverse;//溢出换行
+        justify-content: flex-start(默认)/flex-end/center/space-between/space-around;//伸缩项目在主轴如何排列
+        align-items: flex-start/flex-end/center/baseline/stretch(默认);//伸缩项目在侧轴如何排列
+        // baseline: 项目的首行文字对齐(基线);  stretch: 若伸缩项目没设置高度，其会自适应被内容撑开,设置stretch后其会进行拉伸(等于容器高度);项目设置高度,其没效果
+        align-content: flex-start/flex-end/center/space-between/space-around/stretch;//聚焦点center ->设置center后多行元素会实现居中(前提flex-wrap:wrap) ->align-items聚焦点单行项目元素居中(多行项目元素有间隔)
+
+        伸缩项目属性
+        order: number;//number越小越排在前面,默认值0
+        align-self: flex-start/flex-end/center/baseline/stretch;//伸缩项目沿侧重如何排列 ->作为项目个体，其权重大于伸缩容器上设置的align-items;不大于align-content;
+        flex-grow: number;//默认值0表示不分配给该元素,按比例分配盒子剩余空间 -> 按照普通数学比例分配 1,1,2,->1/4, 1/4, 2/4
+        flex-shrink: number;//默认值1,按比例进行缩放->该比例是按权重分配 ->200px*1+200px*1+400px*3=1600px; 首个元素: 200*1 / 1600 * 200px = 25px(首元素缩减的像素),其它元素计算方式同上 ->补充：flex-shrink缩放的是元素content区
+        flex-basis: 200px;//伸缩基准值->其等同于元素的宽度,权重大于元素自身的width;默认值auto等同于元素的宽度-> 若子元素都设置基准值，所有的基准值相加大于容器宽度，那么每个子元素分配的宽度:(flex-basis/(flex-basis相加之和))*容器宽度
+
+        //flex: flex-grow flex-shrink flex-basis;//复合属性
+        //若只写一个值 ->flex-shrink默认值为1, flex-basis默认值为0%
+        //flex:1 -> flex: 1 1 0%;
+        //flex:3 -> flex: 3 1 0%;       
+     -->
+     <!-- 
+         demo: 子元素居中显示
+         div{
+             display: flex;
+             justify-content: center;
+             align-items: center;
+         }
+      -->
+     <div class="demo">
+         <div class="left">left</div>
+         <div class="middle">middle</div>
+         <div class="right">right</div>   
+     </div>  
+</body>
+</html>

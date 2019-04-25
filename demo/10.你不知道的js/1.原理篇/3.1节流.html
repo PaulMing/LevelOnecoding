@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="show">0</div>
+    <button id="btn">click</button>
+    <script>
+        // 应用场景：抢购疯狂点击
+        var oDiv = document.getElementById('show');
+        var oBtn = document.getElementById('btn');
+        oBtn.onclick = function(){
+            oDiv.innerText = parseInt(oDiv.innerText) + 1 ;
+        }
+        // 恶意脚本 -> 多次执行for循环 -> 形成"多次点击"效果
+        // for(var i=0; i<100; i++){
+        //     oBtn.onclick();
+        // }
+
+
+        // 封装节流函数    
+        // handler:函数  wait:等待事件(ms)
+        function throttle(handler,wait){
+            var lastTime = 0;
+            return function(e){
+                var nowTime = new Date().getTime();
+                if(nowTime - lastTime >wait){
+                    // this指向、arguments的使用原因同“防抖”相同
+                    handle.apply(this,arguments);
+                    lastTime = nowTime;
+                }
+            }
+        }
+        function buy(e){
+            console.log(e);
+            oDiv.innerText = parseInt(oDiv.innerText) + 1 ;
+        }
+        oBtn.onclick = throttle(buy,1000); 
+    </script>
+</body>
+</html>

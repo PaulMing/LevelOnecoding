@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 应用场景：广告页面(不用更改本页面结构)，在线编辑器，导航栏tab切换(首尾部相同，只改变中间页面，引入不同的iframe框架即可，较古老的做法)，以及一些登录注册页面(大公司都使用最新的单页面应用[用户体验感好]，小公司还在使用);[目前QQ邮箱登录注册框] -->  
+    <iframe src="http://www.baidu.com" frameborder="1"></iframe>
+    <!-- 同源下才能访问变量，否则不行,所以测试过程中必须在www文件下来保证同源，直接打开是file协议(本地协议)，哪有域名，端口号 -->
+    <iframe src="demo.html" frameborder="0" name="cku" width="160" height="600"></iframe>   
+    <script>
+        // 同源下访问变量的思路：拿到对方的window，然后访问变量
+        /* 
+        document.getElementsByTagName('iframe)[i].contentWindow.age
+        document.getElementsById('id').contentWindow;
+        简易写法：iframe元素的name属性
+        window.frames['cku']//部分浏览器不支持，最好使用ByTagName();
+
+        // IE专用：
+        document.iframes[name].contentWindow;
+        document.iframes[i].contentWindow;
+        */
+        var oIframe = document.getElementsByTagName('iframe')[1];
+        //console.log(oIframe.contentWindow.age);//异步过程，undefined;
+        // window -> 变量
+        oIframe.onload = function(){
+            console.log(oIframe.contentWindow.age);
+        }
+
+        /* 
+         子页面访问父页面：console.log(window.parent.age);
+         多层iframe框架嵌套使用，子页面访问顶级父页面:window.parent.parent.parent;/window.top;
+        */
+
+        // iframe跨域解决方案：
+        /* 
+        1.解决子页面访问父页面数据问题：window.location.hash;
+        2.解决父页面访问子页面的数据问题：window.name
+        */
+    </script>  
+</body>
+</html>

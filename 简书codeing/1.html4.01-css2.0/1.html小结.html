@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- html4.01  html5.0添加新的属性和样式，做了一些javascript的活  html/css/js/jquery/css3/html5 -->
+    <!-- 例子1 -->
+    <div style="width:100px;height:100px;background-color:red">erderfdagoaudlajjgoduagjodufldaajfudjagou</div>
+    
+    <div style="width:100px;height:100px;background-color:red">中华小曲库中华小曲库中华小曲库中华小曲库中华小曲库 </div>
+
+    <div style="width:100px;height:100px;background-color:red">er der fdagoaud lajjgodu agjodufldaajfudjagou</div>
+     
+    <!-- 结论：编辑器中的空格不是文本空格，是分隔符，所以多个空格也默认一个空格， -->
+    <!-- 第一个div浏览器默认是一个单词，溢出 -->
+    <!-- html编码：&； 中间填充字符，&nbsp;浏览器中显示空格； -->
+    <!--  -->
+
+
+    打印一个标签<div>
+    <!--如何打印标签，左边小于“<”  &less than 简称&lt;  右边大于“>” &great than 简称&gt; -->
+    打印一个标签，&lt;div&gt;
+    <!-- 掌握三个html编码，&lt; &gt; &nbsp; -->
+
+    
+    <!-- 例子2 -->
+    <!-- 有序列表，只有五种类型，字母大小写、数字、罗马大小写 a/A/1/i/I  默认数字1.2.3-->
+    <!-- 三个属性：type、start(开始序列，不管是字母还是罗马大小写，值为数字就可以，按数字推算) reversed:倒序排列 -->
+    <ol type="i" start="3" reversed="reversed">
+        <li></li>
+        <li></li>
+        <li></li>
+    </ol>
+    <!-- start 值为数字就好了， -->
+    <ol type="i" start=“8”>
+            <li></li>
+            <li></li>
+            <li></li>
+    </ol>
+
+    <!-- reversed="reversed" 倒序排列 -->
+    <ol type="a" reversed="reversed">
+            <li></li>
+            <li></li>
+            <li></li>
+    </ol>
+    <!-- 无序列表的属性只有一个type  值为：disc：实心圆圈；square:方块；circle：空心圆圈-->
+    <!-- 导航栏就是最好用到ul li 元素，父子元素，子元素功能样式相差不多； -->
+    <ul type="disc">
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+
+    <!-- 例子3 -->
+    <img src="" alt="">  
+    <!-- src source:图片资源地址/路径；alt:图片占位符  title:图片提示符 -->
+    <img src="" alt="" title="this is coco">
+    <!-- 网上url :服务器中的图片地址，直接点击图片地址栏是百度浏览器中的图片地址，要右击在新网页中打开-->
+    <!-- 绝对路径：指文件在硬盘上真正存在的路径：D:\全栈\duyi\review\border三角形、梯形 -->
+    <!-- 相对路径  ./同级目录；.//上一级目录 -->
+
+
+    <!-- 例子4 -->
+    <!-- hyperText reference 超文本引用 a标签的作用是四个 也算是附属功能 -->
+    <!-- 1、超链接   target=""在什么位置打开链接 -->
+    <a href=http://"www.baidu.com">百度</a>
+    <a href="" target="_blank"></a>
+    <!-- 2、锚点    a 标签最早是作为锚点使用的 anchor  网页中常常会有“索引栏”，可使用a标签实现-->
+    <a href="#demo1"></a>
+    <!-- 3、打电话(美团、饿了么实现就是调用了电话接口 应用场景极广)，发邮件（很少用） -->
+    <a href="tel:15658865200">打电话</a>
+    <a href="mailto:196909452@qq.com">发邮件</a>
+    <!-- 4、协议限定符  可以放置javascript:后面放代码，方法都OK；-->
+    <a href="javascript:show()">哈哈</a>
+
+
+     input没有伪元素；
+    <!-- 例子5 表单中的组件 -->
+    <!-- method:get/post发送数据的方式；  action:发送到的地址 -->
+    <!-- 表单提交数据，最重要的是数据名、数据值；验证是否将数据提交成功，没有数据名提交不成功 -->
+    <form action="" method="get">
+        <!-- input中的value和placeholder的区别  required="required" 必填项 -->
+        username:<input type="text" name="username"  required="required"  >
+        password:<input type="password" name="password">
+        <!-- file:///D:/%E5%85%A8%E6%A0%88/day701/index.html?username=huabei&password=123 -->
+          
+        <!-- 提交按钮  默认中间文本为提交，value可改变值-->
+        <input type="submit" value="login">
+        <!-- 默认中间文本为重置，value填值可以改变 -->
+        <input type="reset" value="chongzhi">
+    </form>
+    
+    <form>
+        <!-- 单选，相同的name代表这是同一道选择题 ,name/value 表示数据名、数据值-->
+        <input type="radio" name="strb" value="xiaobei">
+        <input type="radio" name="strb" value="dabai" checked="checked">
+        <input type="radio" name="strb" value="come">
+        <!-- 多选 -->
+        <input type="checkbox" name="fruit" value="red" checked="checked">
+        <input type="checkbox" name="fruit" value="green">
+        <input type="checkbox" name="fruit" value="yellow">
+       <!-- 下拉菜单   数据名name 数据值value， -->
+       <!-- selected 默认选中，实际就是在页面加载时预先选定该选项 -->
+       <select name="province">
+           <option value=""  selected="selected">北京</option>
+           <option value="">上海</option>
+           <option value="">南京</option>
+       </select>
+       <!-- 下拉列表框实现多个选中下拉 -->
+       <select multiple="multiple">
+            <option value="sass">华北</option>
+            <option value="sass" selected="selected">华南</option>
+            <option value="sass">华东</option>
+        </select>  
+        <button></button>  
+        <!-- 按钮：行内快元素；以上这些都是行内块元素； -->
+
+
+
+        <!-- 输入框事件：有个小bug -->
+        <input type="text" placeholder="hello world">
+        <input type="text" name="username" style="color:#999" value="请输入用户名" onfocus="if(this.value=='请输入用户名'){this.value='';this.style.coloe='#424242'}" onblur="if(this.value==''){this.value = '请输入用户名';this.style.color='#999'}">
+        
+        
+    </form>
+
+
+    
+
+
+</body>
+</html>

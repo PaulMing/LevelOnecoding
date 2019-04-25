@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 冒泡排序 -> 适合：基础数据已经有些顺序，减少交换次数
+        var arr = [1,2,3,20,35,32,12,10];  
+        function sort1(arr){
+            var len = arr.length;
+            for(var j=0; j<len; j++){
+                // 两两比较,len-1提升性能，每次排序后“最后一位必然是最大的”
+                for(var i=0; i<len-j; i++){
+                    if(arr[i] > arr[i+1]){
+                        var temp = arr[i];
+                        arr[i] = arr[i+1];
+                        arr[i+1] = temp;
+                    }
+                }
+            }
+            return arr;
+        }
+        console.log(sort1(arr));//(8) [1, 2, 3, 10, 12, 20, 32, 35]
+        
+
+
+        // 优化版：冒泡排序 = 比较 + 交换
+        var arr = [1,2,3,20,35,32,12,10];  
+        // 比较
+        function compare (a,b){
+            if(a>b){
+                return true;
+            }else {
+                return false;
+            }
+        }
+        // 交换
+        function exchange(arr,m,n){
+            var temp = arr[m];
+            arr[m] = arr[n];
+            arr[n] = temp;
+        }
+        function sort1(arr){
+            var len = arr.length;
+            for(var j=0; j<len; j++){
+                // 两两比较,len-1提升性能，每次排序后“最后一位必然是最大的”
+                for(var i=0; i<len-j; i++){
+                    if(compare(arr[i],arr[i+1])){
+                       exchange(arr,i,i+1)
+                    }
+                }
+            }
+            return arr;
+        }   
+        
+        
+        // 数组原生方法sort();
+        arr.sort(function(a,b){return a-b});//升序
+        arr.sort(function(a,b){return b-a});//降序
+    </script>       
+</body>
+</html>

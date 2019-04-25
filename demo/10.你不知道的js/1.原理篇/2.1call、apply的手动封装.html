@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var value = "a";
+        var obj = {
+            value: 'b',
+        }
+        function show(){
+            console.log(this.value);
+        }
+        // show();
+        // show.bind();
+        // show.call();
+        // show.apply();
+        // 传参形式不同：bind();call();参数以逗号分隔; apply();参数以数组形式传递
+        
+        
+        // 手动封装call();
+        // 简版：只传入this新指向的参数
+        Function.prototype.newCall = function(ctx){
+            ctx.fn = this;
+            ctx.fn();
+            delete ctx.fn
+        }
+        // 优化版：可传入其它参数
+        Function.prototype.newCall = function(){
+            var ctx = arguments[0] || window;//不传入参数，this指向便是window
+            ctx.fn = this;
+            var args = [];
+            for(var i=1; i<arguments.length; i++){
+                args.push('arguments['+i+']');
+            }
+            var result = eval('ctx.fn('+args.join(',')+')');//eval();其会将字符串当作代码执行
+            delete ctx.fn;
+            return result;     
+        }
+
+
+        // 手动封装apply();
+        Function.prototype.newApply = function(ctx,arr){
+            var ctx = ctx || window;//不传入参数，this指向便是window
+            ctx.fn = this;
+            if(!arr){
+                var result = ctx.fn();
+                delete ctx.fn;
+                return result;
+            }else{
+                var args = [];
+                for(var i=0; i<arr.length; i++){
+                    args.push('arguments['+i+']');
+                }
+                var result = eval('ctx.fn('+args.join(',')+')');
+                delete ctx.fn;
+                return result;
+            }   
+        }     
+    </script>
+</body>
+</html>

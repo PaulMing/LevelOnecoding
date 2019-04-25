@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 标记用户身份
+        [浏览器历史记录：其只能记录用户曾经访问过的网页，并不记录用户信息]
+        [web应用程序是通过HTTP协议传输数据的，HTTP协议是无状态的协议，数据交换完毕，客户端与服务器端的连接就会关闭；再交互数据需建立新的连接，服务器无法从连接上来记录跟踪会话，所以才会有了cookie]
+        1.(请求报文)请求http的首部(header部分)：
+        form: e-mail;//这个属性目前header部分基本没有了，因为涉及到油箱，一些服务器会恶意收集，发送垃圾邮件
+        user-agent: bom讲过，发送给服务器，其包含的都是浏览器的信息，与用户关系不大
+        referer: 用户上次浏览过的网页，或者本次网页是从那个网页跳转而来，也不能确认是那个用户操作的
+
+        2.根据客户端IP地址来跟踪，但是请求报文的头部没有相关属性，请求的tcp连接可以轻松获得ip地址，但IP地址描述的是机器，而不是用户，(网络上发表不当言论追责，可追踪IP地址，如今经常有动态IP地址，而且容易伪造，所以IP地址不稳定，根据IP地址不靠谱)
+
+        3.用户登录，用户名/密码
+        4.胖URL： 对原有URL进行扩展，访问网站的时候会扩展一些唯一标识的值，参数多了，扩展的参数可以放前面，也可以放到后面，放后面的情况多一些，对浏览器形成负载，而且生存周期仅为窗口打开的时候
+
+        5.cookie:服务器生成的本地文件，可删减，，而且一般都在c盘users里面，文件里面包含所有登录网站的信息，都在这一个文件夹中，，，而且每个浏览器都有自己的cookie文件，不同浏览器写的形式也有所不同
+     -->
+    <!-- cookie特点：
+        cookie只是起标识的作用，所以大小4kb左右，占用内存少
+        cookie的保质期：会话cookie：临时和永久的
+        [cookie包含的信息可不仅仅是用户名/密码，主要是标识用户信息即可，由于cookie可以手动操作，不建议存入敏感信息，有安全隐患]
+        [cookie使用流程(系统实现)：首次用户访问某网页，服务器端会生成cookie，返回网页的时候将其发送给浏览器，浏览器存储在本地；第二次用户访问同一网页时，浏览器端发送请求时会把cookie也一起发送给服务器端，服务器端根据cookie信息返回为用户定制化服务的网页；cookie中存放用户访问所有网页的cookie信息，访问某网页，传输该网页的cookie值即可，不用将所有cookie都传输]
+    -->
+
+       <script>
+        /* 操作cookie:
+        其是浏览器、服务器端自行操作，不用自己手动操作，例如用户名、密码不用用户再次输入,底层原理也是系统拿到cookie值，将其放入到input的输入框的value值而已，所以关于cookie基本操作还是要学的；
+
+        获取:document.cookie;//获取所有cookie值;其是字符串；
+        设置key-value:document.cookie="age=18"//注意:在chrome浏览器中，必须发起http请求才会设置上(否则浏览器默认其进行不必要的操作，操作无效果)；设置过程中必须将文件放置到服务器环境www文件下
+
+        设置时间:document.cookie="age=18,max-age=1000";//expires也可以设置，但其设置的时间必须是时-分-秒，不能像max-age，直接设置1000秒 
+                document.cookie="name=aimee";//不设置存储时间,便为Session临时存储，关闭窗口该cookie值便消失
+                 
+        删除:document.cookie='age=18,max-age=-1';//存储时间小于Expires/Max-age设置的时间便会过期，直接设置-1即可，过期表示的就不会存在 */
+    
+
+        var oDate = new Date();
+        oDate.setDate(oDate.getDate() + 3);//oDate.setDate('13');//设置日
+        document.cookie = 'name=aimee; expires='+oDate
+
+        // 注意：设置cookie的过程中，遇到分号其会自行截断，系统认为其是value值的描述信息，描述信息就是domain/max-age/path/size;没有name，所以添加不到此cookie中
+        document.cookie = 'age=18;max-age=1000;name=aimee;expires='+ oDate;//只设置上了age=18,max-age=1000;
+        document.cookie = 'name=aim;ee;expires='+oDate;//其也会截断，cookie中只有name=aim;//ee找不到就不再往下查找了
+
+        // 字符串的拼接
+        document.cookie = 'school=duyi;expires='+oDate+';path=/';
+
+        // 查找：处理字符串, cookie中没有API共我们处理字符串，自己封装
+       
+        // 封装操作cookie函数：
+        var manageCookie = {
+            setCookie: function(name,value,time){
+                document.cookie = name + '=' + value + ";max-age="+time;
+                return this;
+            },
+            removeCookie: function(name){
+                return this.setCookie(name,'',-1);
+            },
+            getCookie: function(name,callback){
+                var allCookieArr = document.cookie.split('; ');
+                var len = allCookieArr.length;
+                for(var i=0; i< len;i++){
+                    var itemCookieArr = allCookieArr[i].split("=");
+                    if(itemCookieArr[0] == name){
+                        callback(itemCookieArr[1]);
+                        return this;
+                    }
+                }
+                callback(undefined);
+                return this;
+            }
+        }
+        manageCookie.setCookie(age,18,10000)
+                    .setCookie("target1","aimee",20000)
+                    .setCookie("age",18,10000)
+                    .removeCookie('teater')
+                    .getCookie('age',function(data){
+                        console.log(data);
+                    })  
+       </script>
+
+</body>
+</html>

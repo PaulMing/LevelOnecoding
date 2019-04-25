@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // ES3.0/5.0对象   
+        let obj = {};//字面量
+        let obj1 = new Object();
+        let obj2 = Object.create(null);
+        // 对象“增删改查”
+        obj.name = '';
+        obj[name] = '';
+        delete obj.name;
+
+        // ES6.0对象
+        let person = {
+            name,
+            sayName(){
+                console.log(this.name);
+            }
+            // 简写：
+            /*  
+            name: name,
+            sayName: function(){
+               console.log(this.name);
+            }//省略了:function
+            */
+        }  
+        // 可计算属性
+        let front = 'elem-';
+        let name = "huhua";
+        let stuff = 'stuff';
+        let stuffify = {
+            [front + stuff]: name,
+            // front + stuff:name,//错误->其只能使用对象[]获取属性(此种方式也可理解为对象是数组，通过数组下标取值)
+            // ['skr'+ name]: name;
+        }
+
+
+        // 对象新增方法：静态方法(对象上直接定义) -> 新方法不在全局(window)定义，其也不在prototype上定义，避免冲突
+        // 方法1：Object.is(a,b);//判断a,b是否相等
+        console.log(NaN == NaN);//false
+        console.log(NaN === NaN);//false
+        console.log(object.is(NaN,NaN));//true;//NaN在开发中经常用到 -> 常判断“非数”情况
+        // 例如 +0 -0;开发中也会判断两者情况，两者趋势不同： +0：正向趋于0； -0：负向趋于0 
+        console.log(+0 === -0);//true
+        console.log(Object.is(+0,-0));//false
+        // 补充：开发中判断“是否等于”，常常使用的是===, 不经常使用==，避免发生类型转换
+
+        // 方法2：Object.assign();//混合属性 -> 浅克隆、对象合并
+        var newObj = Object.assing({},obj,obj1);//{}目标对象，obj/obj1源对象；其将obj、obj1里的属性添加到目标对象中，若属性名有冲突，其会覆盖，返回新目标对象；同时其支持多个参数
+
+        // 方法3：Object.keys();  Object.values();  Object.entries();
+        let person = {
+            name: 'hua',
+            age: 18,
+            height: 180
+        }
+        Object.keys(person);//返回数组，对象key值的集合
+        Object.values(person);//返回数组，对象value值的集合
+        Object.entries(person);//返回数组，每个key,value值为一个单独的数组 (3) [Array(2), Array(2), Array(2)]
+
+        // 方法4：Object.getPrototypeOf(); Object.setPrototypeOf();//增强对象原型
+        person.__proto__;//ES3.0/5.0获取对象原型的方法 -> __proto__:此属性是私有属性，系统调用，开发中不要过多使用
+        Object.getPrototypeOf(person);//返回对象原型
+        Object.setPrototypeOf(p1,p2);//设置 -> p1的原型等于p2
+        
+  
+   
+
+       
+        
+
+
+        // 解构赋值
+        // 原始方法：
+        resData = {
+            director:'skr',
+            imgs: [],
+            casts: {}
+        }
+        let director = resData.director;
+        let imgs = resData.imgs;
+
+        // 解构赋值实质 -> 模式匹配
+        // 方法1：
+        let {director,imgs,casts} = resData = {director:'skr',imgs: [],casts: {}}
+        // let {director:director,imgs:imgs,casts:casts} = {director:'skr',imgs: [],casts: {}}
+        // let {director:dir,imgs:i,casts:c} =  {director:'skr',imgs: [],casts: {}};//虽然语义化不好，但依旧可行 -> director表示模式， dir表示匹配, 同理其它属性也是如此
+
+        // 方法2：此种方式若是不加();语法错误
+        let director,imgs,casts;
+        ({director,imgs,casts} = resData);
+
+        // 解构失败 -> 部分属性未成功匹配
+        let {director,imgs,casts,value} = resData;
+        conole.log(value);//undefined;
+
+        // 不完全解构
+        let {director,imgs} = resData;
+        console.log(casts);//casts is not defined;
+
+        // 补充: 解构赋值中的默认参数
+        let {PI,random,pow,floor} = Math;//解析Math对象，直接使用PI即可(不需要let PI = Math.PI,或者使用Math.PI)
+        // 默认参数：Math对象上存在的属性，即使写上默认值也无效，默认参数只对非对象上的属性有效
+        let {PI=3.14,random,pow,floor,A=0} = Math;
+        let {PI:PI=3.14,random:random,pow:pow,floor:floor,A:A=0} = Math;
+        console.log(PI);//3.141592653589793
+        console.log(A);//0
+
+
+
+        // 嵌套结构 -> 解构赋值
+        let node = {
+            type: 1,
+            parentNode: {
+                tagName: 'div',
+                value: {
+                    value: 123
+                }
+            }
+        }
+        let {type,parentNode} = node;
+        let{parentNode,parentNode:{tagName,value:{value}}} = node
+
+        // 数组 -> 解构赋值
+        var arr = [1,2,3]
+        let {x,y,z} = arr;//x:undefined;此方式不能成功解析
+        let [x,y,z] = arr;//成功解析
+        let {0: x, 1: y, 2: z} = arr;//成功解析
+        let {length} = arr;
+        console.log(length);//3
+    
+        var arr1 = [1,2,3]
+        // let [a,b,c] = arr = [1,2,3]
+        // let [d,[e],f] = [1,[2],3]  
+        let [g=10,h,i] = [,,10]
+        console.log(g);//10
+        console.log(h);//undefined;
+
+        // demo 交换
+        // 原生解决方案
+        let a,b,temp;
+        a = 1; b = 2;
+        temp = a;
+        a = b;
+        b = temp;
+        // 解构赋值
+        let a = 1;
+        let b = 2;
+        [a,b] = [b,a]      
+    </script>
+</body>
+</html>

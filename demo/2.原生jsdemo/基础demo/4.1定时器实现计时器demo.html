@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 实现计时器功能，到三分钟停止 -->
+    <div>
+        minutes:<input type="text" value=0> 
+        seconds:<input type="text" value=0>
+    </div>
+    <script>
+        var minutesNode = document.getElementsByTagName('input')[0];
+        var secondsNode = document.getElementsByTagName('input')[1];
+        var minutes = 0;
+            seconds = 0;
+        var timer = setInterval(function () {
+            seconds++;
+            if (seconds == 60) {
+                minutes++;
+                seconds = 0;
+            }
+            minutesNode.value = minutes;
+            secondsNode.value = seconds;
+            if (minutes == 3) {
+                clearInterval(timer);
+            }
+
+        }, 10)
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="width:100px; height:100px;background-color:skyblue;position:absolute;left:0;top:0"></div>
+    <script>
+        var div = document.getElementsByTagName('div')[0];
+        function getStyle(obj, prop, fake) {
+            var fake = fake || null;
+            if (obj.currentStyle) {
+                return obj.currentStyle[prop];
+            } else {
+                return window.getComputedStyle(obj, fake)[prop];
+            }
+        }
+        function addEvent(elem, type, handle) {
+            if (elem.addEventListener) {
+                elem.addEventListener(type, handle, false);
+            } else if (elem.attachEvent) {
+                elem.attachEvent('on' + type, function () {
+                    handle.call(elem);
+                })
+            } else {
+                elem['on' + type] = handle;
+            }
+        }
+        // 封装兼容性取消冒泡函数
+        function stopBubble(event) {
+            if (event.stopPropagation) {
+                event.stopPropagation();
+            } else {
+                event.cancelBubble = true;
+            }
+        }
+
+        // 封装阻止默认事件的函数：
+        function cancelHandler(event) {
+            if (event.preventDefault) {
+                event.preventDefault();
+            } else {
+                event.returnValue = false;
+            }
+        }
+        function drag(elem) {
+            var disX,
+                disY;
+            addEvent(elem, 'mousedown', function (e) {
+                var event = e || window.event;
+                disX = event.clientX - parseInt(getStyle(elem, "left"));
+                disY = event.clientY - parseInt(getStyle(elem, "top"));
+                addEvent(document, "mousemove", mouseMove);
+                addEvent(document, "mouseup", mouseUp);
+                stopBubble(event);
+                cancelHandler(event);
+            });
+            function mouseMove(e) {
+                var event = e || window.event;
+                elem.style.left = event.clientX - disX + "px";
+                elem.style.top = event.clientY - disY + "px";
+            }
+            function mouseUp(e) {
+                var event = e || window.event;
+                // 缺封装的解除事件绑定函数
+                // removeEvent(document, 'mousemove', mouseMove);
+                // removeEvent(document, "mouseup", mouseUp);
+            }
+        }
+        drag(div);
+    </script>
+
+</body>
+
+</html>

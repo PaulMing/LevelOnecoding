@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 日期对象：date对象是系统提供好的，掌握就OK
+        // date 对象属性：constructor   
+
+        var date = new Date();//创建的对象，是这一刻的对象，记录时刻，date.getSeconds(); 始终不变；
+
+        date.getDate();//一个月中的某一天
+       
+        
+        date.getFullYear();//返回四位年份
+        date.getYear();//返回三位数
+        date.getMonth();//返回月份，0开始 0~11
+        date.getDay();//一周的某一天  从0开始 0代表周末，第七天
+        date.getHours();//0~23
+        date.getMinutes();//60进制，0~59
+        date.getSeconds();//60进制，0~59
+        date.getTime();//返回 1970 年 1 月 1 日至今的毫秒数。
+        
+        date.setFullYear();
+        date.setMonth();
+        date.setHours();
+        date.setMinutes();
+        date.getSeconds();
+        date.setTime();//以毫秒设置 Date 对象。
+
+
+        date.getTime();//1970年01月01日至今的毫秒数
+        // 纪元时间：1970年01月01日 00:00:00:00
+        时间戳
+
+
+        // 设置时间:应用场景：倒计时秒杀
+        setDate()
+        setMonth()
+        setFullYear();
+
+        setTime(); //设置毫秒数；
+        // UTC: 世界时间：
+
+
+        var firstTime = new Date().getTime();
+        for (var i = 0; i < 10000; i++) { }
+        var lastTime = new Date().getTime();
+        console.log(lastTime - firstTime);
+
+        // new Date().getTime();等同于var date = new Date(); date.getTiem(); 
+        // 功能相同，但可以简化代码，多尝试使用；  
+        var firstTime = new Date().getTime();
+            for (var i = 0; i < 1000000000; i++) {
+
+             }
+        var lastTime = new Date().getTime();
+        console.log(firstTime);
+        console.log(lastTime);
+        console.log(lastTime - firstTime);
+
+
+        var data = new Date();
+        date.setMinutes(17);
+
+        setInterval(function(){
+            if(new Date().getTime() - date.getTime()>1000){
+               
+            }
+        },1000)
+
+
+        // 定时器：(定时循环器)
+        //1.time的值一但确定就一直是那个值；
+        var time = 1000;
+        setInterval(function(){
+            console.log('a');
+        },time)
+        time = 2000;
+        // 2.setInterval() 定时器不准确；
+        var firstTime = new Date().getTime();
+        setInterval(function(){
+            var lastTime = new Date().getTime();
+            console.log(lastTime-firstTime);
+            firstTime = lastTime;
+        },1000)
+
+
+        // 3、window.setInterval （window上的方法，window可省略）
+        // 有返回值，执行setInterval 都会返回一个唯一标识，通过这个标识可以清除
+        
+        var i=0;
+        var timer = setInterval(function(){
+            console.log(i++);
+            if(i>10){
+                clearInterval(timer);
+            }    
+        },1000);
+
+
+    
+       setTimeout(function(){
+           console.log('a');
+
+       },1000)
+
+     
+
+
+
+        timer也是依次返回
+        var timer = setTimeout(function(){},1000)
+        clearTimeout(timer);//也有应用场景
+
+        // 总结：里面的方法都是全局对象上的window上的方法，this指向window;
+        
+        // 直接放js代码也可以，开发中不用
+        setInterval(console.log('a'),1000);
+        setInterval("console.log('a')",1000);
+
+
+
+           // 实现简易版闹钟
+           var date = new Date();
+        date.setMinutes(17);//设置时间(设置分钟，整个时间年/月/日/时/分/秒都随之改变)
+        setInterval(function () {
+            // getTime();获得毫秒数
+            if (new Date().getTime() - date.getTime() > 1000) {
+                console.log("javascript very nice");
+            }
+        }, 1000)
+
+
+
+
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>

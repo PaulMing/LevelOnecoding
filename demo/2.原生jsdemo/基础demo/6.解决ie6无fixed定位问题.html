@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <!-- 解决ie6无fixed定位问题 -->
+    <div style="position:absolute;left:0;top:0; background-color:red;width:100px;height:100px;"></div>
+    <script>
+        // 封装滚动条滚动距离
+        function getScrollOffset() {
+            if (window.pageXOffset) {
+                return {
+                    x: window.pageXOffset,
+                    y: window.pageYOffset,
+                }
+            } else {
+                return {
+                    x: document.body.scrollLeft + document.documentElement.scrollLeft,
+                    y: document.body.scrollTop + document.documentElement.scrollTop,
+                }
+            }
+        }
+        var div = document.getElementsByTagName("div")[0];
+        window.onscroll = function () {
+            // div.style.top = parseInt(div.style.top) + window.getScrollOffset().y + "px";//错误写法
+            // 绝对定位是相对于有定位的父元素定位，此处相对于文档定位，fixed相对于视口进行定位；
+            // ie6没有fixed定位但有其他定位方式，使用absolute模仿，把滚动条滚动距离赋值给top即可；
+            div.style.top = window.getScrollOffset().y + "px";
+            console.log(div.style.top);
+        }
+    </script>
+</body>
+</html>

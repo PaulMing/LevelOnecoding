@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+
+        li {
+            width: 200px;
+            height: 40px;
+            background-color: #ccc;
+            margin: 20px;
+            list-style: none;
+            display: block;
+        }
+
+        #trash-box {
+            width: 300px;
+            height: 200px;
+            background-color: #000;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <ul>
+        <li class="drag-item" draggable="true">列表项1</li>
+        <li class="drag-item" draggable="true">列表项2</li>
+        <li class="drag-item" draggable="true">列表项3</li>
+        <li class="drag-item" draggable="true">列表项4</li>
+        <li class="drag-item" draggable="true">列表项5</li>
+    </ul>
+    <div id="trash-box">删除列表</div>
+
+    <script type="text/javascript">
+        var li = document.getElementsByTagName('li'),
+            trashBox = document.getElementById('trash-box'),
+            len = li.length,
+            ul = document.getElementsByTagName('ul')[0];
+
+        function bindLiEvent () {
+            // 给每个li绑定拖拽相关事件
+            for(var i = 0; i < len; i++) {
+                li[i].addEventListener('dragstart', function(e) {
+                    var i = getIndex(li, this);
+
+                    e.dataTransfer.setData("data",i);
+                }, false);
+
+                li[i].addEventListener('drop', function(e) {
+                    var i = e.dataTransfer.getData("data");
+
+                    ul.insertBefore(li[i], this);
+                }, false);
+
+                li[i].addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                }, false);
+            }
+        }
+
+        // 获取li的索引
+        function getIndex(list, c) {
+            for(var i = 0, len = list.length; i < len; i++) {
+                if(list[i] === c) {
+                    return i;
+                }
+            }
+        }
+
+        // 垃圾箱相关事件绑定
+        function bindTrashEvent() {
+            trashBox.addEventListener('drop', function(e) {
+                var index = e.dataTransfer.getData("data");
+
+                li[index].remove();
+            },false);
+
+            trashBox.addEventListener('dragover', function(e) {
+                e.preventDefault();
+            },false);
+        }
+
+        bindLiEvent();
+        bindTrashEvent();
+    </script>
+</body>
+</html>

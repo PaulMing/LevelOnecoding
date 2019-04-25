@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 事件：交互体验的核心
+        // 前面这就是事件了，后面是触发后的效果，所谓的绑定事件，并非是创建事件，dom元素本来就有事件，需要绑定个函数而已；
+        // 方法1.兼容性很好，一个对象的一个事件只能绑定一个处理函数，绑定多个覆盖，就是简单的属性赋值呀；绑定的就相当于是行内写了一个事件,直接写执行语句，不用写function(){},
+        <div style="width:100px;" onclick="console.log('a')"></div>//句柄的方式
+
+        div.onclick = function () {
+            this.style.backgroundColor = "red";
+
+        }
+
+        有bug;
+
+        // 方法2：div.addEventListener(事件类型， 处理函数， false)
+        div.addEventListener('click', function () { }, false);
+        // 优点：可以给一个对象的一个事件绑定多个处理函数，并且按照绑定的顺序执行
+
+        div.addEventListener('click', function () {
+            console.log('a');
+        }, false);
+
+        div.addEventListener('click', function () {
+            console.log('a');
+        }, false)
+
+        div.addEventListener('click', test, false);
+
+        // ie9以下不兼容
+
+
+
+
+
+        // // 方法3 ie9独有的
+        // div.attachEvent(on事件类型，处理函数);一个对象的一个事件绑定多个处理函数，可以执行多次，结构很松散，不严格；
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // this指向问题：
+        div.onclick = function () { }; //this指向dom元素本身；
+        div.addEventListener(type, func, false); //this指向dom元素本身；
+        div.attachEvent('on' + type, func);//this指向window;
+        // 解决：改变this指向，使其指向dom元素本身；
+        div.attachEvent('onclick', function () {
+            //函数体内的函数 handle();才是真正的事件处理函数；[借助一个函数，改变this指向为div;]
+            // handle();
+            handle.call(div);
+        });
+
+
+
+
+        //封装函数实现：给一个dom对象添加该事件类型的处理函数；解决兼容以及this指向问题
+        function addEvent(elem, type, handle) {
+            if (elem.addEventListener) {
+                elem.addEventListener(type, handle, false);
+            } else if (elem.attachEvent) {
+                elem.attachEvent('on' + type, function () {
+                    handle.call(elem);
+                })
+            } else {
+                elem['on' + type] = handle;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+        // 解除事件函数
+        div.onclick = null / false / "";
+        //以下两式参数必须与绑定事件参数“高度对应”，否则无效；
+        div.removeEventListener('click', function () { }, false);
+        div.detachEvent('on' + type, func);
+
+        // 匿名函数无法解除：
+        div.addEventListener('click', function () { }, false);
+        div.removeEventListener('click', function () { }, false);//函数是引用值，显然这是两个不同的函数；
+
+        // ---->>> 使用函数引用：若想解除，使用这种方式即可
+        div.addEventListener('click', test, false);
+        function test() { console.log('a'); }
+        div.removeEventListener('click', test, false);
+
+
+
+
+        div.onclick = null / false
+        // 方法1：div.onclick = null;
+        div.onclick = function () {
+            console.log('a');
+            this.onclick = null;
+        }
+
+
+
+
+
+
+        // 方法2：removeEventListerer('click',function(){},false);   与绑定函数高度对应；函数写函数引用；
+
+        ele.detachEvent('on' + type, func);
+
+
+
+
+
+        // 事件处理模型：冒泡、捕获
+        // 一个对象一个事件类型绑定的一个执行函数只能有遵循一个事件处理模型，但一个事件可以绑定两个执行函数，若是
+
+        // 冒泡每个浏览器都支持，捕获谷歌支持，而且火狐和opera高版本支持，低版本也没有，IE没有捕获事件；他们多多少少也渗透了一些谷歌的webkit内核；
+
+        // 并非所有事件都会冒泡
+
+
+        // 捕获并执行，最后一个执行； 
+
+
+
+
+        // 取消冒泡：
+        document.onclick = function () { }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // 事件对象，event ,反映当前事件发生的一系列状态和信息；
+        e: 事件对象
+
+        // 取消冒泡：
+        e.stopPropagation();
+
+
+        e.cancelBubble = true;
+
+
+
+
+        //封装兼容性取消冒泡函数
+        function stopBubble(event) {
+            if (event.stopPropagation) {
+                event.stopPropagation();
+            } else {
+                event.cancelBubble = true;
+            }
+        }
+        // 例：
+        document.onclick = function () {
+            console.log("hello javaScript");
+        }
+        var div = document.getElementsByTagName("div")[0];
+        div.onclick = function (e) {
+            console.log("skrskr");
+            // e.stopPropagation();
+            e.cancelBubble = true;
+        }
+
+
+
+
+        // 阻止默认行为
+        // 手机、电脑 等系统带有很多默认事件，例如电脑右键出菜单也是一个默认事件，可以阻止它发生
+
+        document.oncontextmenu = function () {
+            console.log('a');
+            // return false;
+        }
+        // 1.return false; //只能用于句柄的方式；div.onclick;
+        // 2.event.preventDefault();
+
+
+
+        //封装阻止默认事件的函数：
+        function cancelHandler(event) {
+            if (event.preventDefault) {
+                event.preventDefault();
+            } else {
+                event.returnValue = false;
+            }
+        }
+
+        // 例题：
+        function cancelHandler(event) {
+            if (event.preventDefault) {
+                event.preventDefault();
+            } else {
+                event.returnValue = false;
+            }
+        }
+        document.oncontextmenu = function (e) {
+            console.log("a");
+            cancelHandler(e);
+        }
+
+
+
+        /* 补充：a标签有默认事件，即使<a ></a>,跳转到“#”，要不就是刷新
+
+
+
+        a标签经常当按钮使用，要不刷新页面，要不跳转到顶部，需要阻止默认行为
+        1、
+        2、<a href="javascript:alert('a')">demo</a>
+       //  点击去执行里面的js代码；
+       2、<a href="javascript:void()">demo</a>
+       void()等同于是返回值，void(false),return false; */
+
+        // 事件对象：
+
+        // 在一个函数里，浏览器会默认把event事件对象传入到形参中，但IE浏览器不支持，其会把event事件对象传入到window.event上；
+        // 封装一个兼容性更好的函数
+        div.onclick = function (e) {
+            // 兼容性写法
+            var event = e || window.event;
+
+        }
+        // 事件源对象：由于有冒泡模型，需要确认到底是谁触发的事件，
+        // event里的属性，
+        // event.target 火狐只有这个
+        // event.srcElement IE只有这个
+        // chrome 两者都有
+
+        // 封装查看事件源对象的函数
+        div.onclick = function (e) {
+            var event = e || window.event;
+            var target = event.target || event.srcElement;
+            console.log(target);
+        }
+
+
+        // 事件写的时候不分小驼峰、大驼峰，直接写就可以
+        // 即使代码顺序有变化，onclick = onmousedown + onmouseup
+        document.onclick = function () {
+            console.log('click');
+        }
+        document.onmousedown = function () {
+            console.log("mousedown");
+        }
+        document.onmouseup = function () {
+            console.log("mouseup");
+        }
+        //当点击div时：输出：onclick、onmousedown、onmouseup
+
+
+        // onmouseenter   onmouseleave;
+        // onmouseover onmouseout
+        //  css中的hover 也是mouseover mouseout,css/js/html 三者有很深的联系，css/html里面的js 直接调用的js引擎实现的，效率高
+
+        // event.buton区分鼠标的按键，0、1、2
+        // 使用 监听按键的只能是 mousedown mouseup
+
+
+
+
+
+        //DOM3标准规定：click事件只能监听左键，判断鼠标键只能通过mousedown 和 mouseup来判断鼠标键；
+        document.onmousedown = function (e) {
+            if (e.button == 0) {
+                console.log('left');
+            } else if (e.button == 1) {
+                console.log('mid');
+            } else {
+                console.log('right');
+            }
+        }
+
+
+
+
+
+        // 键盘事件：watch：按键号
+        // onkeydown --> onkeypress --> onkeyup
+        // 相比于鼠标事件,onkeydown按下是连续触发；   
+        document.onkeypress = function(){
+            console.log("keypress");
+        }
+        document.onkeydown = function(){
+            console.log("keydown");
+        }
+        document.onkeyup = function(){
+            console.log("keyup");
+        } 
+
+        // 字符类、区分大小写用keypress;
+        // 操作类 上下左右          keydown
+        // keypress返回ASCII码，可转换为相应的字符，有一定的应用场景；String.fromCharCode();//String静态类的静态方法，参数传入ASCII码，返回相应字符；shift+a; alt+a;//也OK；
+        document.onkeypress = function(e){
+            console.log(String.fromCharCode(e.charCode))
+        }  
+
+
+        // 文本类操作事件：
+        // input输入框中的事件
+        // input事件:框内有变化都会触发该事件
+        // change事件： 聚焦和离开的状态的变化，有变化就触发，没变化就不触发
+
+        // focus blur
+        
+       /*  <input type="text">
+        <input type="text" value="请输入用户名" style="color:#999" onfocus="if(this.value=='请输入用户名'){
+        this.value ='';this.style.color='#424242'}" onblur = "if(this.value==''){this.value='请输入用户名'; this.style.color='#999'}"> */
+    
+        /* var input = document.getElementsByTagName("input")[0];
+        // 输入框内容改变即触发 
+        input.oninput = function(){
+            console.log(this.value);
+        }
+        // 输入框聚焦-->>内容改变-->>焦点离开-->>触发
+        // 内容改变才触发；
+        input.onchange = function(){
+            console.log(this.value);
+        } */           
+
+
+    // 后续需要什么功能，在onmousedown/onmouseup中添加功能即可；
+    var firstTime = 0;
+        var lastTime = 0;
+        var key = false;
+        document.onmousedown = function(){
+            firstTime = new Date().getTime();
+        }
+        document.onmouseup = function(){
+            lastTime = new Date().getTime();
+            // 小于0.3s -->>> 点击 --> 执行click函数 -->>否则就是拖拽 -->>执行拖拽函数
+            if(lastTime - firstTime <300){
+                key = true;
+            }
+        }
+        document.onclick = function(){
+            if(key){
+                console.log("click");
+                key = false;
+            }
+        }  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

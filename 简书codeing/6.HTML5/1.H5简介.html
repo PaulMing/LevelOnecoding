@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .demo{
+            width: 50px;
+            height: 50px;
+            background: yellow;
+        }
+        .box,.wrapper{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 600px; height: 400px; border: 1px solid black;">释放区域</div>
+    <!-- 更加语义化 article -> div   section -> p  -->
+    <!-- canvas/svg   audio/video  自定义标签都是行级元素 -->
+    <header>header</header>
+    <nav>nav</nav>
+    <article></article>
+    <section></section>
+    <aside></aside>
+    <footer>footer</footer>
+
+    <!--HTML5 新增属性  -->
+    <!-- contenteditable='true'/'false'; 用户是否可修改页面内容 -->
+    <div class="demo" contenteditable='true' >hellow html5</div>
+    <!-- draggable='true'/'false' 用户是否可以拖拽 -->
+    <div class="box" draggable='true'>helloworld</div>
+    <!-- hidden 隐藏 -> 底层还是css样式display:none -->
+    <div class="wrapper" hidden>hellojs</div>
+    <!-- data-val 自定义属性 -> 其只能通过getAttribute();获取，打点无法获取到 -->
+    <div class="sweder" data-tal='skr' >hellovue</div>
+    <!-- contextmenu 为元素设定快捷菜单(目前无浏览器支持) -->
+    <!-- 当用户点击元素时将显示菜单 -->
+    <div contextmenu="mymenu">
+        <menu type="context" id="mymenu">
+            <menuitem label="Refresh"></menuitem>
+            <menuitem label="Twitter"></menuitem>
+        </menu>       
+    </div>
+
+    <script>
+         /* 
+         属性：draggable: auto/true/false;
+         拖放事件: dragstart:  开始拖动时触发
+                  dragend：   拖动完成时触发  
+                  drag：      拖动时便触发
+         释放区事件: dragenter： 被拖动元素进入释放区触发
+                    dragover：  被拖动元素在释放区移动时触发 
+                    dragleave： 被拖动元素没有放下便离开释放区触发  
+                    drop：      被拖动元素在释放区放下时触发    
+         */
+        var box = document.getElementsByClassName('box')[0];
+        var oDiv = document.getElementsByTagName('div')[0];
+        box.ondragstart = function(e){
+            console.log('start');
+        }
+        box.ondragend = function(e){
+            console.log('end');
+        }
+        box.ondrag = function(e){
+            console.log('drag');
+        }
+        // 释放区
+        oDiv.ondragenter = function(e){
+            console.log('dragenter');
+        }
+        oDiv.ondragover = function(e){
+            console.log('dragover');
+        }
+        oDiv.ondragleave = function(e){
+            console.log('dragleave');
+        }
+        oDiv.ondrop = function(e){
+            console.log('drop');
+        } 
+     </script>
+</body>
+</html>

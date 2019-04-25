@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 快速排序   
+        var arr = [1,2,3,20,35,32,12,10];  
+        function quickSort(arr){
+            if(arr.length <=1){ 
+                return arr;
+            }
+            var leftArr = [];
+            var rightArr = [];
+            var midIndex = Math.floor (arr.length/2);
+            var midArr = arr.splice(midIndex,1)[0];//splice();返回截取到的数组 -> 其会修改原数组
+            for(var i=0; i<arr.length; i++){
+                if(arr[i] >= midArr){
+                    rightArr.push(arr[i]);
+                }else{
+                    leftArr.push(arr[i]);
+                }
+            }
+            return quickSort(leftArr).concat([midArr],quickSort(rightArr));
+        }
+        console.log(quickSort(arr));//(8) [1, 2, 3, 10, 12, 20, 32, 35]    
+    </script>
+</body>
+</html>

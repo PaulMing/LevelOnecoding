@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .demo{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }  
+    </style>
+</head>
+<body>
+    <div class="demo"></div>
+    <script>
+         // 惰性函数应用：优势 -> 首次执行addEvent();需要判断，后续再次执行该函数，就不再需要进行判断了
+         var demo = document.getElementsByClassName('demo')[0];
+         function addEvent(dom,type,handler){
+            if(dom.addEventListener){
+                console.log('first');
+                dom.addEventListener(type,handler,false);
+                addEvent = function(dom,type,handler){
+                    console.log('last');
+                    dom.addEventListener(type,handler,false);
+                }
+            }else{
+                dom.attachEvent('on'+type,handler);
+                addEvent = function(dom,type,handler){
+                    dom.attachEvent('on'+type,handler);
+                }
+            }
+        }
+        addEvent(demo,'click',function(){
+            alert(0);
+        });
+        addEvent(demo,'click',function(){
+            alert(1);
+        });
+        addEvent(demo,'click',function(){
+            alert(2);
+        });    
+    </script>
+</body>
+</html>

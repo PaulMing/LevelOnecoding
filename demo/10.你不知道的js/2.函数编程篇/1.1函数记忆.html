@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 函数记忆
+        // 阶乘demo -> 递归
+       /*  var count = 0;
+        var cache = [];
+        function mul(n){
+            count++;
+            if(cache[n]){
+                return cache[n]
+            }else{
+                if(n==0 || n==1){
+                    cache[0] = 1;
+                    cache[1] = 1;
+                    return 1;
+                }else{
+                    cache[n] = n*mul(n-1);
+                    return cache[n]
+                }
+            }
+        }
+        mul(5); */
+
+
+        // 封装具有"函数记忆"的函数 -> 传入函数，return函数记忆的函数
+        function memorize(fn){
+            var cache = {};
+            return function(){
+                // 生成唯一标识
+                var key = arguments.length + Array.prototype.join.call(arguments);
+                if(cache[key]){
+                    return cache[key]
+                }else{
+                    cache[key] = fn.apply(this,arguments);
+                    return cache[key]
+                }
+            }
+        }
+        function mul(n){
+            if(n==0 || n==1){
+                return 1;
+            }else{ 
+                return n*mul(n-1);
+            }
+        }
+        var newF = memorize(mul);            
+    </script>   
+</body>
+</html>

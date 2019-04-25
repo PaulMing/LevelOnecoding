@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+   <script>
+    // \转义字符：写在双引号中，可以把后面的符号转换为文本输出；
+    var str = "abc'edf'"
+    var str = "abc\"edf"
+    var str = "abcd\\edf"; 
+
+    // \n 换行   \r行结束符    回车:(操作系统中内置：\n\r)
+    // \t 制表符 缩进（四个空格）
+    var str = "abcd\nedf";
+    var str = "abc\tnedf";
+
+    // 字符串是不允许换行的，为了书写标签方便，可以在每一行后面加上\，代表并没有换行；
+    // 方式1：
+    var test = "\
+        <div></div>\
+        <span></span>\
+    ";
+    // 方式2：使用反偏号``
+    var test = `<div></div> 
+        <span></span>`
+
+    // 方式3：字符串拼接
+    var test = 
+      "<div></div>"+
+      "<span></span>";
+
+    
+    // RegExp: 正则表达式的作用：匹配特殊字符或有特殊搭配原则的字符的最佳选择；正则表达式是对象；
+
+    // RegExp 与 Data(); 一样，也是对象，必须创建对象，才能使用一系列的规则
+    // 创建方法：
+    // 直面量：
+    正则表达式abc
+    var reg = /abc/;
+    // var reg = /abc/img; img 代表属性，可以单独，可以组合；
+    // new的方式
+    var reg = new RegExp("abc","");//第二个参数写属性，没有可以省略
+          
+    // 其也可以通过下述方式创建(了解即可)
+    var reg1 = new RegExp(reg);//但这是两个独立的正则表达式(创建的是对象，可利用属性测试，两者引用不同)
+    var reg1 = RegExp(reg);//两个正则表达式相同(引用相同) [开发中没人这么写]
+
+
+
+    // 修饰符(属性)
+    // i:ignorecase 忽略大小写；
+    // g:global全局匹配；
+    // m: 多行匹配；
+    var reg = /abc/i;  reg.test("ABC");//true;
+    var reg = /ab/g;   var str = "ababab"; str.match(reg);//["ab","ab","ab"]
+    // /^a/表示以a开头
+    var reg = /^a/gm;  
+    var str = "abcde\na";//多行
+    str.match(reg);//["a","a"]
+
+    reg.test();//传入字符串，返回布尔值；判断该字符串是否符合该正则表达式
+    str.match();//传入正则表达式，返回值为数组；匹配字符串中符合正则表达式的片段 
+    
+    
+
+    // 表达式：[]
+    // 每个[]都是一位，括号内是区间范围(只能取里面的一个值)
+    var reg = /[][][]/g;//第一位、第二位、第三位；
+    [abc] // abc中的某个值； [^abc] // 非abc的其他值； ^在表达式[]中表示取反，直接使用表示以某字符开头
+    // [^] // 表示非；表示什么都进行匹配，一般结合字符使用，不单独使用；
+    [0-9] // 0-9的某个数；
+    [a-z] // a-z的某个数；
+    [A-Z] // A-Z的某个数；
+    [A-z] // A-z的某个数，ASCII码排序 A:65 a:97 0:48;
+    (ab|bc|cd) // ab或bc或cd
+
+    // 例：
+    var reg = /[ab][cd][d]/g;
+    var str = "abcd";
+    str.match(reg);//["bcd"]
+
+    var reg = /[0-9A-z][cd][d]/g;
+    var str = "ab1cd";
+    str.match(reg);//["1cd"]
+
+    // 匹配过的字符便不再进行二次匹配
+    var reg = /[^a][^b]/g;
+    var str = "ab1cd";
+    str.match(reg);// ["b1","cd"]
+
+    var reg = /(abc|bcd)[0-9]/g;
+    var str = "bcd2";
+    str.match(reg);//["bcd2"]
+
+
+
+    // 元字符：每个代表一位，等同于[]
+    // \w === [0-9A-z_]//最后是下划线 (world查找单个字符)
+    // \W === [^\w] 
+
+    // \d ===[0-9] (查找数字字符)
+    // \D ===[^\d]
+
+    // \s === [\t\n\r\v\f ] //最后代表空格,查找空白字符;
+    // \S === [^\s]
+
+    // \b 匹配单词边界
+    // \B 匹配非单词边界
+
+    // . === [^\r\n] // 查找单个字符，除了换行和行结束符
+
+    // \t === 制表符  \n === 换行符  \f:查找换页符  \r:行结束符  \v:查找垂直制表符
+    // \t \n使用场景较多，其他不怎么用到；
+    // 匹配过程中就是直接匹配的\t \n \f等，而非var str = "agc   cde",匹配\t是匹配不到的；
+    
+    // 补充:匹配所有字符
+    var reg = /[/d/D]/g;//匹配所有的字符，同理元字符和其补集都可以 /[/s/S]/g等；
+
+    // 例
+    var reg = /\w/g; 
+    var str = "bcd2";
+    str.match(reg);//["b","c","d","2"]
+
+    var reg = /\Wcd2/g;
+    var str = "b*cd2";
+    str.match(reg);//["*cd2"]
+
+    var reg = /\d\d\d/g;
+    var str = "234";
+    str.match(reg);//["234"]
+
+    var reg = /[\w\d]/g;//表达式内可写元字符，聚焦点是[]表示一位，里面表示范围
+
+    var reg = /\s/g;
+    var str = " ab dd\n ";
+    str.match(reg);//[" ", " ", "↵", " "]
+
+    var reg = /\bc/g;
+    var reg1 = /\bcde\b\bfgh/g;
+    var reg2 = /\bcde|\bfgh/g;
+    var str = "abc cde fgh";//6个单词边界
+    str.match(reg);//["c"]
+    str.match(reg1);//null
+    str.match(reg2);//["cde", "fgh"]
+
+    var reg = /\tc/g;
+    var str = "_abc\tcdefgh";
+    var str1 = "abc  cdefgh"
+    str.match(reg);//["	c"]
+    str1.match(reg);//null
+
+
+
+    // 量词：其和元字符配合使用，类似于乘积
+    // n+    匹配包含至少一个n的字符串；
+    // n*    匹配任何包含0个或多个
+    // n?    0~1个
+    // n{X}  X个进行匹配
+    // n{X,Y} X~Y个进行匹配，能Y个匹配就匹配，若是不行就匹配X个,或者X~Y个[贪婪匹配原则]
+    // n{X,}  X个到正无穷若是n{0,} 等同于是n*
+
+    // ^n   匹配以n开头的字符串
+    // n$   匹配以n结尾的字符串
+    // ?=n  正向预查/正向断言 n为修饰作用
+    // ?!n  匹配任何后面没有n的字符串
+
+    // 例：
+    var reg = /\w+/g;
+    var str = "abc";
+    str.match(reg);//["abc"]
+
+    // 关于*：不同情况下匹配的不同，如果能匹配到尽量多的去匹配，贪婪匹配原则(正则表达式的原则)
+    var reg = /\w*/g;
+    var str = "abc";
+    str.match(reg);//["abc",""]  
+
+    var reg = /\d*/g;
+    var str = "abc";
+    str.match(reg);//["","","",""] 逻辑光标的位置
+
+    var reg = /\w?/g;
+    var str = "aaaaaaaa";
+    str.match(reg);//["a", "a", "a", "a", "a", "a", "a", "a", ""]
+
+    var reg = /\w{3}/g;//三个三个匹配，若是不够则匹配不成功
+    var str = "aaaaaaaaaa";
+    str.match(reg);//["aaa", "aaa", "aaa"]
+
+    var reg = /\w{3,5}/g;//贪婪匹配原则：先匹配5个，再4个，再3个；
+    var str = "aaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    str.match(reg);//["aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaaa", "aaaa"]
+
+    var reg = /abcd$/g;
+    var reg1 = /abcded$/g;
+    var reg2 = /ed$/g;
+    var str = "abcded";
+    str.match(reg);//null
+    str.match(reg1);//["abcded"]
+    str.match(reg2);//["ed"]
+
+    var reg = /^abc$/g;
+    var reg1 = /^abcabc$/g;
+    var str = "abcabc";
+    str.match(reg);//null//^和$包裹，abc就是这个abc,其他的不行,也就是只能匹配str="abc";
+    str.match(reg1);//["abcabc"]
+
+
+
+
+
+
+    // 正则表达式是对象(对象形式略有差异而已，字母量创建的对象属性便在//g;)
+    // 属性：
+    var reg = /^abcabc$/g;//字面量创建方式
+    reg.global;//返回布尔值，有则true;无则false;
+    reg.ignoreCase;//false;
+    reg.multiline; //false;
+    reg.source;//返回源文本，正则表达式的内容
+    reg.lastIndex;//一个整数，标示开始下一次匹配的字符位置，配合reg.exec();方法使用；
+
+    // 方法：参数都为字符串[字符串匹配]
+    reg.test();//是否匹配上，若匹配上返回true,匹配不上返回false;
+    reg.exec();
+    reg.compile();//编译正则表达式(不怎么使用)
+
+    // 支持正则表达式的String对象方法(但这些方法可不仅仅只应用于正则表达式)
+    str.match();
+    str.search();//参数为reg,返回值为匹配到的光标位置的值，若是匹配不到返回-1;
+    // 如果search()的参数不是正则表达式，则首先会通过RegExp构造函数将它转换为正则表达式，search()不支持全局检索，因为它忽略修饰符g，其的聚焦点就是位置
+    str.split();//参数为reg的时候，按照reg进行拆解为数组；
+    str.replace();//第二个参数可以为字符串，也可以为函数；
+    // replace(reg,"b");注意是否是全局匹配
+    // 此方法中第二个参数可以为函数(可对字符串进行处理返回结果)；若匹配正则表达式时，函数中有三个参数:1.正则表达式匹配的结果aabb；2.第一个子表达式匹配的内容a；3.第二个子表达式匹配的内容b；
+    // 例：aabb ->> bbaa;
+    var str = "aabb"; var reg = /(\w)\1(\w)\2/g;
+    str.replace(reg,function($,$1,$2){
+        return $2+$2+$1+$1;//"bbaa"
+    })
+
+    
+
+
+
+
+    // 正向预查(正向断言) ?=后面的值起修饰的作用，不参与正则
+    var str = "abaaaaa";
+    var reg = /a(?=b)/g;
+    str.match(reg);//["a"]
+    var reg1 = /a(?!b)/g;//a后面没有b的那个a;
+    str.match(reg1);//["a", "a", "a", "a", "a"]
+
+    // 贪婪匹配/非贪婪匹配
+    // 贪婪匹配：一般都是贪婪匹配，能多则多；
+    // 非贪婪匹配：任何量词后面加个?即可；
+    var reg = /a{1,3}?/g;//能取一个就不会取三个；
+    var reg = /a??/g;//并不是从贪婪匹配变为了非贪婪匹配；第一个？是量词0~1个, 第二个?是非贪婪匹配，也就是能取到0个就不取1个；
+
+    // 匹配空格：可以使用\s，也可以直接写空格
+    var reg = / /g;//var reg = /\s/g;
+    var str = "aabb  ccdd";
+    //\s区别于\t \n \r;\t\r等匹配过程中就是直接匹配的\t \n \f等，而非var str = "agc   cde",匹配\t是匹配不到的；
+
+    // 反向引用\1; 正向引用$, $1(正向引用第一个数值,以此类推)
+    // 若是匹配$,使用两个$$;
+    // 匹配\ 使用两个即可； 匹配?使用\? 同理加减乘除、括号[],()等也是如此；
+
+
+
+    // 例1.检验一个字符串首尾是否含有数字(首有数字或尾有数字)
+    var reg = /^\d|\d$/g;
+    var str = "123ab32";
+    str.match(reg);//["1","2"]
+    reg.test(str);//true;
+    // 补充：首尾都含有数字(中间为任意字符，进行拉伸) var reg = /^\d[\s\S]*\d$/;
+
+    // 例2.匹配XXXX型、XXYY型、XYXY型等
+    var str = "aaaa";
+    var reg = /(a)\1/g;//()表示子表达式，\1表示反向引用第一个子表达式的内容；
+    var reg = /(\w)\1\1\1/g;//XXXX型
+    var reg = /(\w)\1(\w)\2/g;//XXYY型
+    var reg = /(\w)(\w)\1\2/g;//XYXY型
+
+    // 例3.关于str.replace();
+    var str = "aa";
+    console.log(str.replace("a","b"));//"ba"//没有匹配全局的能力
+    var reg = /a/g;
+    console.log(str.replace(reg,"b"));//"bb"
+    // 例:aabb --> bbaa
+    // $2$1正向引用第2个子表达式，正向引用第1个子表达式
+    var reg = /(\w)\1(\w)\2/g;
+    var str = "aabb";
+    console.log(str.replace(reg,"$2$2$1$1"));//bbaa
+
+
+    // 例:字符串去重
+    var str = "aaaaaaaaaaabbbbbbbcccccccc";
+    var reg = /(\w)\1*/g;//反向引用多个
+    console.log(str.replace(reg,"$1"));
+
+
+
+    // 例:转换为小驼峰 the-first-name -->>> theFirstName;
+    var reg = /-(\w)/g;
+    var str = "the-first-name";
+    str.replace(reg,function($,$1){
+        return $1.toUpperCase();
+    })
+
+    // 例:从后向前3个0依次打点
+    var str = "100000000000"
+    var reg = /(?=(\B)(\d{3})+$)/g;
+    str.replace(reg,".");//100.000.000.000"
+
+    // 例:手机号码正则表达式验证-> 后期手机号变换(增添位数)，匹配规则也随之改变
+    function checkPhone(){
+        var phone = document.getElementById("phone").value;
+        // 其表示以1开头，第二位可能是3/4/5/7/8，后面的\d表示数字[0-9]的9位，总共加起来11位结束
+        // /^1(3|4|5|7|8)\d{9}$/
+        if(!(/^1[34578]\d{9}$/.test(phone))){
+            alert("手机号码有误，请重填");
+            return false;
+        }
+    }
+
+    // 例:身份证正则：
+    //身份证正则表达式(15位)
+    isIDCard1=/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$/;
+    //身份证正则表达式(18位)
+    isIDCard2=/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{4}$/;
+    // 身份证正则合并：(^\d{15}$)|(^\d{17}([0-9]|X)$)
+
+   </script> 
+</body>
+</html>

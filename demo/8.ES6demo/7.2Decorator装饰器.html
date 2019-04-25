@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="inp">
+    <button id="btn"></button>
+    <script>
+        // 张三
+        let oInput = document.getElementById('inp');
+        let oBtn = document.getElementById('btn');
+
+        @Skin //装饰类
+        class Search {
+            constructor () {
+                this.keyValue = '';
+            }
+            @myReadOnly //装饰私有属性
+            url = 'urlA-';
+
+            @dealData('张三') //装饰原型属性
+            getContent (a, b) {
+                console.log('向' + this.url + '发送网络请求, 数据:' + this.keyValue, a, b);
+                return 10;
+            }
+        };
+
+        function Skin (target) {
+            target.aaa = 30;
+        }
+        let oS = new Search();
+        // oS.url = 20;
+
+        oInput.oninput = function () {
+            oS.keyValue = this.value;
+        };
+        oBtn.onclick = function () {
+            oS.getContent(1, 2);
+        };
+
+
+        // 装饰私有属性 
+        function myReadOnly (proto, key, descriptor) {
+            // console.log(proto, key, descriptor);
+            descriptor.writable = false;
+            // descriptor.initializer就是属性值 -> 可写函数进行更改
+            descriptor.initializer = function () {
+                return 6;
+            }
+        }
+
+        // 原型上的属性的话
+        function dealData (proto, key, descriptor) {
+            console.log(proto, key, descriptor);
+            let oldValue = descriptor.value;
+            // 代理思想
+            descriptor.value = function () {
+
+                var urlB = 'urlB-';
+                console.log('向' + urlB + '发送网络请求, 数据:' + this.keyValue);
+
+                return oldValue.apply(this, arguments);
+            }
+        }
+
+
+        function dealData (ms) {
+            return function (proto, key, descriptor) {
+                console.log(proto, key, descriptor);
+                let oldValue = descriptor.value;
+                // 代理思想
+                descriptor.value = function () {
+            
+                    var urlB = 'urlB-';
+                    console.log('向' + urlB + '发送网络请求, 数据:' + this.keyValue + ms);
+            
+                    return oldValue.apply(this, arguments);
+                }        
+            }
+        }
+     
+    </script>
+</body>
+</html>

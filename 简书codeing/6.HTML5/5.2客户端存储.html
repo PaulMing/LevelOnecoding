@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 存储作用域
+        localStorage;//永久存储 -> 聚焦点：不手动删除其会永久存储在浏览器，但可手动删除
+        sessionStorage;//临时存储 -> 窗口关闭便消失
+        // 存储方式
+        // 系统内部做了处理 -> 可"打点调用/获取";//区别于cookie, document.cookie获取到的是字符串，需转换为对象才可"打点调用"
+        localStorage.name = 'aimee';
+        localStorage.name;
+        // 存储引用值 ->其只能存储字符串形式，需要做转换
+        localStorage.a = JSON.stringify({name:'animee',age:18})
+        JSON.parse(localStorage.a);
+
+        // 调用api
+        localStorage.setItem('xxx',666);//设置属性值    
+        localStorage.getItem('xxx');//获取属性值
+        localStorage.removeItem('xxx');//移除属性
+        localStorage.clear();//清空属性
+        
+    </script>   
+</body>
+</html>

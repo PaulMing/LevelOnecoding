@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 历史记录
+        window.history;
+        history.length;
+        history.back();
+        history.forward();
+        history.go();//参数为负 -> 回退
+
+        // H5新增API
+        // 添加一条历史记录 ->此API受同源策略的限制 -> 实际开发中有很nice的应用场景：写入hash值
+        // state: 一个与指定网址相关的状态对象，popstate事件触发时，该对象会传入回调函数中。如果不需要这个对象，此处可以填null
+        // title: 新页面的标题，目前所有浏览器都忽略此值，可填写null
+        // url: 地址，其必须与当前页面处于同一个域，浏览器的地址栏将显示此网址
+        history.pushState(state,title,url);
+        history.pushState(null,null,'demo.html');
+        history.pushState(null,null,'#a');// ->hash值的好处，其不会刷新页面，但URL是新的，说明其就是新网页
+        // 替换当前历史记录
+        history.replaceState(state,title,url);
+
+        // 新增事件
+        // 历史记录发生改变时触发 -> 聚焦点为URL切换，调用history.pushState();/history.replaceState();不会触发此事件
+        window.addEventListener('popstate',function(){},false);
+        // 页面hash值改变时触发，-> 常用于构建单页面应用(hash值的不同代表着URL地址栏的不同，其就代表着不同页面，当hash值改变触发此事件后，重新渲染页面即可)
+        window.addEventListener('hashchange',function(){},false);          
+    </script>
+</body>
+</html>

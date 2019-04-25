@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //  function print(){
+        //           console.log(foo);
+        //           var foo = 2;
+        //           console.log(foo);
+        //           console.log(hello);
+        //       }
+
+        // 三目：  条件判断? 是：否 并且会返回值
+        // 首先先执行括号内的，比较运算符都是字符串时比较的是ascii码，但其是逐位比较ascii码；”10“字符串代表的是一零；因为一小于九，10" > "9" false ;
+
+        // “10”字符串一 零，一下于9 ，
+        var num = 1 > 0 ? ("10" > "9" ? 1 : 0) : 2;//
+
+
+
+
+        // 数组：推荐字面量
+        // 第一种定义方法：字面量/直接量
+        var arr = [];
+        var arr = [1, 2, 3, 4, 5, 6];
+        var arr = [, , , , , , ,]//每一个都是空值，稀松结构，但是计入array.length;//创建空数组；
+        var arr = [1, 2, , , , 4, 6, 7]//不报错；
+
+        // 第二种： 构造函数  数组的方法来源：Array.prototype
+        var arr = new Array();
+        // var arr = new Array(1, 2,, 4, 5);//报错
+        // var arr = new Array(,,,,, );//报错
+        var arr = new Array(10);//参数只有一位的时候表示长度，通过这种方式可以创建空数组；
+        var arr1 = [10];
+        var arr1 = [10.2]//arr1[0]=10.2;
+        var arr = new Array(10.2);//不合法,参数一位的时候代表长度，长度不能为小数；
+
+        // 数组的读和写基本上都不会报错（报错和undefined概念不一样）；
+        // 数组是基于对象的，溢出就是Undefined；对象中找不到变量的时候，可不就输出undefined）
+        var arr = [1, 2, 3]
+        console.log(arr[10]);//undefined;
+        arr = [1, 2, 3]
+        arr[6] = 9;
+        console.log(arr.length);//6 相当于拉长了，中间的是empty;
+
+
+
+
+        // es1.0废弃了  es2.0没有用    es3.0最标准的版本最全、最基本、现在所学的  es5.0新加了几个方法（新版本浏览器器支持，老版本浏览器不支持，浏览器版本发布时候就确定了es标准）     es6.0最新、最强大的方法；    es7.0 最新标准还没有投放
+        // es3.0 + es5.0;
+        // ECMAScript DOM:js操作HTML页面的    BOM：js操作浏览器的，每个浏览器都不兼容（可以随便操作你的浏览器）
+        // 数组 es3.0
+
+
+        // 接下来的方法都是可以改变原数组的:
+        // 1.push()
+        var arr = [1, 2, 3]; arr.push(3); console.log(arr);//[1,2,3,3]
+        //模拟系统封装的方法，巧妙的利用了数组的length比索引值大1，数组的length就可以表示未添加的最后一位；                                             （目的：深挖底层原理，学会在原型上封装函数，以后创建的对象就可调用该方法了）
+        Array.prototype.push = function () {
+            for (var i = 0; i < arguments.length; i++) {
+                this[this.length] = arguments[i];
+            }
+            return this.length;
+        }
+
+        // 2.pop() 
+        // 从数组末位开始剪切，执行一次，剪切一位；传参数没用，不能指定剪切几位，同时返回的是剪切下的值；
+
+        // 3.unshift(); 在前面加值，返回的是数组length;
+        // 4.shift(); 在前面减值，执行一次，减一位，不能传参数，返回的是减下的值；
+        // 5.reverse(); 倒序输出，执行两次arr.reverse(); 回到原来的数组；
+        // 6.arr.splice(从第几位开始，截取多少的长度，在切口处添加新的数据)，返回值是截取下来的数据；
+        var arr = [1, 2, 3, 5];
+        arr.splice(3, 0, 4);
+        arr.splice(2, 10, 9, 10)//返回的是截取到的数据(2) [3,5] arr//[1,2,9,10]
+        //所有数组的方法若是可以添加参数，参数可以是负数；
+        arr.splice(-1, 3, 2);//倒数第一位开始截取，负数记得是倒数第几位就OK；
+        // 实现过程: -1+length； -1+4= 3  //正着数第3位；
+        // 内部会有这样的一个过程；
+        splice = function (pos) {
+            pos += pos > 0 ? 0 : this.length;
+        }
+
+
+        // sort()
+        var arr = [1, 2, 3, 9, 8, 5]
+        arr.sort();
+
+        var arr = [1, 3, 5, 4, 10, 11]
+        arr.sort();
+
+        // sort()方法留了个接口，自己进行封装方法；
+        // 规则：1.必须写两个形参
+        // 2.看返回值：当返回值为负数时，那么前面的数放到前面；当返回值为正数时，那么后面的数在前，为0的时候，不动；
+        // 内部采用的规则就是冒泡算法；2和10，2和30，2和13；
+        var arr = [2, 10, 30, 13, 3, 4, 5, 9]
+        arr.sort(function () {
+
+        })
+          // // // sort()
+        // // var arr=[1,2,3,9,8,5]
+        // // arr.sort();
+
+        // // var arr=[1,3,5,4,10,11]
+        // // arr.sort();
+        
+
+        // // sort()方法留了个接口，自己进行封装方法；
+        // // 规则：1.必须写两个形参
+        //         // 2.看返回值：当返回值为负数时，那么前面的数放到前面；当返回值为正数时，那么后面的数在前，为0的时候，不动；
+
+    
+        // // 内部采用的规则就是冒泡算法；2和10，2和30，2和13,,,,,10和30,10和13,,,[一轮轮比较，聚焦到数据的位置上的数比较]前提：按照系统提供的规则进行比较；
+        // // 升序
+        // var arr = [2,10,30,13,3,4,5,9]
+        // arr.sort(function(a,b){
+        //     if(a>b){
+        //         return 1;
+        //     }else{
+        //         return -1;
+        //     }
+        // })
+        // console.log(arr);//[2, 3, 4, 5, 9, 10, 13, 30]
+        // // 降序
+        // var arr1 = [2,10,30,13,3,4,5,9]
+        // arr1.sort(function(a,b){
+        //     if(a<b){
+        //         return 1;
+        //     }else{
+        //         return -1;
+        //     }
+        // })
+        // console.log(arr1);//[30, 13, 10, 9, 5, 4, 3, 2]
+
+        // var arr = [2,10,30,13,3,4,5,9]
+        // arr.sort(function(a,b){
+        //     // 升序 a>b ---> a-b>0; return 正数-----> return a-b;
+        //     if(a-b>0){
+        //         return a-b;
+        //     }else{
+        //         return a-b;
+        //     }
+        //   /*   降序
+        //     if(a-b<0){
+        //         return b-a;
+        //     }else{
+        //         return b-a;
+        //     } */
+        // })
+     
+        // // -------->>>最终版
+        // arr.sort(function(a,b){
+        //     // 升序
+        //     // return a-b; 
+        //     // 降序
+        //     return b-a;
+        // })
+
+
+
+      /*阿里笔试题：
+        1、给你一个有序的数组，如何乱序；
+        var arr = [1,2,3,4,5,6,7,8];
+        思路：排序使用的sort()方法，系统提供了接口，可自行封装函数；同时所谓的“乱序”就是“随机”
+             使用Math.random()；(其可以生成0~1之间的随机数，（0,1）开区间)
+        
+      */
+    //   var arr3 = [1,2,3,4,5,6,7,8];
+    //   arr3.sort(function(a,b){
+    //     //系统规则判断的标准就是return值是正数还是负数来进行排序 
+    //     // -0.5 可返回正值，可返回负值；  
+    //     return Math.random() -0.5;
+
+    //   })
+
+
+
+    //实现年龄的升序排列
+      var wang = {
+          name: 'xiaowang',
+          age: 18,
+          sex: "female",
+      }
+      var zhang = {
+          name: 'xiaozhang',
+          age: 30,
+          sex: "male",
+      }
+      var li = {
+          name: 'xiaoli',
+          age: 21,
+          sex: "male",
+      }
+      var arr = [wang,zhang,li]
+      arr.sort(function(a,b){
+        //   if(a.age>b.age){
+        //       return 1;
+        //   }else{
+        //       return -1;
+        //   }
+        return a.age-b.age;
+      })
+      console.log(arr);
+
+      // 实现按字符串长度排序（升序）
+      var arr = ['aa','ccb','ccc','dddd','ddfadfa','a','dafadadafd','fffff'];
+      arr.sort(function(a,b){
+          return a.length - b.length;
+      })
+      //实现按字符串字节长度排序
+      function retBytes(str){
+          var num = str.length;
+          for(var i=0; i<str.length; i++){
+              if(str.charCodeAt(i)>255){
+                  num ++;
+              }
+          }
+          return num;
+      }
+      var arr1 = ['aa','ccb','ccc','dddd','ddfadfa运','a','dafadadafd红','fffff'];
+      arr1.sort(function(a,b){
+          return retBytes(a)-retBytes(b);
+      });
+
+
+        // 不改变原数组,操作后不影响之前的数组
+        //1.concat()连接，返回的是新数组；
+        var arr = [1, 2, 3, 4, 5, 6]; var arr1 = [2, 3]; console.log(arr.concat(arr1));//新数组[1,2,3,4,5,6,2,3]
+        //2.toString();
+        var arr = [1, 2, 3, 4, 5, 6]; console.log(arr.toString());//"1,2,3,4,5,6"
+        //3.slice(从该位开始截取，截取到某位);返回值为截取下的数据；当只有一个参数的时候，从该位开始，截取到最后一位；不写参数，把整个数据都截下来；返回值是截取下来的数据；
+        var arr = [1, 2, 3, 4, 5, 6]; console.log(arr.slice());//[1,2,3,4,5,6]
+        //4.join("");参数必须是字符串，里面填充字符，以该字符连接；将数组变为字符串；
+        //  split();其是字符串的方法，拆解；其和数组的join();是互逆的；将字符串变为数组；
+        var arr = [1, 2, 3, 4, 5, 6]; console.log(arr.join('-'));//"1-2-3-4-5-6"
+        var str = "arr.join('-')"; console.log(str.split());//["1-2-3-4-5-6"]
+        console.log(str.split('-'));// ["1", "2", "3", "4", "5", "6"]
+        console.log(str.split('3'));// ["1-2-", "-4-5-6"]
+
+
+
+        arr.concat(arr1)
+        // arr.toString();
+        // arr.slice(从该位开始截取，截取到某位);  返回的是截取的值， 
+        // arr.slice(1);没有第二个参数，从1位截取到最后，负数位也可以；
+
+        // arr.join("");参数是字符串
+        // arr.join("_");按符号来连接；这里的符号什么都可以，数字、汉字，符号；
+
+        // split（）与join()方法是可逆的的方法；
+        // 字符串.split();
+
+
+
+        // 笔面试题：join()方法的应用场景；
+        // 实现字符串的拼接：字符串存储到栈区，可以使用“+”或者for循环实现，但对于存储区需来回存取值，效率不高；所以可采取数组的形式，数组是散列结构，存储在堆区；
+        /* for循环实现；
+        var strFinal = '';
+        var arr = [str,str1,str2,str3,str4,str5];
+        for(var i=0; i<arr.length; i++){
+              srtFinal += arr[i];
+        }
+        */
+        var str = "honghua";
+        var str1 = "honghua1";
+        var str2 = "honghua2";
+        var str3 = "honghua3";
+        var str4 = "honghua4";
+        var str5 = "honghua5";
+        var arr = [str, str1, str2, str3, str4, str5];
+        arr.join('');//"honghuahonghua1honghua2honghua3honghua4honghua5"
+        // 括号内不加引号，输出的值会有逗号；
+        arr.join();//"honghua,honghua1,honghua2,honghua3,honghua4,honghua5"
+
+
+
+        // 类数组：形式上是数组，也可以当数组使用，但其就不是数组，数组有的方法其不能调用；
+        // arguments,类数组；arguments的属性只有length,callee;数组的其他方法他没有；
+
+        // ------> 延生：
+
+        // 如何让一个对象变为类数组
+        var obj = {
+            "0": 'a',
+            "1": 'b',
+            "2": 'c',
+            "length": 3,
+            "push": Array.prototype.push,
+            "splice": Array.prototype.splice
+        }
+        // 属性要为索引（数字）属性，必须有length属性，最好加上push
+        // 加上splice方法后，控制台上输出的就和数组一模一样了
+        // 封装的push()；数组的方法介绍中讲述过深挖底层实现原理的思路；
+        Array.prototype.push = function (target) {
+            obj[obj.length] = target;
+            obj.length++;
+        }
+
+        // 例题1
+        var obj = {
+            "2": 'a',
+            "3": 'b',
+            "length": 2,
+            "push": Array.prototype.push,
+        }
+        obj.push('c');
+        obj.push('d');
+        console.log(obj);
+        //数字属性代表着“索引”,执行封装的push();
+        obj = {
+            "2": 'c',
+            "3": 'd',
+            "length": 4,
+        }
+        //例题2
+        var obj = {
+            "1": 'a',
+            "2": 'c',
+            "3": 'd',
+            "length": 3,
+            "push": Array.prototype.push,
+        }
+        obj.push('b');
+        console.log(obj);//obj{"1" : 'a',"2" : 'c',"3" : 'b',length:4}
+
+
+        // 应用场景，类数组必须要有length属性；
+        // 对象可以和类数组一起使用，这样就存储方面更强大；
+
+
+
+        // 数组去重:巧妙使用对象的属性“特性”，把数组的每个值作为对象的属性，对象的属性只能对应一个属性值，判断：若是某属性已经有了属性值，那说明这个数就出现过了；
+
+        Array.prototype.unique = function () {
+            var temp = {},
+                arr = [],//返回的新数组
+                len = this.length;//代码优化，不用每次循环都去计算this.length;
+            for (var i = 0; i < len; i++) {
+                if (!temp[this[i]]) {
+                    temp[this[i]] = 'abc';//abc代表着对象中的属性值，可以为其他；
+                    arr.push(this[i]);
+                }
+            }
+            return arr;
+        }
+        var arr = [1, 1, 1, 1, 2, 3, 4, 2, 4, 5, 6, 7, 7, 9];
+        console.log(arr.unique());//[1,2,3,4,5,6,7,9]   
+
+
+
+
+
+        // 封装type方法：
+        function type(target) {
+            var template = {
+                "[object Array]": "array",
+                "[object Object]": "object",
+                "[object Number]": "number -object",
+                "[object Boolean]": "boolean -object",
+                "[object String]": "string -boject"
+            }
+            if (target == null) {
+                return "null";
+            }
+            if (typeof (target) == "object") {
+                var str = Object.prototype.toString.call(target);
+                return template[str];
+            } else {
+                return teypeof(target);
+            }
+        }
+
+
+        // 在try里面发生的错误，不会执行错误后try里面的代码，但依旧可以执行后面的代码；接连错误代码，遇到第一条错误信息就中断了；
+        // 如果try里面代码发生错误后，执行catch里面的代码，里面就是错误信息，你可以使用；
+        // catch：捕获错误，它不会输出到控制台，让程序中断，而是交给你处理，；里面可以执行任何代码，我们一般打印错误信息，捕获到错误信息后可以选择怎么处理，你可以打印出来给用户看，也可以输出到控制台，也可以
+        // 没有错误就不执行代catch语句;
+
+
+        try{
+            console.log('a');
+            console.log(b);
+        }catch(e){//error 错误,是一个对象，error.message err.name; 这里的e就是error对象的别名，可以换其他名字；这里的错误对象只有两个信息，一个message、一个name；
+            console.log(e.name);
+            console.log(e.message);
+        }
+        console.log("hello js");
+
+        // uncaught:未捕获；
+        /* 
+        Error.name的六种值对应的错误信息
+        1、EvalError: eval()的使用与定义不一致
+        2、RangeError: 数值越界
+        3、ReferenceError: 非法或不能识别的引用数值；
+        4、SyntaxError: 发生语法解析错误；
+        5、TypeError: 操作数类型错误；
+        6、URLError: URI处理函数使用不当；
+        */
+
+
+        //  es5严格模式：代码更严格了，更少犯错了，以前很松散，感觉没那么灵活了，但在开发中又很大好处；
+        /* 
+        es3.0  es5.0  es的发展基本都是摒弃了一些旧语法，产生了一些新语法；
+        现在的浏览器都是基于es3.0 + es 5.0新增的方法，当出现es3.0/es5.0都有的方法，浏览器采用的是es3.0的方法；
+
+        es3.0 和es5.0产生冲突的部分，es5.0称之为es5.0的严格模式， 这种模式产生冲突的部分使用es5.0，否则使用es3.0
+
+        // es5.0严格模式的启动,使用"use strict";(不使用方法的原因：字符串在哪个浏览器版本中运行都不会报错，如果是方法，若是浏览器不能识别必会报错，那之后的代码都无法继续执行)
+           
+          "use strict" 有两种使用方式：
+          1、全局严格模式，必须写在页面逻辑的最顶端；
+          2、局部函数内严格模式，也必须写在函数体内的顶端；
+            function test(){
+                "use strict";
+                console.log(arguments);
+            }
+
+
+
+    
+
+    不支持with，arguments,callee,func,caller，变量赋值前必须声明，局部this必须被赋值(Person.call(null/undefined))赋值什么就是什么，拒绝重复属性和参数；
+
+        // "use strict"
+        // with使用场景1：
+        var obj = {
+            name: "obj",
+            age: 234
+        }
+        var name = "window";
+        function test() {
+            var age = 18;
+            var name = 'scope';
+            with (obj) {
+                console.log(name);//"obj"
+                console.log(age);//234
+            }
+        }
+        // with使用场景2：命名空间的使用；
+        var org = {
+            department1: {
+                wang: {
+                    age: 18,
+                    money: {},
+                }
+            }
+        }
+        with(org.department1.wang){
+            console.log(age);//18
+        }
+        // with使用场景3:
+        // document是对象，平时使用的时候document.write(a);write就是该对象上的方法而已；
+        with(document){
+            write("a");
+        }
+        
+
+         // es5.0严格模式
+       function test(){
+          "use strict"
+           console.log(this);
+       }
+       test();//undefined;
+       new test();// test {};
+       test.call();//undefined;
+       test.call(123);//123;
+       
+    // es3.0
+       function test1(){
+           console.log(this);
+       }
+       test1();//window;
+       new test1();//test {};
+       test1.call(); // window;
+       test1.call(123);//Number {123};包装类对象
+
+         //  二维数组：数组中包含数组
+        var arr = [[1, 2, 3], [11, 22, 33], [111, 222, 333]]
+        var arr = [
+            [1,   2,   3  ],
+            [11,  22,  33 ],
+            [111, 222, 333]
+        ]
+        console.log(arr[0][0]);//1
+        console.log(arr[1][1]);//22
+
+        
+
+
+
+
+
+        
+        */
+
+
+    </script>
+</body>
+
+</html>

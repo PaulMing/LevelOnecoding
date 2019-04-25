@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>关于a标签</title>
+    <style>
+        .demo:link{
+            color: pink;
+        }
+        .demo:visited{
+            color: green;
+        }
+        .demo:hover{
+            color: red;
+        }
+        .demo:active{
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <!-- 1.target="_blank"/"_self"; -->
+    <a href="http://www.baidu.com" target="_blank" title="baidu新窗口">跳转1</a>
+    <a href="http://www.baidu.com" target="_self" title="baidu本窗口">跳转2</a>  
+    <!-- 2.锚点跳转：a标签最早是作为锚点使用的(anchor);应用场景广泛：网页中常常会有“索引栏”，可使用a标签实现  -->
+    <a href="#wangyi">跳转3</a> 
+    <div id="wangyi">网易</div>
+    <!-- 3.打电话(美团、饿了么实现就是调用了电话接口,应用场景极广，发邮件使用较少) -->
+    <a href="tel:15658865200">打电话</a>
+    <a href="mailto:196909452@qq.com">发邮件</a>
+    <!-- 4.协议限定符:点击执行该js方法，直接写js代码也OK；-->
+    <a href="javascript:show()">跳转</a>
+
+    <!-- 
+        补充：a标签点击默认会刷新页面:<a href='#'></a>//跳转到#并刷新页面，<a></a>//没有href，其就是普通的行标签，什么效果都没有；所以平时提到的a标签指的是<a href=""></a>
+        而且a标签最原始的使用场景是锚点跳转，如今单页面应用很巧妙应用到了a标签;  
+    -->
+    <!-- a标签伪类的执行顺序 -->
+    <a href="#" class="demo" style="padding:20px">测试伪类</a>
+    <!-- 
+        伪类的优先级是同样的，后出现的伪类会覆盖前面的伪类：若是hover在active后面,那么active将被覆盖，永远不能执行，同理visited若放到hover后面,点击跳转后，永远不能执行hover，以下是正常顺序：link和visited可以互换位置，其他不能变化
+        a:link{};//未访问的链接
+        a:visited{};//已访问的链接
+        a:hover{};//鼠标移动到链接
+        a:active{};//鼠标点击链接
+    -->   
+    <!-- 关于title属性:鼠标移到元素上显示提示文本，应用场景:多为form表单输入组件以及a元素使用(提升用户体验)，同时其也是abbr和acronym元素的必须属性 -->
+    <!-- abbr元素表示：某某的缩写版本，title属性表示全称 -->
+    <!-- asronym:HTML5已经不支持该标签，使用<abbr>标签代替 -->
+    The<abbr title="World Health Organization">WHO</abbr> was founded in 1948.
+    <acronym title="World Wide Web">WWW</acronym>
+</body>
+</html>

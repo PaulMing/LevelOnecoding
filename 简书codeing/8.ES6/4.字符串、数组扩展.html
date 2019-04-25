@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // ES6字符串扩展
+        // String.prototype.charAt(num)/charCodeAt(num)/slice()/indexOf()/split()/toUpperCase()/toLowerCase();
+        // ES6新增API: String.prototpe.includes()/startsWith()/endsWith()/repeat(num);
+
+        // str.indexOf(xx,num);//匹配索引,匹配不到返回-1,第二个参数为开始匹配位置
+        str.indexOf(str);
+        str.indexOf(str,5);
+
+        // str.includes(xx,num);//返回布尔值,判断子串是否存在于父串,第二个参数为起始位置    
+        let str = 'I believe i can fly';
+        str.includes("can");//true, 
+        str.includes('can',9);
+        // String.prototype.isInclude = function(){
+        //     if(this.indexOf(str) !== -1){
+        //         return true
+        //     }else{
+        //         return false
+        //     }
+        // }
+
+        // str.startWidth();endsWith();//返回布尔值
+        str.startsWith('I be');
+        str.startsWith('i',9);//true，索引为9的字符是否是以'i'开头的e
+        str.endsWith('e',4);//true ->判断过程是“根据光标”位置，其比索引值大1
+
+        // str.repeat(num);//重复字符串 ->返回新字符串
+        // demo: 写出由10个*组成的字符串
+        let str = '';
+        for(let i=0; i<10; i++){
+            str += '*';
+        }
+        let str = '*'.repeat(10);//ES6新方法
+
+
+
+        /*
+         模版字符串：``以及${}的使用
+            1.其在反偏号``中使用(字符串''中使用没意义)，${}插值语法中变量为字符串形式，即使不写入字符串，其也会隐式调用toSring();
+            2.优点：更好的处理字符串拼接；语义化更好；防止注入xss;
+            补充：xss恶意脚本攻击：使用document.write();<script>标签等向页面写入脚本代码，篡改页面 
+        
+        */
+        let name1 = 'I';
+        let name2 = 'fly';
+        let str = name1 +"love"+ name2;
+        let str1 = `${name1} believe ${name2}`;
+
+        // 标签模版/函数模版 ->``等同于函数
+        alert('hello')//等同于 alert`hello`
+        // 其会将模版进行分拆 -> ${}中的值作为单独参数
+        function print(arg1, arg2) {
+            console.log(arguments);//['12', '4', '6'], 3, 5
+        }
+        print`12${3}4${5}6`
+        // console.log(parseInt`12${3}`)
+        // console.log(parseInt(['12', ''], 3))
+
+
+        // xss攻击
+        let name = '<script>console.log("攻击成功");<\/script>'
+        document.write(`<p>你好，${name}</p>`);//其可解析<script>标签
+        // 防止xss攻击
+        let name = '<script>console.log("攻击成功");<\/script>'
+        function safeHTML(arr, name) {
+            return `${arr[0]}${name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}${arr[1]}`
+        }
+        document.write(safeHTML`<p>你好，${name}</p>`)
+
+
+        // 字符串换行
+        let str2 = "<div>\
+                        <p></p>\
+                    </div>";// \换行符 \n回车符, 两者都可实现
+        let str2 = "<div>"+
+                        "<p></p>"+
+                    "</div>";
+        let str3 = `<div>
+                        <span></span>
+                    </div>`;
+
+
+
+
+
+    
+
+        // ES6数组扩展
+        // Array.of(); 加强Array构造函数
+        // ES6之前数组创建
+        var arr = [];
+        var arr = new Array(9);//9表示数组元素9个
+        var arr1 = new Array('7');
+        var arr2 = new Array('1',2,3);
+        // Array.of()构造函数 ->直接返回由参数构成的数组
+        var arr3 = Array.of(9);//[9]
+        var arr4 = Array.of('5');//['5']
+        var arr5 = Array.of('1',2,3);//['1',2,3]
+
+
+        // Array.from();其将有“迭代接口”的数据转换为数组，常用来转换类数组(arguments,NodeList)
+        // 类数组与数组的区别：1.类数组没有数组原型上的方法(可手动添加)，因此开发中经常转换为数组,方便调用API； 2.类数组原型链指向并非Array,数组原型链指向Array;
+        var likeArray = document.getElementsByClassName('btn');
+        var realArr = Array.from(likeArray);
+
+
+
+        // find(fn);模糊查找 ->值
+        // findIndex(fn);精确查找 ->索引 ->查找到立即停止
+        var arr = [1,2,3,4,5];
+        console.log(arr.find(x => x%2 ==0 ));//2,找到直接返回,不看后续的值
+        console.log(arr.findIndex(x => x>3));//3,返回值大于3的索引,找到直接返回,不看后续的值
+
+        // indexOf();返回数组索引，找不到返回-1
+        var arr = [1,2,3,4,5];
+        console.log(arr.indexOf(4));
+        // 有bug -> NaN找不到，以及很多条件找不到
+        var arr = [1,2,3,4,5,NaN];
+        console.log(arr.indexOf(NaN));//-1; NaN 不等于NaN
+
+
+
+
+        // fill(value,start=0,end=length);//初始化填充操作
+        var arr = [1,2,3];
+        arr.fill('*');
+        arr.fill('*',1,2);
+        // demo: 制作雷盘
+        let arr = new Array(10);
+        arr.fill(0);
+        let list = new Array(10);
+        list.fill(arr);
+    </script>
+</body>
+</html>

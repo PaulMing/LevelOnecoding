@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>关于ul/ol</title>
+    <style>
+       /* ul,ol{
+           padding: 0px;
+           margin: 0px;
+           list-style: none;
+       } */
+    </style>
+</head>
+<body>
+    <!-- ul/ol默认存在padding-left:40px;margin-top/bottom:16px; -->
+    <!-- 
+        list-style是复合属性：list-style-type; list-style-position; list-style-image
+        list-style-type:none/disc/circle/decimal/lower-roman
+        list-style-position:inside;
+        list-style-image:url(./i/sr.gif);
+        常用：list-style:none;//隐藏li前面的标记(padding依旧存在)
+     -->
+    <!-- 无序列表属性只有type:disc(实心圆圈)/square(方块)/circle(空心圆圈) -->
+    <ul type="square">
+        <li type='circle'>哈登</li>
+        <li>库里</li>
+        <li>保罗</li>
+    </ul>
+    <!-- 属性：type:a/A/1/i/I, start:使用数字即可,reversed(单属性) -->
+    <ol type="a" start='6' reversed>
+        <li>LA</li>
+        <li>HOS</li>
+        <li>chr</li>
+    </ol>
+</body>
+</html>

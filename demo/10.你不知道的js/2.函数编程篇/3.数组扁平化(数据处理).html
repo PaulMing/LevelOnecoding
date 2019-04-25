@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+        数据处理：
+        对象扁平化：深度很深的对象 -> 深度唯一的对象
+        数组扁平化：数组降维   
+        */
+        var arr = [1,2,3,[4,5,6,[7,8,0],[1,2,20]],[[[16]]],{},'hua',null];
+        // 封装扁平化函数
+        // 方法1：
+        function isArray(obj){
+            return Object.prototype.toString.call(obj) == '[object Array]'
+        }
+        function flatten(arr){
+            var arr = arr || [],
+                resArr = [],
+                len = arr.length;
+            for(var i=0; i<len; i++){
+                if(isArray(arr[i])){
+                    resArr = resArr.concat(flatten(arr[i]));
+                }else{
+                    resArr.push(arr[i]);
+                }  
+            }
+            return resArr;
+        }
+        flatten(arr);
+
+        // 方法2: 数组reduce();
+        function flatten1(arr){
+            var arr = arr || [];
+            return arr.reduce(function(prev,next){
+                return Object.prototype.toString.call(next) == '[object Array]' ? prev.concat(flatten1(next)) : prev.concat(next);
+            },[])
+        }
+
+        // 方法3：ES6.0箭头函数
+        const flatten2 = arr => arr.reduce((prev,next) => Object.prototype.toStirng.call(next) == '[object Array]'? prev.concat(flatten2(next)):prev.concat(next))
+
+
+        // 方法4：数组原型链上扩展 -> 推荐
+        Array.prototype.flatten = function(){
+            var resArr = [];
+            this.forEach(function(item){
+                Object.prototype.toString.call(item) == '[object Array]' ? resArr = resArr.concat(item.flatten()) : resArr.push(item)
+            })
+            return resArr;
+        }
+        arr.flatten();     
+    </script>
+</body>
+</html>

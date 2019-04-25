@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 解决mousedown和click的冲突-->
+    <!-- 例如a标签做成的盒子，移动和点击，如何判断是拖拽还是点击 -->
+    <div style="width:100px;height:100px;background-color:red"></div>
+    <script>
+        // 后续需要什么功能，在onmousedown/onmouseup中添加功能即可；
+        var firstTime = 0;
+        var lastTime = 0;
+        var key = false;
+        document.onmousedown = function(){
+            firstTime = new Date().getTime();
+        }
+        document.onmouseup = function(){
+            lastTime = new Date().getTime();
+            // 小于0.3s -->>> 点击 --> 执行click函数 -->>否则就是拖拽 -->>执行拖拽函数
+            if(lastTime - firstTime <300){
+                key = true;
+            }
+        }
+        document.onclick = function(){
+            if(key){
+                console.log("click");
+                key = false;
+            }
+        }   
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <script>
+        var oLi = document.getElementsByTagName('li');
+        // 封装底层实现方法：
+        Array.prototype.mySlice = function(start,end){
+            var result = [],
+            start = start || 0,
+            end = end || this.length;
+            for(var i=start; i<end; i++){
+                result.push(this[i]);
+            }
+            return result;    
+        }
+        console.log(Array.prototype.mySlice.call(oLi,0));
+        console.log([].mySlice.call(oLi,1,3));
+    </script>
+</body>
+</html>
+
+
+

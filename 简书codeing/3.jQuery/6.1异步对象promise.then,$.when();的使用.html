@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 延迟对象 ->延迟到某个状态触发相关回调函数
+        var df = $.Deferred();
+        df.resolve(ms);//成功;  ->触发相关的注册函数 ->可传入参数
+        df.reject();//失败;   ->触发相关的注册函数
+        df.notify();//进行时; ->触发相关的注册函数
+
+        // 注册成功的回调函数
+        df.done(function (ms) {
+            console.log('oh yeah I do it' + ' ' + ms);
+        });
+
+        // 注册失败的回调函数
+        df.fail(function (ms) {
+            console.log('sorry I am loser' + ' ' + ms);
+        });
+
+        // 注册进行时的函数
+        df.progress(function (ms) {
+            console.log('waiting...' + ' ' + ms);
+        }); 
+
+        df.done().fail().progress().done().progress();//可注册多个函数，触发的时候都会执行 -> 例如df.resolve();其会将两个成功的注册函数都执行 
+
+        //  ----->>>外界也可执行df.resolve()系列函数，如果外界需要只能执行相关的注册函数，可使用df.promise();//其返回的也是延迟对象,称之为promise对象，只不过其只能触发注册函数 ->阉割版
+        function createScore () {
+            var df = $.Deferred();
+            setInterval(function () {
+                var score = Math.random() * 100;
+                if (score > 60) {
+                    df.resolve('congradulation!!!');
+                }else if (score < 50) {
+                    df.reject('get out');
+                }else {
+                    df.notify('go on');
+                }
+            }, 1500);
+            return df.promise();//promise对象
+        }
+        var df = createScore();
+        // 注册成功的回调函数
+        df.done(function (ms) {
+            console.log('oh yeah I do it' + ' ' + ms);
+        });
+        // 注册失败的回调函数
+        df.fail(function (ms) {
+            console.log('sorry I am loser' + ' ' + ms);
+        });
+        // 注册进行时的函数
+        df.progress(function (ms) {
+            console.log('waiting...' + ' ' + ms);
+        });   
+
+        // df.then(); ->延迟对象以及promise对象都有该方法
+        // 其的作用: 1.简化注册函数; 2.其链式调用中可进行传递参数 -> 利用此可解决回调地狱(层层依赖关系转换为线性关系) ->$.ajax();的返回值就是延迟对象 
+        // 简化注册函数新写法 -> 三个参数(选填):首个参数为注册成功的回调函数，第二个参数为注册失败~，第三个参数为进行时函数 
+        df.then(function (ms) {
+            console.log('oh Yeah!' + ' ' + ms);
+            return 'ok';
+        }, function (ms) {
+            console.log('oh No!' + ' ' + ms);
+            return 'no';
+        }, function () {
+            console.log('what?' + ' ' + ms);
+            return 'go on';
+        }).then(function (param) {
+            console.log("quick" + param);
+        }, function (param) {
+            console.log(param);
+        }, function (param) {
+            console.log(param + '加油');
+        });
+
+
+
+        // $.when(); ->参数为一个或多个延迟对象 ->返回值为promise对象
+        // 当参数为多个延迟对象时->皆为成功状态，执行成功回调函数，若有一个为失败状态，执行失败回调函数，进行时的状态几乎不考虑
+        $.when( createScore1() , createScore2() , createScore3() ).then(function () {
+            console.log('done');
+        }, function () {
+            console.log('fail');
+        });
+    </script>
+</body>
+</html>

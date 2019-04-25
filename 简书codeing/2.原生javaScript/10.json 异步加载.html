@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // xml:以xml进行传递数据，如今使用json，前后端通信传递的都是字符串格式，里面填充数据，数据就是对象的形式，前端给后端发送字符串格式的数据，后台需要解析成对象，同理后台传递过来，前端也需要将其转化为对象；
+
+        // JSON是一种传输数据的格式（以对象为样板，本质上就是对象，但用途有区别，对象时本地用的，json就是用来传输的）其个样式和对象一样，但是属性必须加双引号，不能省略,这样就能区别出，这就是JSON数据；
+        
+        // 如下：
+        var obj = {
+            "name": "abc",
+            "age": 123,
+        }
+
+        JSON.parse();  string --> json
+        JSON.stringify(); json --> string;
+
+        var str = JSON.stringify(obj);
+
+
+
+    /*  <?xml vesion='' encoding="utf-8"?>
+    <country>
+        <name>中国</name>
+        <province>
+            <name>广东</name>
+            <cities>深圳</cities>
+            <cities>广州</cities>
+        </province>
+        <province>
+                <name>山西</name>
+                <cities>太原</cities>
+                <cities>阳泉</cities>
+        </province>
+    </country> */
+  
+    /* var json = {
+        "name": "中国",
+        "province":[
+            {
+            "name":"广东",
+            "cities":{
+                "city":["深圳","广州"]
+               }
+            },
+            {
+            "name":"广东",
+            "cities":{
+            "city":["深圳","广州"]
+               }
+            }
+        ]
+    } */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // js引擎是一行行（按像素点）渲染页面的
+
+       /*  domTree (深度优先原则)，内部标签若是含有src，href等属性，和css相关联的，内部依旧先解析dom元素到domTree上，【异步过程】；
+
+        domTree 完成后，进行cssTree的绘制，深度优先原则，绘制完成后，
+
+        domTree + cssTree = randerTree;
+
+        renderTree; 渲染树，js引擎按着它开始渲染；绘制页面；
+
+
+        js可以改变HTML进行影响css，每一次变化都会对domTree产生影响，domTree变化，就需要重新进行绘制domTree 、cssTree 、 randerTree,这种改变称为reflow重排（重构、重做），影响性能，这也是为什么我们不要随便修改HTML结构，
+
+        【dom节点的删除增加、增删改查，dom节点的宽高变化，位置变化，display none --> display block;  
+        offsetWidth  offsetLeft 这种虽然是查看元素，但依旧会对dom元素产生影响，一改变某个元素，对后续元素都会产生一系列影响】
+
+
+        repaint 重绘 修改部分，randerTree 进行部分重绘即可，大多是css的一些样式的改变，例如颜色、背景图片、背景颜色等等，对后续元素无影响的，对性能的影响要小一些；
+
+
+
+
+
+
+
+       与页面操作有关的js文件会阻塞页面的加载，过程是同步加载；但一些工具库、一些使用场景不是很多的，我们常常需要异步加载，不要阻塞页面， 
+       
+       
+       小tips：当属性等于属性值的时候，可以直接写一个属性名就OK，系统可以识别，但最好写上；
+       <script type="text/javasccript" src="tools.js" defer="defer"><script>
+       <script type="text/javascript" src="tools.js" defer="defer"><script>
+
+       js异步加载的方法:当执行到js文件时，不会阻断HTML页面的加载，会同时进行；
+       1.defer的使用，IE可用，除了可以引入外部的js文件，也可以在内部写js代码；
+       <script type="text/javascript" defer="defer">
+        var a = 123;
+     
+       [当然并不能既引入js文件，有在内部写入js代码]
+
+       异步加载，但要等到dom文档全部解析完后才会被执行，
+
+       2、 <script type="text/javasccript" src="tools.js" aysnc="aysnc"><script>
+       aysnc w3c标准，异步加载，加载完成后就执行
+ */
+
+
+
+
+      /*  3、按需加载：封装兼容性方法
+
+       下载资源也是有过程的，发出请求，等待响应，响应后才开始反馈资源，(请求到资源进行下载，)过程是以微秒计算；
+       下载的过程中，由于是异步下载，下面代码在你下载的过程中便开始执行，执行过程中发现没有便会报错，使用定时器检测；
+
+
+       很多对象都有load事件，不仅仅是只有window独有
+       触发事件，代表下载完了；兼容性很好，safari chrome firefox opera
+       IE只有script标签上没有load事件，IE有独有的方法；
+
+       IE独有 IE在script上设置了状态码：随着加载过程其会变化属性值；
+       script.readyState = "loading"
+       加载后：   script.readyState="complated"   或者loaded;
+       readystatechange 事件
+       script.onreadystatechange = function(){
+           if(script.readyState=="complete" || scipt.readyState=="loaded"){
+               test();
+           }
+
+       }
+
+       封装函数，异步加载函数；ie 那个事件当状态变化才触发，如果瞬间状态不变化，就不会触发了吧；先绑定事件，再下载文件 
+
+
+
+
+       回调函数：callback   当满足一定条件才执行的函数称为回调函数；
+
+
+         
+      
+
+
+
+
+
+
+       补充：asychronous:异步
+
+
+
+
+       文档解析：domTree解析完成，但不是加载完成，解析完成一定发生在加载完成之前
+
+       document.write();把里面的内容当成是HTML文档输出到页面里面去
+        使用的时候会把之前的文本内容全部清空；
+        当页面全部加载完成，使用其会将内容清空，同时异步加载过程若是使用也会清空；有可能脚本还没加载完，就清空内容了，以后就不要使用，没什么用处；
+
+
+         文档解析完成：domTree解析完成，但不是页面加载完成，css和js;
+
+
+         可以识别事件，页面实际就是事件驱动阶段， */
+
+
+
+
+
+
+
+        
+        
+        
+        
+    </script>
+</body>
+</html>

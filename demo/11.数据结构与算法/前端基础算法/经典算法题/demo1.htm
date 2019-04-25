@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 把一个数组最开始的若干个元素搬到数组的末尾，称之为数组的旋转，输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素，例如数组[3,4,5,1,2] 为[1,2,3,4,5]的一个旋转，该数组的最小值为1，Tag: 给出的所有元素都大于0，若数组大小为0，请返回0-->
+    <script>
+        // 查找最小值；
+        function searchMin(arr){
+            var min = arr[0];
+            for(var i=0; i<arr.length; i++){
+                if(min > arr[i]){
+                    min = arr[i];
+                }
+            }
+            return min;
+        }
+        console.log(searchMin([1,2,4,8,6,6]));
+
+        // 非减排序：不是从大到小的，所以其是从小到大的，中间可以有重复的数字；
+        var arr2 = [1,2,3,4,5,5,6];// [3,4,5,5,6,1,2]
+        // 解法1：
+        // 使用递归，要掌握两点： 抽象规律，找出口；
+        function test(arr){
+            var mid = Math.floor(arr.length / 2);
+            // 出口；
+            if(arr.length == 2){
+                return Math.min(arr[0],arr[1]);
+            }
+            if(arr[0] > arr[mid]){
+                var arr1 = arr.slice(0, mid+1);
+                return test(arr1);
+            }else{
+                var arr1 = arr.slice(mid);
+                return test(arr1);
+            }
+        }
+        // 解法2：先排回正常顺序，后找到第0项即可；  
+    </script>
+</body>
+</html>

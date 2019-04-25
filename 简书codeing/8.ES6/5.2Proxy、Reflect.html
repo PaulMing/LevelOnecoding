@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+        1.proxy:代理;  Reflect:映射; -> ES6新增语法，并非语法糖，使用babel工具进行语法降级也不能全部转换为ES5语法，因此其的兼容性不是很好
+        2.其植入代理模式的思想,以简洁易懂的方式控制对外部对象的访问
+        3.使用内置的set();get();方法控制属性的读写功能用处较大，其余has();deleteProperty();等目前开发很少用到    
+        */
+        let oData = {
+            val: 'duyi',
+            _val: 'aaaa',//私有属性
+        }
+
+        let oProxyData = new Proxy(oData, {
+            set (target, key, value, receiver) {
+                // console.log(target, key, value, receiver);
+                Reflect.set(target, key, value);
+                upDate();
+            },
+            get (target, key, receiver) {
+                // console.log(target, key, receiver);
+                return Reflect.get(target, key);
+            },
+            // xx in obj的底层实现便是has(){}
+            // has (target, key) {
+            //     return key.indexOf('_') != -1 ? false : key in oData;
+            // },
+            // delete obj.xx的底层实现
+            deleteProperty(){
+
+            }
+        });
+        // console.log( delete oProxyData.val );
+
+        // 读、写控制 -> 其同数据劫持使用方法相似，读写操作时其会自动触发相应的get(); set();
+        // new Proxy(oData);参数传入数据，返回值便是代理，后续使用该代理即可oProxyData.val
+        console.log( oProxyData.val );
+        oProxyData.val = 10;
+        function upDate () {
+            console.log('更新了')
+        }
+        oProxyData.name = 20    
+    </script>
+</body>
+</html>

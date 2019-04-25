@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            height: 3000px;
+            width:3000px;
+
+        }
+    
+    </style>
+</head>
+<body>
+    <script>
+        // window 对象操作 
+        // clientwidth  clientY   可视区：不包含滚动条宽、高； 
+        // innerWidth  innerHeight;   可视区： 包含滚动条宽、高；
+        
+        // pageXOffset 滚动条距离 左侧
+        // pageYOffset
+
+        // 懒加载：看到哪里加载到哪里，剩余部分按需加载；
+
+
+        window.onscroll
+
+
+        // windwo.screenX   浏览器距离屏幕窗口的距离
+
+        // window.top  window.self;
+        // top   self   不能被赋值;
+
+        // 属性的四大特性：可读、可写、可枚举、可配置；
+
+        window.name ,
+
+
+        // window原生的三个弹出框，会阻塞页面其他代码的执行，必须点击确定或取消，否则就阻塞(不能进行本页面的其他操作，其他页面依旧可以);
+        window.alert();//只有“确定”按钮；
+
+        window.confirm();//有“确定”和“取消”按钮，返回值:true/false;  
+
+        window.prompt();//带有输入框的弹出框，返回用户输入的值；没有输入，返回null;
+        // 补充:判定是否离开此网站，浏览器基本都兼容，但大多数浏览器是不支持return信息的，ie11及以下是可以返回信息的；
+        window.onbeforeunload = function(){
+            return 'hahaha'//返回提示信息
+        }
+
+
+
+        window.open('网址',"窗口名字","描述窗口的特征值")
+        //重新打开一个浏览器窗口,width=100px也可以；
+        window.open("http://www.baidu.com",'huahua',"width=100,height=200");
+
+        //参数不能省略，每个参数高度对应; 下式则会在原有浏览器中新开一个窗口，并且第二个参数依旧是窗口名字；
+        window.open("www.baidu.com","width=100,height=200");
+        返回值是window
+        var newWindow = window.open("www.baidu.com",'huahau',"width=100,height=200");
+        newWindow.close();
+
+        if(navigator.onLine){
+
+        }else{}
+
+
+        //  location:
+        //  http://
+        //  www.baidu.com:  // http协议默认80端口 //https协议默认443端口；
+         
+        //  /s 路径；
+
+        //  参数
+
+        //  # dasdas    锚点；
+
+
+
+         /* 浏览器中页面与页面之间的跳转是有刷新效果的，但是单页面应用，一个页面来回跳转，不需要刷新，vue中实际监控的是URL地址栏中的锚点，每回跳转锚点会变化，以区别不同的页面；锚点发生变化代表着URL地址栏发生变化，history可以记录；
+
+
+         location.assign(); 让当前页面加载此个地址；
+         location.reload(); 如果参数填写false,刷新页面取到的也是缓存内容； 扫雷中刷新，按钮触发此事件；
+         替换页面不会有历史记录，也就是当前页面不能回退；可以重定向；
+
+
+         1、传统网站，导航，百度，点击一个跳转到的是另一个网页，但是会刷新，而且URL地址栏会变成一个全新的网址；
+
+         做成单页面应用的话，根据锚点的变化进行页面的变化，但是不会刷新页面，用户体验会好很多，地址栏虽然只有锚点变化了，但是URL地址就是变了，历史记录可以追查；
+         2、单页面应用中，如果打开一个页面，但你跳转到另一个页面的时候，之前那个页面即使刷新依旧可以保存原有的形象，就是缓存；
+
+         3、写应用的三步骤：
+         [
+             1.根据锚点的信息来选择对应要展示的内容；
+             2.切换内容时需要映射到锚点之中；（可以使用事情触发）
+             3。检测锚点是否修改，若是修改，修改以后再映射内容；
+         ]
+
+
+
+         BOM，玩转BOM，就是玩转window的属性和方法；
+         DOM： document提供了一系列对元素的方法的集合
+         document.
+         window.
+
+         DOM:w3c ,所以就涉及到兼容性问题，
+         BOM: 操作浏览器； */   
+    </script>
+</body>
+</html>

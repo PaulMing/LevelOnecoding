@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .demo{
+            width: 100px;
+            height: 100px;
+            border: 10px solid #ccc;
+            /* overflow: hidden; */
+            /* overflow-x: visible; */
+            overflow:visible;
+            overflow-x:hidden;     
+        }
+        .box{
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+        textarea{
+            resize: vertical;
+        }
+    </style>
+</head>
+<body>
+    <!--
+        IE6混杂模式盒模型代码区width/height = contentwidth/height + padding + border
+        // 手动设置盒模型
+        box-sizing:border-box/content-box;//border-box;IE6混杂模式盒模型; content-box;标准渲染模式盒模型
+
+        // 盒子内容溢出
+        overflow:visible(默认值)/hidden/scroll/auto/inherit;//可理解为复合属性x、y,但overflow: hidden hidden;//不要这样写
+        // auto:当内容未溢出容器时不出现滚动条，当内容溢出容器时出现滚动条,按需出现滚动条
+        overflow-x:visible/hidden/scroll/auto/inherit;
+        overflow-y:visible/hidden/scroll/auto/inherit;   
+        // "overflow-x","overflow-y"其中之一设置为非默认值visible,另一个属性自动设置为auto
+
+
+
+        // 内容缩放属性resize; -> IE不兼容，常用于textarea中[若用于其它元素，该元素需设置overflow属性，属性值都OK,visible默认值当然不行,建议设置overflow:hidden;(否则不生效)]
+        resize: none/both(默认)/horizontal/vertical/inherit
+        <textarea name="" id="" cols="30" rows="10"></textarea>
+        textarea{ resize: none };       
+      -->
+     <div class="demo">
+         <div class="box">122</div>
+     </div>   
+</body>
+</html>

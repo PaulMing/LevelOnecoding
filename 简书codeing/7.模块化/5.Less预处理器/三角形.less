@@ -1,0 +1,24 @@
+
+// 引入模块 ->省略triangle.less 后缀
+// @import './triangle';
+.triangle(@width,@color){
+    width: 0;
+    height: 0;
+    border-width: @width;
+    border-style: solid;
+    border-color:  transparent @color transparent transparent ;
+}
+.wrapper{
+    width: 400px;
+    height: 400px;
+    margin: 10px auto;
+    .box{
+        .triangle(50px,blue);   
+    }
+}
+
+
+
+
+
+

@@ -1,0 +1,93 @@
+.clock {
+  width: 500px;
+  height: 500px;
+  border: 3px solid #666;
+  border-radius: 50%;
+  margin: 30px auto;
+  position: relative;
+}
+
+p.dial {
+  width: 4px;
+  height: 500px;
+  background-color: #333;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  margin-left: -2px;
+}
+
+p.dial:nth-of-type(1) {
+  transform: rotate(30deg);
+}
+
+p.dial:nth-of-type(2) {
+  transform: rotate(60deg);
+}
+
+p.dial:nth-of-type(3) {
+  transform: rotate(90deg);
+}
+
+p.dial:nth-of-type(4) {
+  transform: rotate(120deg);
+}
+
+p.dial:nth-of-type(5) {
+  transform: rotate(150deg);
+}
+
+p.dial:nth-of-type(6) {
+  transform: rotate(180deg);
+}
+
+.cover {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  border: 230px solid #fff;
+  left: 10px;
+  top: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  color: red;
+}
+
+/* .hour{
+	width:8px;
+	height:130px;
+	background-color: #666;
+	position: absolute;
+	left:50%;
+	bottom:50%;
+	margin:0 0 0 -4px;
+	@include transform-origin(50%,100%);
+	@include animation(lap 3600*24s steps(12) infinite);
+}
+.min{
+	@extend .hour;
+	width:4px;
+	height:170px;
+	margin:0 0 0 -2px;
+	@include animation(lap 3600s steps(60) infinite);
+}
+.sec{
+	@extend .hour;
+	width:2px;
+	height:210px;
+	margin:0 0 0 -1px;
+	@include animation(lap 60s steps(60) infinite);
+}
+
+@include keyframes(lap){
+	0%{
+		@include transform(rotate(0));
+	}
+	100%{
+		@include transform(rotate(360deg));
+	}
+} */
+body {
+  color: red;
+  font-size: 45px;
+}

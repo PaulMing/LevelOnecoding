@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+          生成器：生成迭代对象
+          生成器函数：function关键字与函数名之间加入*,位置无要求;function* test(){}; function * test(){}; function *test(){}; function*test(){};
+          yield: 产出;//每次xx.next();执行到其便停止   
+        */ 
+        // 生成器函数
+        function* test(){
+            yield 'a';
+            yield 'b';
+            yield 'c';
+            return 'd';
+        }
+        let oG = test();
+        oG.next();//{value: "a", done: false}
+        oG.next();//{value: "b", done: false}
+        oG.next();//{value: "c", done: false}
+        oG.next();//{value: "d", done: true}
+
+        // 迭代过程 -> 蛇形走位
+        function *test1(){
+            yield 'a';
+
+            console.log('1');
+            yield 'b';
+
+            console.log('1');
+            yield 'c';
+
+            console.log('1');
+            return 'd';
+        }
+        let oG1 = test1();
+        oG1.next();//{value: "a", done: false}
+        oG1.next();//1 {value: "b", done: false}
+        oG1.next();//1 {value: "c", done: false}
+        oG1.next();//1 {value: "d", done: true}
+
+        // 更复杂 -> 首先执行yield 'a',然后执行let value1赋值操作，然后console.log(value1);然后执行yield'b',此时的value1并不等于yield'a',而是等于xx.next();传入的参数
+        function *test2(){
+            //             yield 'a';
+            // let value1 =
+            // console.log(value1);
+            //             yield 'b';
+            // let value2 = 
+                         
+            let value1 = yield 'a';
+            console.log(value1);
+                        
+            let value2 = yield 'b';
+
+            console.log(value2);
+            let value3 = yield 'c';
+
+            console.log(value3);
+            return 'd';
+        }
+        let oG2 = test2();
+        oG2.next();//{value: "a", done: false}
+        oG2.next('one');//one {value: "b", done: false}
+        oG2.next('two');//two {value: "c", done: false}
+        oG2.next('three');//three {value: "c", done: false}
+
+
+
+
+
+        // 改写： 手动添加迭代接口
+        let obj1 = {
+            0: 'a',
+            1: 'b',
+            2: 'c',
+            length: 3,
+            [Symbol.iterator]: function *() {
+                   let currIndex = 0;
+                   while(currIndex != this.length){
+                       yield this[currIndex];
+                       currIndex++;
+                   }
+            }
+        };
+        console.log([...obj1]);//(3) ["a", "b", "c"]
+
+      
+    </script>  
+</body>
+</html>

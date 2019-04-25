@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 解析document.cookie;
+        // var str = document.cookie;
+        var str = "BAIDUID=8D03601F599F3FDFA8E8594A7CDB8B62:FG=1; BIDUPSID=8D03601F599F3FDFA8E8594A7CDB8B62; PSTM=1528076956; BD_UPN=12314753; BDORZ=B490B5EBF6F3CD402E515D22BCDA1598; MCITY=-176%3A; ispeed_lsm=2; BD_HOME=1; H_PS_PSSID=1462_21108_18559_20929; BDRCVFR[feWj1Vr5u3D]=I67x6TjHwwYf0; BD_CK_SAM=1; PSINO=2; delPer=0; BDRCVFR[S4-dAuiWMmn]=I67x6TjHwwYf0; H_PS_645EC=5b86skz6vercoHFttcnOimdmjW%2BmlpomKQPjAni3LpXyIwqjqXcPcjSYXHBlnDis2w";
+        
+        function parseCookie(str){
+            var arrCookie = str.split("; ");
+            var cookieObj = {};
+            arrCookie.reduce(function(prevValue,curValue,index,self){
+                var curArr = curValue.split('=');
+                cookieObj[curArr[0]] = curArr[1];
+                return prevValue;
+            },cookieObj)
+            return cookieObj;
+        }  
+        parseCookie(str);  
+    </script>   
+</body>
+</html>

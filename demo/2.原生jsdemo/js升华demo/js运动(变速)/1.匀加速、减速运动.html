@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            border-radius: 50%;
+        } 
+        span{
+            position: absolute;
+            left: 300px;
+            top: 0;
+            width: 1px;
+            height: 100px;
+            background: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <!-- 匀加速、匀减速运动 -->   
+    <div></div>
+    <span></span>
+    <script>
+        var oDiv = document.getElementsByTagName('div')[0];
+        oDiv.onclick = function(){
+            startMove(this);
+        }
+        function startMove(obj){
+            clearInterval(obj.timer);
+            var iSpeed = 20;
+            var a = 3;
+            obj.timer = setInterval(function(){
+                if(obj.offsetLeft < 300){
+                    iSpeed = iSpeed + a;
+                }else{
+                    iSpeed = iSpeed - a;
+                }
+                obj.style.left = obj.offsetLeft + iSpeed + 'px';
+            },30)
+
+        }
+
+        // 匀减速运动：减速向右运动，之后反向加速运动
+        // function startMove(obj){
+        //     // v= v0 + at; a为正值，匀加速； a为负值，匀减速；
+        //     clearInterval(obj.timer);
+        //     var iSpeed = 60;
+        //     var a = -3;
+        //     obj.timer = setInterval(function(){
+        //         iSpeed = iSpeed + a;
+        //         obj.style.left = obj.offsetLeft + iSpeed +　"px";
+        //     },30)
+        // }
+    
+    </script>   
+</body>
+</html>

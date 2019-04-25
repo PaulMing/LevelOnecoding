@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .demo{
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 10px;
+            top: 50px;
+            /* transition动画的聚焦点“过程，设置上后元素状态改变才会触发”，animation动画聚焦点是“变化的节点，即关键帧，其设置上后便会触发”，-> 其是多个状态，transform聚焦点是“起始状态的改变” */
+            transition: left 2s, top 2s ease 2s;
+            animation: move 10s linear
+        }
+        a:hover + .demo{
+            left: 100px;
+            top: 100px;
+        }
+        @keyframes move{
+            0%{
+                left: 10px;
+                top: 50px;
+            }
+            25%{
+                left: 100px;
+                top: 50px;
+            }
+            50%{
+                left: 100px;
+                top: 100px;
+            }
+            100%{
+                left: 100px;
+                top: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        animation动画(关键帧动画)->其可以有中间状态; transform->起始、终止状态  
+        animation: move 3s linear 3s normal infinite both //复合属性
+        animation-name:;
+        animation-duration:;动画执行时间
+        animation-timing-function:;指定过渡函数
+        animation-delay:; 执行前延迟时间
+        animation-direction:normal/reverse/alternate/alternate-reverse;
+        //normal:默认值(按着关键帧方向执行); reverse:倒序(关键帧反方向执行)
+        //alternate;若动画执行多次，每次执行顺序交替(关键帧从0%->100%,下次100%->0%;交替执行)
+        //alternate-reverse;关键帧从100%->0%,下次从0%->100%
+
+        animation-iteration-count:infinite/number;//动画循环次数，infinite;//无限次
+        animation-fill-mode:forwards/backwards/both/none;//动画位置设定
+        //forwards:动画结束位置为100%关键帧
+        //backwards:动画开始位置就在0%关键帧的位置，其不会等待延迟;//例如2s后到达某位置，设置该属性值，其表示一开始就到达该位置
+        //both: forwards、backwards功能的结合; //none: 默认值
+        animate-play-state:running/paused;//控制元素动画的播放状态 ->往往配合事件使用
+        //running: 播放;//paused: 停止
+
+        //补充 0%的别名from 100%别名to
+        @keyframes move{
+            from{
+                transform: rotateX(40deg) rotateY(0deg);
+            }
+            20%{
+                transform: rotateX(40deg) rotateY(90deg);
+            }
+            50%{
+                transform: rotateX(40deg) rotateY(180deg);
+            }
+            to{
+                transform: rotateX(40deg) rotateY(360deg);
+            }
+        }
+     -->
+    <a href="#">123</a>
+    <div class="demo"></div>
+    <button>click</button>
+    <script>
+        var oBtn = document.getElementsByTagName('button')[0];
+        var oDiv = document.getElementsByTagName('div')[0];
+        var flag = true;
+        oBtn.onclick = function(e){
+           if(flag){
+            oDiv.style.animationPlayState = 'paused'; 
+            flag = false;
+           }else{
+            oDiv.style.animationPlayState = 'running'; 
+            flag = true;
+           }     
+        }
+    </script>
+</body>
+</html>

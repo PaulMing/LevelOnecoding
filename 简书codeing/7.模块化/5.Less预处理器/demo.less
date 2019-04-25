@@ -1,0 +1,143 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+// 嵌套
+.wrapper{
+    width: 200px;
+    height: 100px;
+    border: 1px solid #000;
+    .nav{
+        width: 60px;
+        height: 20px;
+        background: red;
+        // 等同于.nav:hover{}
+        &:hover{
+            background: pink;
+        }
+    }
+    // 等同于 .wrapper:hover{}
+    &:active{
+        background: blue;
+    }
+}
+
+// 混合Mixins：提取公共样式;//官方:一系列属性从一个规则到另一个规则的引用
+@height: @width + 10px;
+.border{
+    border: 1px solid #ccc;
+}
+// 带参数的混合
+.border(@w,@color){
+    border: @w solid @color;
+}
+// 带默认值的混合
+.border(@w:2px,@color:#000){
+    border: @w solid @color;
+}
+.wrpper{
+    width: 200px;
+    height: 100px;
+    .border;//等同于 border: 1px solid #ccc;
+    .nav{
+        width: 60px;
+        background: red;
+        .border(1px,blue);
+    }
+}
+//@arguments ->混合的另一种写法
+.border(@1,@2,@3){
+    border: @arguments;//等同于实参
+}
+.box{
+    width: 100px;
+    // border: 2px solid #ccc;
+    .border(2px,solid,#ccc);
+}
+
+
+// 变量替代属性名、属性值都OK -> 其也可替代选择到的元素例如wrapper,但操作意义不大，遵循"语义化"规范
+// .nav{}中的font-size最终为20px;//首先变量存在"快级作用域",聚焦到@var:16px; @var:20px; 然后变量存在"延迟加载",所以@var:20px;底层剖析便是css解释器
+@width: 200px;
+@height: @width + 100px;
+@var: font-size;
+@main: content;//语义化不好->不建议使用
+.main{
+    border: 1px solid #000;
+}//等同于.content{border: 1px solid #000;}
+.wrpper{
+    width: @width;
+    height: @height;
+    border: 1px solid #000;
+    @var: 12px;
+    .nav{
+        @var: 16px;
+        width: 60px;
+        height: 20px;
+        background: red;
+        @var: 20px;
+    }
+    @var: 30px;
+}
+@var: 36px;
+
+
+// 导入：默认后缀名.less可省略, .css后缀名不可省略
+@import 'library';//library.less
+@import 'demo.css';
+
+
+//运算：加减乘除
+@base: 5%;
+@filler: 10%;
+@odr: @base + @filler;//15%;
+@color: #224488/2;//#112244;
+@background-color: @color + #111;
+@tar: 50vh/2;
+@width: calc(50% + (@tar - 20px));//calc();计算变量以及数学公式的值
+
+
+// 函数
+// @bes: #00eeff;
+// @width: 0.5;
+.class{
+    width: percentage(@width);//50% -> 百分数
+    color: saturate(@bes,5%);//颜色饱和度增加5%
+    background-color: spin(lighten(@bes,25%),8);//颜色亮度降低25%,并且色相值增加8
+} 
+
+// 注释
+// 单行注释：其不会被编译到css文件中,也就是仅供“开发人员”查看
+// 快级注释：其会被编译到css文件中,用户也可查看
+/* */ 
+
+
+
+
+// Maps
+/*
+#colors() {
+    primary: blue;
+    secondary: green;
+  } 
+.button {
+    color: #colors[primary];//blue
+    border: 1px solid #colors[secondary];//1px solid green;
+  } 
+*/
+// 作用域：变量快级作用域，并且延迟加载 -> 其会全部解析完成后再确认变量的值，最后赋值的才是真正的值;(并不同于js解释一行执行一行)
+// 注释：同CSS相同 -> 快注释、行注释
+// 导入：利用@import关键词导入 -> .less后缀名可省略； .css后缀名不可省略
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas{
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas width='800' height='800'>dfa</canvas>
+    <img src="" alt="" id="pic">
+    <script>
+        var oCanvas = document.getElementsByTagName('canvas')[0];
+        var ctx = oCanvas.getContext('2d');//画笔 -> css像素
+        
+        // 绘制图片
+        var img = new Image();
+        img.src = './img/pic.jpg';
+        img.onload = function(){
+            // 填充图案
+            // var bg = ctx.createPattern(img,'no-repeat');
+            // ctx.fillStyle = bg;
+            // ctx.fillRect(0,0,400,400);
+            
+            // 绘制图片 -> 图片onload后才能绘制，同填充图案相同
+            // 首个参数：image/canvas/video
+            // 三个参数: 0,0位置开始绘制图片
+            // ctx.drawImage(img, 0,0);
+            // 五个参数： 0,0, -> 起始位置坐标   100,100 -> 绘制的图片大小
+            // ctx.drawImage(img, 0,0,100,100,);
+            // 九个参数：0,0到100,100开始截取图片 -> 然后从150,150位置开始，宽为200,高为200,绘制图片
+            ctx.drawImage(img, 0,0,100,100,150,150,200,200);
+
+            // 导出canvas
+            // canvas.toDataURL(); -> canvas元素上的方法，非画笔对象上的方法，其可将canvas内容导出
+            // 同源策略的限制 -> 开启服务器；
+            pic.src = oCanvas.toDataURL();//导出的是内容可抽取成图片，base64编码格式
+        }
+        
+    </script>
+</body>
+</html>

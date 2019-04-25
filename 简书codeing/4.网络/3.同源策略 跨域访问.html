@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 同源策略：浏览器中很重要的概念 -->
+    <!-- 同源：协议  域名   端口号；   [域名， 主机名就是IP地址] -->
+    <!-- https协议是在http协议下加了一个SSL层，是http的安全版本，有加密技术的http协议；https:443; http:80; 80端口隐藏  http 与https是不同的协议-->
+    <!-- http://localhost:80/demo.html --> 
+    <!-- 80端口是http默认端口，可省略不写其隐藏了，如果80端口占用了，经常使用8080  8000，3000,90端口， 这些端口是不能省略的 -->
+
+    <!-- 补充：相对路径和绝对路径 -->
+    <script>
+        // Ajax是受同源策略限制的,所以index.html才能访问getNews.php上的数据
+        // http://localhost/index.html
+        // http://localhost/getNews.php
+
+        // 这两个并不一定是同一地址，服务器端并不一定配置了别名
+        // http://www.example.com/dir/page.html
+        // http://example.com/dir/page.html
+
+    </script>
+
+
+
+   <!-- 同源策略是浏览器的一种安全策略，ajax获取数据的方式必须遵循同源策略 -->
+    <!-- 跨域解决方案：
+        1.Flash（是一种插件），目前没人使用了
+        2.服务器代理中转：设置服务器代理成功跨域，浏览器访问服务器有同源策略限制，但服务器之间可以直接传输数据，没有同源策略，http://localhost/index.html 想访问http://www.baidu.com。可做服务器代理http://localhost/, 客户端直接访问即可；
+        3.Jsonp:最初是jQuery提出的
+        4.document.domain：针对基础域名相同的情况，设置document.domain = baidu.com;//基础域名相同的话，下面的子域名就可以进行跨域了，即使不同源，但也可以进行跨域，https://zhidao.baidu.com/   https://www.baidu.com/ 这两个的基础域名都是baidu.com，应用场景：例如两个网址都未登录，但一个网址进行用户登录，另一个页面刷新过程中发现其也进行了用户名登录，底层就是进行了跨域操作
+        5.access-control-allow-origin:(允许特定的域名访问);access-control-allow-origin:* 表示允许所有域名访问
+        6.iframe框架
+    -->
+
+    <!-- jsonp: -->
+    <!-- 浏览器同源策略中script元素是例外,准确说src属性是不受同源策略限制的，img的src属性也是如此，可直接引入图片 -->
+    <script src="index.js"></script>
+    <script src="index.txt"></script>
+    <script src="index.excel"></script>
+    <!-- 综上测试发现，无论src属性值为什么类型，其都可以执行引入的文件，说明其是直接引入到script标签内，然后执行，而非是引入文件，在文件中执行代码;[这也是最初学习script元素时不要既引入外部文件，又在标签体内写js代码的底层原因，但如果真那样操作了，外部引入有效，内部写的js代码失效] -->
+    
+    <!-- jsonp底层便是应用script元素的src属性 -->
+    <script src="https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su"></script>
+    <!-- 引入后得到的是json数据，但无法操作，解决方案是使用参数：
+        1.后端人员与前端人员沟通：后端将一个属性名给前端并告诉前端把函数名作为属性值，然后作为URL的参数发送请求
+        2.后端接收到URL后，cb=aa; 便会进行字符串拼接操作：aa+"("+{}+")"//将数据放到拼接好的{}中
+        3.前端通过src拿到的数据，便是aa({data:{}});//由于之前前端有函数aa的声明操作，于是便成功拿到了数据，后续操作就OK了
+    -->
+    <script>
+        function aa(data){
+            console.log(data);
+        }
+    </script>
+    <script src="http://www.baidu.com?cb=aa">
+        aa({
+            data:[]
+        }) 
+    </script>
+
+    <!-- 
+        补充：
+        [可理解为src属性不受同源策略限制，之前使用img图片的时候src直接引入网络上图片的地址便可使用，以及script引入各种库文件，按道理说都是不同源的，但依旧可获取资源，底层原理便是src]
+        [jsonp的应用场景多为制作搜索框，jsonp不仅可以做GET请求，也可以做POST请求，同ajax类似，只不过它们更聚焦到GET请求] 
+    -->   
+
+    
+
+
+
+
+
+
+
+
+
+</body>
+</html>

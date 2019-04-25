@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .box{
+            height: 100px;
+            width: 173.2px;
+            background-color: red;     
+            margin: 100px auto;
+            position: relative;
+        }
+        .box::before{
+            content:'';
+            display: inline-block;
+            /* 宽/高为0与不设置是有区别的，不设置默认值不是0，宽为父元素宽，高由内容撑开 */
+            width: 0;
+            height: 0;
+            border-left: 86.6px solid transparent;
+            border-right: 86.6px solid transparent;
+            border-bottom: 50px solid red;
+            position: absolute;
+            left: 0;
+            top: -50px;
+        }
+        .box::after{
+            content:'';
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 86.6px solid transparent;
+            border-right: 86.6px solid transparent;
+            border-top: 50px solid red;
+            position: absolute;
+            left: 0;
+            bottom: -50px;
+        }
+        /* .t{
+            width: 0;
+            height: 0;
+            border-width: 100px;
+            border-style: solid;
+            border-color: pink green black yellow;
+        } */  
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <!-- <div class="t"></div> -->
+    <!-- 总结：伪元素的使用、设置三角形(重点：宽/高设置为0与不设置是有区别的，不设置默认值不是0，宽默认等同于父元素，此处是body，高由内容撑开) -->
+</body>
+</html>

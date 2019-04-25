@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        svg{
+            border: 2px solid #000;
+        }
+        line{
+            stroke-width: 10px;
+            stroke: red;
+            stroke-dasharray: 300px;
+            /* 这个属性必须配合stroke-dasharray使用 */
+            stroke-dashoffset: 300px;
+            animation: move 2s linear infinite alternate-reverse;
+        }
+        @keyframes move{
+            0%{
+                stroke-dashoffset: 300px;
+            }
+            100%{
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <svg width="500" height="500">
+
+        <line x1="100" y1="100" x2="300" y2="100"></line>
+    </svg>
+</body>
+</html>

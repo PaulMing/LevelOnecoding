@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        /* // this笔面试
+        // 例子1
+        var f = (
+            function f(){
+                return "1";
+            },
+            function g(){
+                return 2;
+            }
+           
+        )();
+        typeof f;
+        // 逗号操作符的使用，执行第二个函数
+        var f = (
+            function g(){
+                return 2;
+            }
+        )();
+        typeof f; //立即执行函数 return 2; Number;
+
+
+        // 例子2
+        var x = 1;
+        if(function f(){}){
+            x+= typeof f;
+        }
+        console.log(x);
+
+
+        // 例子3
+        parseInt('1a')==1;//true;
+        // undefined == null // true;
+        console.log();测试 ，undefined>0 <0 ==0   null >0 <0 ==0;
+        // NaN ===NaN  //false;
+        == 判断的时候，原始值比较的是值，引用值比较的是存储空间；
+        // {} == {} //false   {}==={} //false; 引用值比较的是存储空间；两者指向不同的空间，各自的存储空间； */
+         var obj = {}; var obj1 =obj;  obj==obj1; true;
+
+         [] ==[]  []===[]
+        
+        // 例子
+        function foo(){
+            bar.apply(null,arguments);
+            // 等同于 bar(arguments);
+        }
+        function bar(){
+            console.log(arguments);//1,2,3,4,5,注意：这里是传入形参；
+        }
+        foo(1,2,3,4,5);
+        // 例子 
+        function foo(){
+            console.log(arguments);
+        }(1,2,3,4,5);
+        //首先function foo(){}();肯定报错，立即执行函数中要求是表达式，这里是函数声明，但加入参数不报错，相当于是两个分开的语句，各自执行；【不报错，但其也不是函数的实参列表】
+
+        // 例子5
+
+        // 首先function f(){}是ture；然后执行下面的语句，但(function f(){})是立即执行函数，执行完就销毁，那x+= typeof f;中的f就相当于没定义，但typeof f ;不报错返回字符串undefined;
+        var x = 1;
+        if(function f(){}){
+            x+= typeof f;
+        }
+        console.log(x);//'1undefined'
+
+
+
+        // 逗号操作符：
+        var f = (
+            function f(){
+                return "1";
+            },
+            function g(){
+                return 2;
+            } 
+        )();
+        typeof f;
+        // 逗号操作符的使用，简化函数，执行第二个函数
+        // ------> 简化后
+        var f = (
+            function g(){
+                return 2;
+            }
+        )();
+        typeof f; //立即执行函数 return 2; Number;
+        // 附：立即执行函数中只放一个函数；
+
+
+
+        this
+        // 1、函数预编译过程 this----> window window就是全局GO对象
+        function test(c){
+            // 以下这两种方式都可以表示new对象时的this对象；
+            // var this = Object.create(test.prototype);
+            // this{
+            //     __proto__:test.prototype
+            // }
+            var a = 123;
+            function b(){}
+        }
+        AO={
+            // arguments: [1],
+            // this: window,
+            c: 1,
+            a: 123,
+            b: function b(){}
+        }//生成AO对象有四步骤，实际情况中arguments、this 也会生成在AO对象中；
+        test(1);
+        new test();//new的时候，this就是创建的this对象 this{}
+
+        // 测试： 
+        function test(){
+            console.log(this);
+        }
+        test();
+
+
+        // 2、全局作用域里this------> window
+        // 3、call/apply 可以改变函数运行时的this指向；
+        // 4、obj.func(); func()里面的this指向obj;
+        // 谁调用的该方法，this就指向谁；
+
+        var name = 'bgo';
+        var obj={
+            a: function(){
+                console.log(this.name);
+            },
+            name: 'abc'
+        }
+        obj.a();//'abc'
+
+      
+
+        // 例1
+        var name = "222";
+        var a = {
+            name: "111",
+            say: function(){
+                console.log(this.name);
+            }
+        }
+        var fun = a.say;
+        fun();//222
+        a.say();//111
+        var b = {
+            name: "333",
+            say: function(fun){
+                fun();
+            }
+        }
+        b.say(a.say);//222 
+        // a.say = function(){console.log(this.name)};这里作为参数传入到函数中；fun()相当于function(){}();由于函数执行过程中没有对象调用，还是预编译的过程，AO对象中的this指向window全局；b.say();说明的是say()函数中的this指向b;
+        b.say = a.say;
+        b.say();//333
+
+
+
+        // arguments实参列表：.length  .callee 
+        // arguments.callee------->函数的引用；arguments是函数的实参列表，arguments.callee指向函数的引用；
+        
+        // 测试
+        function test(){
+            console.log(arguments.callee);
+        }
+        test();//test
+        // 例子：阶乘
+        var num = (function (n){
+            if(n ==1){
+                return 1;
+            }
+            // return n * 阶乘（n-1）;
+        }(100))
+        // -------> 使用立即执行函数实现阶乘，但立即执行函数是没有函数名的，采用的是执行符号()执行；采用arguments.callee代替函数名实现功能；
+        var num = (function (n){
+            if(n==1){
+                return 1;
+            }
+            return n  * arguments.callee(n-1);
+        }(100))
+        //arguments指代的是当前函数的实参列表；
+        function test(){
+            console.log(arguments.callee);
+            function demo(){
+                console.log(arguments.callee);
+            }
+            demo();//demo
+        }
+        test();//test
+
+
+
+        // 函数的caller属性，往往和arguments.callee属性一起考查；arguments中只有length/callee两个属性；
+            // 指向函数被调用的那个函数；
+
+            function test(){
+                demo();
+            }
+            function demo(){
+                demo.caller;
+                console.log(demo.caller);//test();
+            }
+            test();
+
+            // 总结es5严格模式中不让被调用；使用这两个函数
+
+
+            
+
+
+            //  this如果在函数中有调用，指向该函数；new test(),this={}; this就是window;
+
+         
+            //预编译过程中AO对象中的this指向window;
+            var foo = "123";
+            function print(){
+                var foo = '456';
+                this.foo = "789";
+                console.log(foo);
+            }
+            print();//'456',console.log(foo),输出的自己AO对象中foo；
+            // 变形1
+            var foo = 123;
+            function print(){
+               
+                this.foo = 234;
+                console.log(foo);
+            }
+            print();//234；AO对象中找不到foo，到GO中找，GO中有覆盖现象；
+            // 变形2
+            var foo = 123;
+            function print(){
+               
+                this.foo = 234;
+                console.log(foo);//123
+            }
+            new print();//123 new对象的过程中形成一个this{};这时候AO={ this:{}};AO对象中只有this{}foo是全局中找到的；
+
+
+            // this例题2
+            // 运行test() 和new test()的结构分别是什么？
+            var a = 5;
+            function test(){
+                a = 0;
+                alert(a);
+                alert(this.a);
+                var a;
+                alert(a);
+            }
+            test();//0,5,0
+          
+          
+
+
+              // this例题3
+              function print(){
+                  console.log(foo);//undefined;
+                  var foo = 2;
+                  console.log(foo);//2
+                  console.log(hello);//hello is not defined，这里默认hello是变量，如果是字符串，肯定会输出（不报错）
+              }
+              print();
+              AO={
+                  foo:undefined,
+              }//初期生成AO对象一定要按照步骤执行，减少不必要的错误
+
+               // this例题3
+               function print(){
+                   var test;
+                   test();
+                   function test(){
+                       console.log(l);
+                   }
+               }
+               print();//1
+               AO={
+                   test:undefined,
+                   test:function test(){
+
+                   }
+               }
+               
+             
+              
+
+               // this例题4
+               function print(){
+                   var marty={
+                       name:"marty",
+                       printName: function(){
+                           console.log(this.name);
+                       }
+                    }
+                       var test1={ name: "tes1"};
+                       var test2={ name: "tes1"};
+                       var test3={ name: "tes1"};
+                       test3.printName = marty.printName;
+                       var printName2 = marty.printName.bind({name:123})
+
+                       marty.printName.call(test1);
+                       marty.printName.apply(test2);
+                       marty.printName();
+                       printName2();
+                }
+                print();
+
+                // this例题4
+                function print(){
+                   var x = 1;
+                   if(x =="1")console.log("ONE");
+                   if(x ==="1")console.log("TWO");
+               }
+               print();//"ONE"
+                
+               // this例题5
+               var bar = {a:'002'};
+               function print(){
+                   bar.a = 'a';
+                   Object.prototype.b = 'b';
+                   return function inner(){
+                       console.log(bar.a);
+                       console.log(bar.b);
+                   }
+
+               }
+               print()();//'a'  'b'
+               // 样式新颖：首先print()返回的是函数，其次函数加上括号就是执行；
+            
+            
+
+
+
+
+
+
+
+
+           // 浅层克隆
+    var obj = {
+            name: 'abc',
+            age: 23,
+            sex: 'female',
+            childson: ["vis", "rse"]
+        }
+        var obj1 = {
+        }
+        function clone(origin, target) {
+            //容错模式，有可能第二个参数传过来是个空值
+            var target = target || {};
+            for (var prop in origin) {
+                // if(origin.hasOwnProperty(prop)){}
+                target[prop] = origin[prop]
+            }
+            return target;
+
+        }
+        clone(obj, obj1);
+        // 以下两种方式有很大差别，第一种相当于新开辟了一块空间，其的改变自然不会影响到克隆的值；第二种是在原来空间上修改，由于指向同一块空间，所以会对克隆的值有影响；
+        // obj1.childson = ["sonn","rsos","byt"]
+        obj1.childson.push(5);
+        console.log(obj);
+        console.log(obj1);
+
+
+
+        // 深层克隆
+        /* 
+        遍历对象for(var prop in obj)
+        1、判断是不是原始值 typeof() 
+        2、判断是数组还是对象 [三种方法] instanceof toString constructor
+        3、建立相应的数组和对象
+        4、递归
+        */
+        var obj = {
+            name: 'abc',
+            age: 23,
+            childson: ['sonn', 'vsos'],
+            wife: {
+                name: "liru",
+                son: ["hua", "gua"]
+            }
+        }
+        obj1 = {
+
+        }
+
+        function deepClone(origin, target) {
+            var target = target || {};//容错模式
+            toStr = Object.prototype.toString;
+            arrStr = '[object Array]';
+            for (var prop in origin) {
+                if (origin.hasOwnProperty(prop)) {
+                    if (typeof (origin[prop] == 'object')) {
+                        if (toStr.call(origin[prop] == arrStr)) {
+                            target[prop] = [];
+                        } else {
+                            target[prop] = {};
+                        }
+                        deepClone(origin[prop], target[prop]);
+
+                    } else {
+                        target[prop] = origin[prop]
+                    }
+                }
+            }
+            return target;
+        }
+
+
+        function deepClone(origin, target) {
+            var target = target || {};
+            toStr = Object.prototype.toString;
+            arrStr = '[object Array]';
+            for (var prop in origin) {
+                if (origin.hasOwnProperty(prop)) {
+                    // typeof(null)--->> object ; 把null值排除了
+                    if (origin[prop] !== "null" && typeof (origin[prop] == 'object')) {
+                        if (toStr.call(origin[prop]) == arrStr) {
+                            target[prop] = [];
+                        } else {
+                            target[prop] = {};
+                        }
+                        deepClone(origin[prop], target[prop]);
+
+                    } else {
+                        target[prop] = origin[prop]
+                    }
+                }
+            }
+            return target;
+        }
+
+
+        function deepClone(origin, target) {
+            var target = target || {};
+            toStr = Object.prototype.toString;
+            arrStr = '[object Array]';
+            for (var prop in origin) {
+                if (origin.hasOwnProperty(prop)) {
+                    if (origin[prop] !== "null" && typeof (origin[prop] == 'object')) {
+                        // 三目运算符的使用 优化代码；
+                        target[prop] = (toStr.call(origin[prop]) == arrStr) ? [] : {};
+                        deepClone(origin[prop], target[prop]);
+                    } else {
+                        target[prop] = origin[prop]
+                    }
+                }
+            }
+            return target;
+        }
+
+
+
+
+
+
+
+
+        var obj = {
+            name: 'abc',
+            age: 123,
+            sex: 'female',
+            childson: ["vis", "rse"]
+        }
+        var obj1 = {
+        }
+        function clone(origin, target) {
+            //容错模式，有可能第二个参数传过来是个空值
+            var target = target || {};
+            for (var prop in origin) {
+                target[prop] = origin[prop]
+            }
+            return target;
+
+        }
+        clone(obj, obj1);
+        // 以下两种方式有很大差别，第一种相当于新开辟了一块空间，其的改变自然不会影响到克隆的值；第二种是在原来空间上修改，由于指向同一块空间，所以会对克隆的值有影响；
+        // obj1.childson = ["sonn","rsos","byt"]
+        obj1.childson.push(5);
+        console.log(obj);
+        console.log(obj1);
+
+        
+
+              
+
+
+          
+               
+
+
+
+
+
+
+
+        
+        
+        
+     </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div style="width:100px; height:100px;background-color:skyblue;position:absolute;left:0;top:0"></div>
+    <script>
+        // 简版
+        var div = document.getElementsByTagName('div')[0];
+        var disX,
+            disY;//鼠标初入方块的坐标；
+        div.onmousedown = function(e){
+            disX = e.pageX - parseInt(div.style.left);
+            disY = e.pageY - parseInt(div.style.top);
+            // 解决鼠标帧频比系统监听事件帧频快的bug;(鼠标过快操作，移出div,div跟不上鼠标的移动)
+            // 使用document文档上触发事件；
+            document.onmousemove = function(e){
+                var event = e || window.event;
+                div.style.left = e.pageX - disX +"px";
+                div.style.top = e.pageY - disY +"px";
+            }
+            document.onmouseup = function(){
+               document.onmousemove = null;
+            }
+        }
+        // 补充第二种解决方案：div.setCapture().onmousemove = function(e){};//ie独有，dom元素调用此方法可以捕获页面发生的所有事件，配套使用：div.releaseCpture();捕获后需要释放，因为其对其他事件有坏处
+    </script>
+</body>
+</html>

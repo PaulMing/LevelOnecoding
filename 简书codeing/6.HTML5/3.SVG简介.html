@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        svg{
+            border: 1px solid #000;
+        }
+        line{
+            stroke: red;
+            stroke-width: 10;
+        }
+        polyline{
+            fill: transparent;
+            stroke: red;
+            stroke-linejoin:bevel;
+        }
+        polygon{
+            fill: transparent;
+            stroke: red;
+        }
+        path{
+            stroke: red;
+            fill: transparent;
+        }
+    </style>
+</head>
+<body>
+    <!-- canvas应用场景：游戏、图表；  SVG更倾向于图标 -->
+    <!-- 
+        canvas: 位图 -> 其是由像素点构成,放大后容易失真
+        svg：Scalable Vector Graphics -> 可缩放矢量图形，其是由点/线/图形构成，其在放大或改变尺寸的情况下其图形质量不会有所损失
+     -->
+    <!-- with/height是属性，并非行间样式，同canvas相同，设置在标签上最好，表示分辨率-->
+    <svg width="500" height="500">
+
+        <!-- 线 -->
+        <line x1="100" y1="100" x2="200" y2="200"></line>
+        <!-- 以下只要是闭合路径，其默认填充黑色  rx/ry: 圆角效果-->
+        <rect x="50" y="50" width="100" height="100" rx="10" ry="20"></rect>
+        <!-- 圆 -->
+        <circle cx="220" cy="100" r="50" ></circle>
+        <!-- 椭圆 -->
+        <ellipse cx="400" cy="150" rx="100" ry="50"></ellipse>
+        <!-- 折线 -->
+        <!-- 默认也是填充的 ->设置属性fill:transparent;便是折线的样子；  其可写多个点，点都是以组的形式出现 -->
+        <polyline points="100 100, 200 50,300 100, 400 50,500 50"></polyline>  
+        <!-- 多边形,写多个点也可以 -->
+        <polygon points="100 100, 200 50,300 100, 400 50 ,500 50"></polygon>
+
+        <!-- 文本：canvas中使用fillText(); svg中使用<text></text> 两者都不能在标签中直接写内容  -->
+        <!-- 起始位置 -->
+        <text x="100" y="200">hello world</text>
+
+        <!-- 
+            属性：
+            fill: transparent;//填充颜色
+            stroke: red; //描边颜色
+            stroke-width: 10px;//线条宽度(可省略px，最好不要省略)
+            stroke-opacity/fill-opacity: 0~1;//透明度
+            stroke-linecap: butt;/square;/round;//canvas中ctx.lineCap;//小驼峰
+            stroke-linejoin: miter;/round;/bevel;//canvas中ctx.lineJoin;//小驼峰
+            stroke-miterlimit: 30;//无单位(30px无效果)
+        -->
+
+
+        <!-- path元素/指令 -> 其就是简写形式  -->
+        <!-- 线：M: moveTo();  L: lineTo(); -->
+        <!-- 严格区分大小写：大写是绝对单位(相对于坐标原点)   小写是相对单位(此点相对于上一点的位置) -->
+        <path d="M 100 100  L 200 200  L 300 250"></path> -->
+        <path d="m 100 100  l 200 200  l 200 200"></path>
+
+        <!-- 矩形：H:水平 horizontal lineto   V:垂直 vertical lineto  -->
+        <path d="M 100 100 H 200 V 200"></path>
+        <path d="M 100 100  h200 v200"></path>
+        <!-- z表示闭合路径  z/Z大小写皆可  -->
+        <path d="M 100 100 h200 v300 z"></path>
+
+        <!-- 圆弧指令A -->
+        <!-- M为起点坐标，起点坐标同终点坐标x,y -> 过这两个点可做两个椭圆，于是便有了大圆弧、小圆弧的区别
+            7个参数：
+            rx,ry: 圆弧的x轴半径和y轴半径
+            x-axis-rotation: 圆弧相对于x轴的旋转角度，默认顺时针，可设负值
+            large-arc-flag: 表示圆弧是大圆弧or小圆弧， 1表示大圆弧
+            sweep-flag: 表示从起点到终点是顺时针or逆时针，1表示顺时针，0表示逆时针
+            x,y: 终点坐标
+        -->
+        <path d="M 100 100  A rx ry  x-axis-rotation large-arc-flag  sweep-flag  x y"></path>
+        <path d="M 100 100 A 70 120 90 1 1 150 200"></path>
+
+        <!-- 二次贝塞尔曲线Q T:扩展点 -->
+        <path d="M 100 100 Q 200 50 300 300   T 400 300 "></path>
+        <!-- 三次贝塞尔曲线C S:扩展点 -->
+        <path d="M 100 100 C 200 50 300 300 400 300  S 400 200 "></path>
+
+
+
+        <!-- SVG渐变 -->
+        <!-- 线性渐变 -->
+        <defs>
+            <linearGradient id="bg1" x1="0" y1="0" x2="0" y2="100%">
+                <stop offset="0%" style="stop-color:rgb(255,255,0);"/>
+                <stop offset="100%" style="stop-color:rgb(255,0,0);"/>
+            </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="500" height="500" style="fill:url(#bg1)"/>
+        <!-- 径向渐变 -->
+        <defs>
+            <radialGradient id="bg2" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                <stop offset="0%" style="stop-color:green;"/>
+                <stop offset="100%" style="stop-color:red;"/>
+            </radialGradient>
+        </defs>
+        <rect x="0" y="0" width="500" height="500" style="fill:url(#bg2)"/>
+            
+        <!-- SVG滤镜 -> 模糊效果 -->
+        <defs>
+            <filter id="Gaussian_Blur">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="20"/>
+            </filter>
+        </defs>
+        <rect x="0" y="0" width="500" height="500" fill=”yellow” style="filter:url(#Gaussian_Blur)"/>
+    </svg> 
+
+
+
+         
+        <!-- 
+            svg路径动画
+            // 切割线段 -> 可传入多个值，表示按该像素切割
+            stroke-dasharray: 10px 20px 30px; 
+            // 线段依旧会循环，不过其感觉是缩回了10px;
+            stroke-dashoffset: 10px;
+        -->
+        <!-- 可视区 -->
+        <!-- viewBox视图盒子，元素就在上面绘制 -> 起始点(0,0),width:300,height:300  -->
+        <!-- xMid YMid表示其如何与SVG viewport对齐  -->
+        <!-- 后面的参数为设置填充方式:
+            meet保持纵横比缩放viewBox适应viewport
+            slice:保持纵横比同时比例小的方向放大填满viewport
+            none: 扭曲纵横比以充分适应viewport
+        -->
+        <svg width="500" height="500" viewBox="0,0,300,300" preserveAspectRatio="xMid YMid meet"></svg>
+
+        <script>
+            var svg = document.getElementsByTagName('svg')[0];
+            var line = document.getELementsByTagName('line')[0];
+            // 此两个方法常用于path元素上，作用到line元素上部分浏览器不支持
+            console.log(line.getTotallength());//获取路径总长度(stroke-width),使用了stroke-lineCap后，其聚焦点还是路径总长度
+            console.log(line.getPointAtlength(50));//获取路径上距离起始点x长度的点的坐标(x,y) 
+            
+            // 创建svg元素以及其上面绘制的元素 -> 必须使用creatElementNS();//首个参数是创建的svg元素(系统生成)，第二个参数为元素名称
+            var svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+            var line = document.createElementNS("http://www.w3.org/2000/svg","line");
+            // 常通过setAttribute();增加属性
+            svg.setAttribute('width','200');
+            line.setAttribute('x1',"100");
+            line.setAttribute('y1',"100");
+            line.setAttribute('x2',"200");
+            line.setAttribute('y2',"200");
+            line.x2 = 300;//无效，所以x2不是line的特性
+            svg.appendChild(line);
+            document.body.appendChild(svg);
+        </script>
+</body>
+</html>

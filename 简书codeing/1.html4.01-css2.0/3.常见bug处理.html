@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 例子1 -->
+    溢出容器，打点展示：
+    1、单行文本：三件套
+      p{
+          white-space: nowrap;//不折行
+          overflow: hidden;//超出部分隐藏
+          text-overflow: ellipsis; 超出部分打点展示；
+      }
+    2、多行文本，直接截断（超出的隐藏）
+      p{
+          width: 300px;
+          height: 40px;
+          line-height: 20px;
+          overflow: hidden;
+          
+      }  
+    [百度pc端对多行文本的处理，基本就是手写... 原理就是，有行高、有盒子高度、可以算出
+    有几行，每个字体大小估算，推算那个是最后一个字，然后加入...] 
+    
+     <!-- 例子2 -->
+     背景图片处理
+     div{
+         width: 200px;
+         hegiht: 200px;
+         border: 1px solid black;
+         background-image: url();//不用加引号
+         background-size: 100px 100px; //背景图片大小
+         background-repeat: no-repeat;//默认是repeat,,repeat-x,repeat-y;
+         background-position:; //x,y值：可以是100px,50%,或者top/left/center/bottom任意组合使用
+         <!-- 特殊的是：两种写法都是位于中心，50%也一样，区别与快元素居中的写法；
+            background-position：center center;
+            background-position：50%  50%;
+         -->
+
+     }
+
+     网页布局中使用img图片 OR 使用背景图片的关系:
+     案例：淘宝logo；
+     背景图片：更多是替代文本(做背景使用);  img图片：展示内容；
+     淘宝logo使用的是背景图片，当网页不能加载时会出现“淘宝网”字样（希望解决的问题是：一旦浏览器采用默认加载策略，例如网速受限制
+     的时候，浏览器加载网页内容时会屏蔽掉css、javascript，认为html的内容更重要，用户体验更好）
+
+     
+     
+    
+
+     <a href="http://www.taobao.com">淘宝网</a>
+     <!-- 解决方案一： -->
+         *a{
+             display: inline-block;
+             text-decoration: none;
+             color: #424242;
+             width: 190px;
+             height: 90px;
+             border: 1px solid black;
+             background-image: url();
+             <!-- 解决方案一 -->
+             text-indent: 200px;
+             white-spance: nowrap;
+             overflow: hidden;
+         }
+    <!-- 解决方案二：  -->
+     *a{
+             display: inline-block;
+             text-decoration: none;
+             color: #424242;
+             width: 190px;
+             <!-- 高度设为0，利用padding-top 为背景图片  overflow: hidden;-->
+             height: 0px;
+             padding-top: 90px;
+             border: 1px solid black;
+             background-image: url();
+             background-size: 190px 90px;
+             overflow: hidden;
+         }   
+    -->
+         
+
+
+
+
+
+     <!-- 知识点 -->
+     1、行级元素只能嵌套行级元素
+     2、快级元素可以嵌套任何元素；
+     特殊：
+         1、p标签中不能嵌套快级元素，
+         <p>
+             <div></div>
+        </p>
+          控制台：div
+         2、a标签中不能嵌套a标签，到底跳转那个？
+
+     3、font-size: 20px;  设置的是字体的高；
+        line-height:行高；
+    4、盒子模型中背景图片、背景颜色都可以加到padding上；
+     
+
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- div运动体验 -->
+    <button style="width:50px;height:20px;position:absolute;left:500px;top:30px;">123</button>
+    <script>
+        var div = document.createElement("div");
+        document.body.appendChild(div);
+        div.style.width = "100px";
+        div.style.height = "100px";
+        div.style.backgroundColor = "red";
+        div.style.position = "absolute";
+        div.style.top = 0;
+        div.style.left = 0;
+
+        var btn = document.getElementsByTagName("button")[0];
+        var speed = 10;
+        btn.onclick = function(){
+            speed ++;
+            console.log(speed);
+        }
+        // 键盘按键事件
+        document.onkeydown = function(e){
+            switch(e.which){
+                // 上
+                case 38:
+                    div.style.top = parseInt(div.style.top) - speed + "px";
+                    break;
+                // 下
+                case 40:
+                    div.style.top = parseInt(div.style.top) + speed + "px";
+                    break;
+                // 左
+                case 37:
+                    div.style.left = parseInt(div.style.left) - speed + "px";
+                    break;
+                // 右
+                case 39:
+                    div.style.left = parseInt(div.style.left) + speed + "px";
+
+            }
+        }
+        
+        // div沿着某个方向移动；
+        // var speed = 10;
+        // speed += 10/20;        
+        // var timer = setInterval(function(){
+        //     div.style.left = parseInt(div.style.left) + speed+ "px";
+        //     div.style.top = parseInt(div.style.top) + speed + "px"
+        //     // if(div.style.left == "200px"){
+        //     //     clearInterval(timer);
+        //     // }
+        // },500)
+    
+    
+    
+    
+    </script>
+</body>
+</html>

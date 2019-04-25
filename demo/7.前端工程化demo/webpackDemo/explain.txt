@@ -1,0 +1,8 @@
+
+demo1: webpack基础概念
+
+demo2: tree shaking [js tree shaking + css tree shaking]
+
+demo3: html、postcss、图片、本地服务器、热替换等
+
+meituan项目是不完整项目

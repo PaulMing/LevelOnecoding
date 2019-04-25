@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    //对象，包装类
+
+    //字面量创建法：每个属性值后都是分号结束；
+    var xiaoming= {
+        name :"xiaoming",
+        age : 20,
+        sex : "male",
+        health : 100,
+        smoke : function (){
+            console.log("I am smoking");
+            this.health --;//this 是第一人称指代
+        },
+        drink : function () {
+            console.log("I am drink!");
+            this.health ++;
+        }
+    }
+    //属性的增、删、改、查；
+    xiaoming.tall = "haha";//增
+    xiaoming.sex = "female";//改
+    delete xiaoming.name; //删，delete 空格 属性；
+    //如果查看一个没有声明的属性，不会报错，会返回undefined；
+    console.log(xiaoming.height);//undefined;
+
+    // js中字符串可以使用单引号、也可使用双引号；
+    // 后台语言PHP字符串只有单引号，为了未来工作需要，js字符串尽量使用单引号；
+    var obj = new Object();
+    obj.name = 'a"bc';//可打印出双引号来；
+    // obj.name = 'a'bc' //如果写成单引号就会发生闭合，当然也可以使用转义字符打印；
+
+
+    //java 、c++ 产生的对象和js产生的对象的差别，Java他们产生的对象时根据模版也就是类来创建对象，产生的对象时死的，不能动态的改变，js产生的对象可以动态的进行改变，增加属性、删、改、查；
+
+    // 自定义构造函数，大驼峰命名规则；小写也可以，但为了增加区分度，还是要使用大驼峰命名规则，就是首字母大写；
+    //无参数构造函数
+    function Car(){
+        this.name = "QQ";
+        this.height = 1200;
+        this.weight = 800;
+        this.lang = "chinese";
+        this.run = function(){
+            this.height --;
+        }
+    }
+    var car = new Car();
+    var car1 = new Car();
+    //有参数构造函数
+    function Student(name,age,sex){
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        this.grade = 2019;
+        this.school = "zhongtai";
+    }
+    var student = new Student("zhangsan",18,"male");
+    var student1 = new Student("wangwu",18,"male");
+
+    // 构造函数隐式三段论：new对象后才实现，返回了this{}
+    function Student(name,age,sex){
+        //第一步：var this = {
+            
+        //} 预编译过程：AO{this:{name:"zhangsan",age:"18"}}
+        //第二步执行：
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+        this.grade = 2019;
+        this.school = "zhongtai";
+        //第三步：隐式返回，return this;
+    }
+    var student = new Student("zhangsan",18,"male");
+    //最终返回了this对象赋值给变量，该变量就成为了创建的新对象；
+    //延生问题1：既然有隐式返回，如果此时显示加上return{},结果是:空对象，说明同时有显示有隐式，显示起作用；
+    //延生问题2：有隐式、显式语句，显式起作用，但是否可以返回这些值：return 123; return "abc"; return true;结果是：忽略这些语句，仍然返回this{}对象; 只要通过new对象，一定返回的是对象值，可以是数组、对象、函数、但却不可以是原始值(number/string/boolean/undefined/null)；写了原始值，也忽略；
+
+    function person(name,height){
+        var a = {};
+        a.name = name;
+        a.height = height;
+        return a;
+    }
+    // 函数执行结束返回对象a,用变量接收； 
+    var number = person("xiaowang",175);
+
+
+
+
+
+
+
+
+
+
+    //包装类：只有对象才有属性和方法（函数、对象、数组），原始值是没有属性和方法的，但如果使用了原始值的包装类后，其就成为对象，就可以操作自己的属性和方法；原始值里的undefined、null是没有包装类的，也就永远没有属性和方法；
+    var num = new Number(123);
+    num.abc = "a"; console.log(num.abc);//不报错;
+    var str = new String("abcd");
+    var bol = new Boolean(true);
+
+    //奇诡：原始值没有属性、方法，那为什么我们会使用到字符串的长度，str.length; 为什么不报错尼；
+
+    //例子1：
+    var num = 4;
+    num.len = 3;//不报错
+    //隐式调用了包装类，new Number(4).len = 3; 但使用过后就直接delete了，直接销毁；
+    console.log(num.len);//undefined;
+
+    //例子2：
+    var str = "abcd";
+    str.length = 2;//首先不报错，这里隐式使用了包装类，
+    //new String("abcd").length = 2; str="ab"//截断，过后delete销毁；销毁的是新建的对象，根本无法修改原本对象；
+    console.log(str); //依旧是abcd;
+    console.log(str.length);//4 这个属性是字符串就有的属性，只不过是对象字符串的属性（包装类）而非是原始值的属性；//new String("abcd").length;
+
+
+    // 例子3：
+    var str = "abc";
+    str += 1;
+    var test = typeof(str);//test = string ; 6个字符：
+    if(test.length ==6){
+         test.sign = "typeof的返回结果可能为String"
+         //new String(test).sign = "xxx";//不报错，调用了包装类，之后delete，对象时新建的，销毁的也是新建的对象；
+    }
+    //new String(test).sign
+    console.log(test.sign); //undefined；
+
+
+
+    // 原型、原型链、call/apply
+    // Person.prototype   --   原型,这里的Person是函数名、也是函数引用，函数体吧
+    // Person.prototype = {}   是祖先；
+    // Person.prototype.name = "wang";
+    function Person(){
+
+    }
+    var person = new Person();
+    var person1 = new Person();
+    // person.name = "wang";
+    // person1.name = "wang";
+    
+    //原型链的增、删、改、查；
+
+
+    //Person.prototype  原型，构造函数的属性（系统自带的）这里的Person是函数名、也是函数引用，函数体；
+    // Person.prototype = {}
+    Person.prototype.LastName = "wang";
+    Person.prototype.say = function(){
+        console.log("hehe");
+    }
+    function Person(name, age, sex){
+        // this.LastName = "zhao";
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+    }
+    var person = new Person("zhangsan","18","male");
+    var person1 = new Person();
+    // 属性有自己的，也有原型继承来的；但是在控制台中，对象自己的属性、属性值可以显示，原型上的属性却不能显示出来，但是可以调用；既然可以继承，往往利用原型特点和概念，来提取共有属性；
+
+    // 原型的增、删、改、查：都是手动去操作Person.prototype才有效果；如果去修改person.属性，并不能有效操作原型；删除也是如此；delete person.LastName;无效果；
+
+    // 增加：再怎么增加，都是给自己的对象增加了一个属性、属性值；并不是修改了原型；
+    // person.lastName = "";
+    // Person.prototype.lastName = "";  这种方式才可以修改；
+    // 删：delete person.lastName ,删不掉；
+
+
+    // constructor: 返回对象的构造函数，也就是引用；可以手动更改；；
+
+    //  原型链：
+    // __proto__也是一个属性，就是指向原型，原型链的连接点就是__proto__,从近到远查找；
+
+    Person.prototype.name = "abc";
+    function Person(){
+        // var this = {
+        //     __proto__:Person.prototype
+        // }//系统中实际隐式放入了一个__proto__属性了，指向的就是原型，默认是构造函数的原型；可以动态更改；
+    }
+    var obj = {
+        name : "sunny",
+    }
+    var person = new Person();
+    // 当person开始查找一个属性的时候，先在自身构造函数中找，若找不到，通过原型链属性逐层查找（从近到远）；
+    person.__proto__ = obj;
+    console.log(person.name);//sunny;
+
+   // 延生问题1：
+   Person.prototype.name = "sunny"
+    function Person(){
+
+    }
+    var person = new Person();
+    Person.prototype.name = 'cherry';
+    console.log(person.name);//"cherry"
+    // 延生问题2：
+    Person.prototype.name = "sunny";
+    function Person(){
+        
+    }
+    Person.prototype.name = "cherry";
+    var person = new Person();
+    console.log(person.name);//"cherry"
+
+    // 延生问题3：
+    Person.prototype.name = "sunny";
+    function Person(){
+            // var this = { __proto__: Person.prototype}
+    }
+    var person = new Person();
+    Person.prototype ={
+        name: "cherry"
+    }
+    console.log(person.name);//"sunny"
+    //类似：之前创建的是一个对象，现在又新建了一个对象；
+    // 之前__proto__指向的是一个空间，后来你又创建了一个新对象，这时候其换是指向原来的
+
+    // var obj = {name:"a"};
+    // var obj1 = obj;
+    // obj = {name :"b"};
+    // console.log(obj1.name);//"a"  道理是一样的；
+    Person.prototype = {name :"a"};
+    __proto__ = Person.prototype;
+    Person.prototype = {name : "b"};
+
+
+    // 延生问题4：
+    Person.prototype.name = "sunny";
+    function Person(){
+            // var this = { __proto__: Person.prototype}
+    }
+    Person.prototype = {
+        name: "cherry"
+    }
+    var person = new Person();
+    console.log(person.name);//"cherry"
+
+
+    // 增、删、查、改 （子孙是没法动祖先的东西的）
+
+
+
+    // 字面量创建对象，有没有原型；结果是也有原型 Object.prototype;
+    /* var obj = {};  ------> 像是隐式变为了new Object();
+    obj.constructor ------> 返回的也是构造函数；
+    var obj1 = new Object();
+
+    Person.prototype = {}  -----> Object.prototype */
+    // 感觉这也是一个字面量，其的原型也是Object.prototype;
+    function Person(){
+
+    }
+
+
+    // Object.create(原型)  创建对象；
+    var obj = Object.create(原型);
+    var obj = {name: "sunny", age:123};
+    var obj1 = Object.create(obj);
+
+    Person.prototype.name = "sunny";
+    function Person(){
+    }
+    var person = Object.create(Person.prototype);
+
+
+    // 绝大多数对象的的最终都会继承Object.prototype;
+    // 有没有没有原型的对象；
+    Object.create(null);
+    // 原型这个是系统隐式创建的（隐式内部属性），人为是无法添加的，但你可以操作修改它的指向；
+
+
+    // 这也可以解释为什么
+    // 123.toString();
+    var num = 123;
+    num.toString();
+
+    true.toString();//转化为字符串，"toString"
+
+     // 根本没法更改原型的属性；
+        // Person.prototype  --原型,构造器创建时候就有这个属性了，其也是一个对象，其是所有构造器构造出对象的祖先；
+        // Person.prototype={
+        //     name: "huaren",
+        //     city: "dalian"
+        // }
+        function Person(name,age){
+            // this{
+            //     name:"",
+            //     age: '',
+            //     grade: '',
+            // }
+            this.name = name;
+            this.age = age;
+            this.grade = 2018;
+            // return this{};
+
+        }
+        var person = new Person("zhansan",18);
+        // 原型的增、删、查、改，
+        
+
+
+
+
+
+        // 对象如何查看自己的构造器（构造函数），知道自己是怎么来的，car.constutor     function Car(){}    ;
+        
+        
+        // 对象没有显示有这个属性，但可以调用，所以其就是继承原型的 Person.prototype,[其也是原型中隐式的一个属性，对象中隐式的就是系统设置好的]；
+        // constructor 是可以手动更改的；
+        function Person(){
+
+        }
+        function Car(){
+
+        }
+        Person.prototype={
+            constructor: Car
+        }
+        var person = new Person();
+        console.log(person.constructor);//function Car(){}
+
+
+ // Studnet.prototype
+    //   function Student(){
+    //       this.name = "wang";
+    //       this.age = 18;
+    //       this.grade = 2018;
+    //   }  
+    //   var student = new Student();
+    // student.__proto__=Student.prototype
+    // Studnet.prototype
+    // 每个对象都有__proto__属性，其指向的是原型，默认是指向构造函数的原型，
+
+
+
+      function Father(){
+          this.name="zhangs",
+          this.money={
+              card1: 'visa'
+          }
+      }
+      var father = new Father();
+      Son.prototype = father;
+      function Son(){
+      }
+      var son = new Son();
+      son.money.card2=300;
+      console.log(father.money);//{card1:'Visa',card2:300}
+    // 原因：属性值若为原始值，子孙一定不能修改父辈的属性，若是属性值为引用值，这时候便会有效果，这里更倾向于引用值本身的修改；
+    
+    
+    // 子孙是无法修改父辈的属性的，这种修改引用值起作用了，更倾向于是引用值本身的修改，原始值是肯定不能变动的，
+
+    // this指向问题：谁调用，this就是指向谁
+    Person.prototype={
+        name:'a',
+        sayName: function(){
+            console.log(this.name);
+        }
+    }
+    function Person(){
+        this.name = "b";
+    }
+    var person = new Person();
+    console.log(Person.prototype.sayName());//a
+    console.log(person.sayName());//b
+    // 注：不要写成console.log(person.sayName);//其打印的是函数体
+
+
+    // 字面量创建对象也有原型；
+    var obj = {}   //原型是object；
+
+
+    // 绝大多数对象最终都会继承自Object.prototype;
+    // 对象的原型只能是object或者是null，不能是原始值；
+    var obj = Object.create(null);//这样创建的对象时没有原型；
+    
+    var num = 123;
+    //其调用toString(); var num = new Number(123);沿着原型链查找toString();方法，若是Number.prototype上有此方法，调用即可，不用再使用Object.prototype.toString;
+    // 可以更改原型链上的方法：
+    Number.prototype.toString = function(){
+        return "skrskr";
+    }
+    console.log(num.toString());//skrskr
+
+    // toString()方法，是Object对象中的一个方法，这个对象时绝大多数对象的原型，原始值中null,undefined,是没有原型的，所以其是没有该方法的，但是其他三个原始值可以，因为其有自己的包装类；
+
+
+//    document.write();打印的底层原理，调用的是对象的toString()方法
+   
+   document.write(obj);等同于document.write(obj.toString);
+   //例子1：console.log(obj)不会报错，展示的是一个没有原型的空对象；
+   var obj = Object.create(null);
+   document.write(obj);//报错,null创建的对象没有原型，所以就没有toString()方法，
+
+   //例子2：手动写一个toString()方法，
+   var obj = Object.create(null);
+   obj.toString = function(){
+         return 'hahahah';
+    } 
+   document.write(obj);//hahahah
+
+
+
+
+
+
+
+
+//  call: 改变this指向
+    function Person(name,age){
+        this.name = name;
+        this.age = age;
+    }
+    var person = new Person('wang',18);
+    
+    var obj={
+
+    }
+    console.log(Person());
+
+     var test = function(){
+   }
+   // test();------>>>等同于 test.call();
+   // 方法的执行隐式调用的就是.call()方法；
+   // 例子1：call()方法中第一个参数，将this指向了obj
+    function Person(name,age){
+        this.name = name;
+        this.age = age;
+    }//没new对象之前this指向的是window,window.name;window.age;
+    var person = new Person('wang',18);
+    var obj={
+    }
+    Person.call(obj,"zhangsan",18);
+    console.log(obj);//{name: "zhangsan", age: 18}
+
+    // 借用你的方法实现我的功能；没new对象之前this指向的是window，修改了this指向；你的需求覆盖了我的需求，你需要的方法完全符合我需要的方法；
+  
+//  借用别人的函数实现自己的功能,,组合开发
+
+    // var obj1 = Object.create(null);
+    // var obj2 = Object.create(123);
+    // var obj3 = Object.create();
+
+
+    function Person(name,age,sex){
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+    }  
+    function Student(name,age,sex,tel,grade){
+        // this={name: '', age: '', sex:''，tel:'',grade:''};
+        // call()方法第一个参数为this，指代的就是【构造函数三段式中的this{}对象】
+        // Person.call(this,name,age) 即使不写实参，也会把person里面的参数都执行一次，undefined;
+        Person.call(this,name,age,sex);
+        this.tel = tel;
+        this.grade = grade;
+    }
+    var student = new Student('zhansan ',18,'male',123456789,2018); 
+   
+    // Go={
+    //     student:
+    //     Person:function Person(){}
+    //     Student:function Student(){}
+        
+    // }
+    // AO={
+    //     name:zhansan,
+    //     age:18,   
+    //     sex:male, 
+    //     tel:123456789,
+    //     grade:2018,
+    //    
+    //    
+    // } -->
+
+    // 也不一定非要写this,传进去的一定是个对象；
+
+
+
+
+
+
+    // 例子1
+    function Wheel(wheelSize,style){
+          this.style=style;
+          this.wheelSize = wheelSize;
+    }
+    function CarBody(com,carColor){
+        this.com = com;
+        this.carColor=carColor;
+        // this.carColor = carColor;
+    }
+    function Model(width,height,len){
+        this.len = len;
+        this.width = width;
+        this.height = height;
+    }
+    function Car(wheelSize,style,com,carColor,width,height,len){
+        //   Wheel.call(this,wheelSize,style);
+        //   CarBody.call(this,com,carColor);
+        //   Model.call(this,width,height,len);
+          Wheel.apply(this,[wheelSize,style]);
+          CarBody.apply(this,[com,carColor]);
+          Model.apply(this,[width,height,len]);
+    }
+    var car = new Car(300,"cool","大",'red',100,200,300);
+        
+    // call apply的作用：改变this指向，区别就是参数不同，
+    // call 需要把实参按照形参个数传进去
+    // apply 需要传一个数组，arguments
+    // Wheel.apply(this,[wheelSize,style]);
+    // Sit.apply(this,[c,sitColor]);
+
+
+    
+
+    
+    
+    </script>
+</body>
+</html>

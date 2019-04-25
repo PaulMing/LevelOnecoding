@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .demo{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        ele.offsetLeft与ele.style.left的区别:
+        (1).ele.offsetLeft:其是相对于父元素的距离，可读不可写，获取到的为数字 -> "条件判断中很便利"
+        (2).ele.style.left:其可读可写，获取到的是字符串，但其只能读取“行间样式” -> 日常开发中往往样式不直接写在行间
+
+        综上：物块移动过程中最好使用 -> demo.style.left = demo.offsetLeft + 50 +'px';
+    -->
+    <div class="demo" style="left:20px"></div>
+    <!-- 定时器 -->
+  <!--   <script>
+        var demo = document.getElementsByClassName('demo')[0];
+        var timer = setInterval(function(){
+            // demo.style.left = parseInt(demo.style.left) + 50 +'px';
+            demo.style.left = demo.offsetLeft + 50 +'px';
+            if( demo.offsetLeft>500){
+                clearInterval(timer);
+            }
+        },500)
+    </script> -->
+
+
+    <!-- 
+        定时器setInterval/setTimeout -> 动画不流畅 -> 原因:其每隔xx时间执行，但页面大约是16ms重新绘制一次(1s重新绘制60次 1000/60)，两者存在时间差
+        requestAnimationFrame: 请求动画关键帧  -> 动画流畅 -> 原因：每次重新绘制页面的时候才会触发
+        定时器的兼容性更好，其的兼容性不好 -> 主流浏览器都兼容，IE8以下不兼容
+        requestAnimationFrame(function(stemp){}); -> 其同setTimeout效果相同，但其只有一个参数，该参数为函数，stemp表示执行的时间戳，可省略
+     -->
+     <script>
+        //  定时器
+        var demo = document.getElementsByClassName('demo')[0];
+        // function move(){
+        //     var timer = setTimeout(function(){
+        //         demo.style.left = demo.offsetLeft + 50 +'px';
+        //             if(demo.offsetLeft>500){
+        //                 clearTimeout(timer);
+        //             }
+        //     },10)
+        // }
+
+        // requestAnimatinFrame(function(){});//其是每次页面重绘的时候触发，其的参数中没有时间
+        // function move(){
+        //     var timer = requestAnimationFrame(function(stemp){
+        //         console.log(stemp);//时间戳
+        //         demo.style.left = demo.offsetLeft + 50 +'px';
+        //         //move();//其会造成死循环
+        //         if( demo.offsetLeft>500){
+        //            cancelAnimationFrame(timer);
+        //         }else{
+        //             move();
+        //         }
+        //     })
+        // }
+        // 优化版
+        function move(){
+            // 设置的位置称为关键帧
+            demo.style.left = demo.offsetLeft + 50 +'px';
+            var timer = requestAnimationFrame(move);//该方法同定时器相同 -> 异步执行 -> 下面的判断条件依旧可执行
+            if(demo.offsetLeft>500){
+                cancelAnimationFrame(timer);
+             }       
+        }
+        move();
+
+
+        // 兼容性写法
+        // 封装动画函数
+        window.requestAnimFrame = (function(){
+            return window.requestAnimationFrame || 
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame || 
+                    function(callback){
+                        window.setTimeout(callback, 1000/60);
+                    }
+        })();
+        // 封装清除动画函数
+        window.cancelAnimFrame = (function(){
+            return window.cancelAnimationFrame ||
+                   window.webkitCancelAnimationFrame ||
+                   window.mozCancelAnimationFrame ||
+                   function(id){
+                       window.clearTimeout(id);
+                   }
+        })();
+     </script>   
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .demo{
+            width: 100px;
+            height: 100px;
+        }
+        .demo:first-child{
+            background: red;
+        }
+        .demo:nth-child(2){
+            background: blue;
+        }
+        .demo:nth-child(3){
+            background: yellow;
+        }
+        .wrapper {
+            width: 600px;
+            height: 300px;
+            border: 1px solid black; 
+            text-align: right;
+            font-size: 16px;
+            font-weight: bold;
+            color:aqua;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="demo" draggable='true' id="box1"></div>
+        <div class="demo" darggable="true"  id="box2"></div>
+        <div class="demo" darggable="true"  id="box3"></div>
+    </div>
+    <div class="wrapper">回收站</div>
+    <script>
+        var oBox = document.getElementsByClassName('box')[0];
+        var oDiv = document.getElementsByClassName('wrapper')[0];
+        var id = null;
+        oBox.ondragstart = function(e){
+            // console.log('start');
+            // console.log(e.target);
+            id = e.target.id;
+            console.log(id);
+            // 使用dataTransfer对象实现数据传递
+            // e.dataTransfer.setData('id',e.target.id);
+        }
+        oBox.ondragend = function(e){
+            console.log('end');        
+        }
+        oBox.ondrag = function(e){
+            console.log('drag');
+        }
+       /*  oDiv.ondragenter = function(e){
+            var demo = document.getElementById('id');
+            console.log(this);
+            this.appendChild(demo);
+            console.log('dragenter');
+        } */
+        oDiv.ondragover = function(e){
+            console.log('dragover');
+        }
+        oDiv.ondragleave = function(e){
+            console.log('dragleave');
+        }
+      
+        oDiv.ondrop
+        oDiv.ondrop = function(e){
+            console.log('drop');
+            var demo = document.getElementById(id).cloneNode(true);
+            this.appendChild(demo);
+            // 接收数据
+            //  var demo = document.getElementById(e.dataTransfer.getData('id')).cloneNode(true);
+        }    
+    </script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+          树、图、拓扑结构(描述数据关系的一种结构) -->> 树、植物、生物
+          图是二维层面的拓扑结构,拓扑结构大多是多维的;
+          //图:根据方向：有向/无向;根据是否有环：有环/无环; -> 有向无环、有向有环、无向有环等，有向/无向聚焦点是“有序对、无序对”
+     
+          二叉树：数据结构 -> 如何存储这样的数据结构：数组或者对象
+          二叉树的分类：(无子节点的便是叶子节点)     
+               平衡二叉树：任意一个节点其左节点的层树与右节点的层数相差不超过一层 
+               完全二叉树：除了叶子节点外每个节点都有两个子节点
+               满二叉树：所有层都是满的(一个节点要么没有子节点,若有子节点就必须所有的子节点都要有两个)  
+        */
+
+
+        // 使用对象存储二叉树
+        function Node(data,left,right){
+            this.data = data;
+            this.left = left;
+            this.right = right;
+        }
+        // 方式1创建二叉树
+        function setTree(){
+            var root = new Node(1,null,null);
+            var node1 = new Node(2,null,null);
+            var node2 = new Node(3,null,null);
+            var node3 = new Node(4,null,null);
+            var node4 = new Node(5,null,null);
+            var node5 = new Node(6,null,null);
+            var node6 = new Node(7,null,null);
+            
+            root.left = node1;
+            root.right = node2;
+            node1.left = node3;
+            node1.right = node4;
+            node2.left = node5;
+            node2.right = node6;
+            return root;
+        }
+        console.log(setTree());
+
+        // 方式2创建二叉树
+        function setTree(){
+            // 注意书写顺序(考虑预编译过程)
+            var node6 = new Node(7,null,null);
+            var node5 = new Node(6,null,null);
+            var node4 = new Node(5,null,null);
+            var node3 = new Node(4,null,null);
+            var node2 = new Node(3,node5,node6);
+            var node1 = new Node(2,node3,node4);
+            var root = new Node(1,node1,node2);
+            return root;
+        }
+        console.log(setTree());  
+    </script>
+    <script>
+        /*
+          二叉树的遍历方式：
+               前序/先序遍历：首先访问根节点(深度优先策略) -> 根->左->右
+               中序遍历：中间访问根节点 -> 左->根->右
+               后序遍历：最后访问根节点 -> 左->右->根
+        */
+        
+        // 前序遍历
+        var tree = setTree();
+        function pre(node){
+            // 出口
+            if(node == null){
+                return;
+            }
+            console.log(node.data);
+            pre(node.left);
+            pre(node.right);
+        }
+        pre(tree);
+
+        // 中序遍历
+        var tree = setTree();
+        function pre(node){
+            if(node == null){
+                return;
+            }
+            pre(node.left);
+            console.log(node.data);
+            pre(node.right);
+        }
+        pre(tree);
+
+        // 后序遍历
+        function pre(node){
+            if(node == null){
+                return;
+            }
+            pre(node.left);
+            pre(node.right);
+            console.log(node.data);
+        }
+        pre(tree);
+
+
+
+
+
+        // 根据前序和中序还原二叉树  
+        // per:前序数组序列 mid:中序数组序列
+        function perMid(pre, mid){
+            if(pre.length == 0 || mid.length == 0){
+                return null;
+            }
+            if(pre.lenght != mid.length){
+                throw Error('参数不正确');
+            }
+            // 根节点
+            var rootData = pre[0];
+            var midRootIndex = mid.indexOf(rootData);
+            var leftMid = mid.slice(0,midRootIndex);
+            var rightMid = mid.slice(midRootIndex + 1);
+            var leftPre = pre.slice(1,leftMid.length + 1);
+            var rightPre = pre.slice(leftMid.length + 1);
+            var left = preMid(leftPre,leftMid);
+            var right = preMid(rightPre,rightMid);
+            var node = new Node(pre[0],left,right);
+            return node;
+        }
+
+        // 根据后序和中序还原二叉树；
+        function aftMid(aft, mid){
+            if(aft.length == 0 || mid.length == 0){
+                return null;
+            }
+            if(aft.lenght != mid.length){
+                throw Error('参数不正确');
+            }
+            // 根节点
+            var rootData = aft[aft.length-1];
+            var midRootIndex = mid.indexOf(rootData);
+            var leftMid = mid.slice(0,midRootIndex);
+            var rightMid = mid.slice(midRootIndex + 1);
+            var leftAft = aft.slice(0,leftMid.length);
+            var rightAft = aft.slice(leftMid.length,aft.length-1);
+            var left = aftMid(leftAft,leftMid);
+            var right = aftMid(rightAft,rightMid);
+
+            var node = new Node(aft[aft.length-1],left,right);
+            return node;
+
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,799 @@
+*{
+    margin:0;
+    padding:0;
+    list-style:none;
+    text-decoration:none;
+}
+html,body{
+    width:100%;
+    height:1000px;
+    background-color:#f4f4f4;;
+}
+.wrapper{
+    width:100%;
+    height:100%;
+}
+.wrapper .top-nav-wrap{
+    width:100%;
+    height:35px;
+    background-color:#f5f5f5;
+    border-bottom: 1px  solid #eee;
+   
+}
+.wrapper .top-nav-wrap .top-nav{
+    width:1190px;
+    height:35px;
+    margin:0 auto;
+    background-color:#f5f5f5;
+    /* border:1px solid black; */
+}
+.wrapper .top-nav-wrap .top-nav .top-nav-l{
+    float:left;
+}
+.wrapper .top-nav-wrap .top-nav .top-nav-r{
+    float:right;
+}
+.wrapper .top-nav-wrap .top-nav li{
+    float:left;
+}
+.wrapper .top-nav-wrap .top-nav li a{
+    font-size:12px;
+    color:rgb(108,108,108);
+    font-weight:400;
+    line-height:35px;
+    padding: 0 6px;
+}
+.wrapper .top-nav-wrap .top-nav li a:hover,
+.wrapper .top-nav-wrap .top-nav li .login{
+    color:rgb(255, 68, 0);
+}
+
+.wrapper .top-nav-wrap .top-nav .china{
+    font-size:12px;
+    color:rgb(60,60,60);
+    font-weight:400;
+    line-height:35px;
+    margin-right:7px;
+}
+.wrapper .top-nav-wrap .top-nav .china .china-span{
+    padding:0 6px;
+}
+.wrapper .top-nav-wrap .top-nav .cutOff span{
+    color:rgb(221,221,221);
+    font-size:12px;
+    font-weight:400;
+    line-height:35px;
+}
+.wrapper .top-nav-wrap .top-nav .bgPic{
+    display:inline-block;
+    width:6px;
+    height:3px;
+    /* 垂直居中  text-align:center；*/
+    vertical-align:middle;
+    background-size:100% 100%;
+    border:1px solid black;
+}
+.wrapper .top-nav-wrap .top-nav li .xsjPic{
+    background-image:url("img/xsj.png");
+}
+.wrapper .top-nav-wrap .top-nav li .shopCarPic{
+    background-image:url("img/gwc.png");
+    width:12px;
+    height:12px;
+
+}
+.wrapper .top-nav-wrap .top-nav li .likePic{
+    background-image:url("img/star.png");
+    width:12px;
+    height:11px;
+}
+.wrapper .top-nav-wrap .top-nav li .webNavPic{
+    width:8px;
+    height:8px;
+    background-image:url("img/dh.png");
+
+}
+/* 顶部导航条结束 */
+
+
+
+/* 搜索search区 */
+.search-wrap{
+    width:100%;
+    height:121px;
+    background-color:rgb(255, 255, 255);
+}
+.search-wrap .search-con{
+    width:100%;
+    height:97px;
+    /* border:1px solid black; */
+    padding-top:24px;
+
+}
+.search-wrap .search-con .search-conner{
+    width:1190px;
+    height:88px;
+    margin:0 auto;
+    
+    /* border:1px solid blue; */
+}
+/* 搜索区logo区域 */
+.search-wrap .search-con .search-conner .logo-box{
+
+    width:190px;
+    height:80px;
+    display:inline-block;
+    vertical-align:middle;
+    /* vertical-align: top/middle/bottom */
+}
+.search-wrap .search-con .search-conner .logo-box img{
+    width:142px;
+    height:58px;
+    margin-left:22px;
+    margin-top:7px;
+}
+
+/* 搜索区中心搜索区域 */
+.search-wrap .search-con .search-conner .search-box{
+    width:627px;
+    height:87px;
+    display:inline-block;
+    vertical-align:middle;
+    margin-left:60px;
+}
+.search-wrap .search-con .search-conner .search-box  .search-box-top{
+    width:630px;
+    height:62px;
+}
+.search-wrap .search-con .search-conner .search-box  .search-box-top .tab{
+    width:613px;
+    height:22px;
+    position:relative;
+    left:16px;
+}
+.search-wrap .search-con .search-conner .search-box  .search-box-top .tab li{
+    float:left;
+    width:36px;
+    height:22px;
+    font-size:12px;
+    font-weight:700;
+    color:#F40;
+    text-align:center;
+    line-height:22px;
+    cursor:pointer;
+    margin-right:4px;
+  
+}
+.search-wrap .search-con .search-conner .search-box  .search-box-top .tab li:hover{
+     background-color:#FFEEE5;
+}
+.search-wrap .search-con .search-conner .search-box  .search-box-top .tab .selected{
+    /* 有个渐变色  从0% ~ 100% */
+    background-image:linear-gradient(to right, rgb(255, 144, 0) 0px, rgb(255, 80, 0) 100%);
+    /* background-color:#ff5000; */
+    color:#FFF;
+    border-top-left-radius:6px;
+    border-top-right-radius:6px;
+}
+
+/* 搜索区域搜索框 */
+.search-wrap .search-con .search-conner .search-box  .search-box-top .search-panel{
+    width:630px;
+    height:40px;
+    position:relative;
+}
+.search-wrap .search-con .search-conner .search-box  .search-box-top .search-panel .btn{
+    width:74px;
+    height:40px;
+    position:absolute;
+    top:0px;
+    right:0px;       
+}
+.search-wrap .search-con .search-conner .search-box  .search-box-top .search-panel .btn button{
+    width:100%;
+    height:100%;
+    font-size:18px;
+    font-weight:700;
+    color:rgb(255, 255, 255);
+    text-align:center;
+    line-height:40px;
+    border-top-right-radius:20px;
+    border-bottom-right-radius:20px;
+    /* border:none的效果很突出， */
+    border:none;
+    background-image:linear-gradient(to right, rgb(255, 144, 0) 0px, rgb(255, 80, 0) 100%);
+    cursor:pointer;
+}
+.search-wrap .search-con .search-conner .search-box  .search-box-top .search-inp-box{
+    width:554px;
+    height:36px;
+    border-top:2px solid rgb(255, 80, 0);
+    border-bottom: 2px solid rgb(255,80,0);
+    border-left:2px solid rgb(255,80,0);
+    border-right:2px solid rgb(60,60,60);
+    border-top-left-radius:20px;
+    border-bottom-left-radius:20px;
+    overflow:hidden;
+    position:relative;
+    /* 圆角设置时，先设置上、下，再设置左右 
+    border-right-bottom-radius:20px;*/  
+}
+.search-wrap .search-con .search-conner .search-box  .search-box-top .search-inp-box .search-inp{
+    width:472px;
+    height:36px;
+   
+    /* position:relative;
+    left:18px; */
+}
+.search-wrap .search-con .search-conner .search-box  .search-box-top .search-inp-box .search-inp input{
+    width:472px;
+    height:24px;
+    padding:6px 0;
+    /* 输入框会有边框，取消掉 */
+    border:none;
+    /* 缩进 10px*/
+    text-indent: 10px;
+
+}
+.search-wrap .search-con .search-conner .search-box .search-inp-box .camera{
+    width:24px;
+    height:36px;
+    position:absolute;
+    background-color:blue;
+    right:10px;
+    top:0px;
+}
+.search-wrap .search-con .search-conner .search-box .search-fdj{
+     width:16px;
+     height:24px;
+     position:absolute;
+     left:10px;
+     top:11px;
+     background:url();
+     background-size:100% 100%;
+     /* background-color:blue;
+     z-index:100; */
+}
+
+.search-wrap .search-con .search-conner .search-box .search-box-bottom{
+    width:589px;
+    height:18px;
+    position:relative;
+    left:16px;
+    margin-top:5px;
+    
+}
+.search-wrap .search-con .search-conner .search-box .search-box-bottom a{
+    width:60px;
+    height:18px;
+    font-size:12px;
+    font-weight:400;
+    color:rgb(60,60,60);
+
+}
+.search-wrap .search-con .search-conner .search-box .more{
+    position:relative;
+    left:570px;
+    top:-19px;
+    font-size:12px;
+    font-weight:400;
+    color: rgb(102, 102, 102);
+
+}
+
+.search-wrap .search-con .search-conner .search-box .search-box-bottom a:hover, 
+.search-wrap .search-con .search-conner .search-box .more:hover,
+.search-wrap .search-con .search-conner .search-box .search-box-bottom .search-box-bot-select{
+    color:#ff5000;
+}
+
+
+
+/* 搜索区域二维码区 */
+.search-wrap .search-con .search-conner .code-box{
+    width:76px;
+    height:90px;
+    display:inline-block;
+    vertical-align:middle;
+    border:1px solid rgb(238, 238, 238);
+    background-color:rgb(255,255,255);
+    cursor:pointer;
+    position:relative;
+    margin-left:125px;
+}
+.search-wrap .search-con .search-conner .code-box span{
+    font-size:12px;
+    font-weight:400;
+    color:rgb(255, 80, 0);
+    margin-left:13px;
+}
+.search-wrap .search-con .search-conner .code-box img{
+    width:62px;
+    height:62px;
+    margin-left:8px;
+
+}
+.search-wrap .search-con .search-conner .code-box .closed{
+    width:14px;
+    height:14px;
+    position:absolute;
+    left:-15px;
+    top:0;  
+    font-size:12px;
+    line-height:14px;
+    text-align:center;
+    color: rgb(204, 204, 204);
+    border:1px solid rgb(238, 238, 238);
+}
+
+/* 搜索区结束*/
+
+
+/* 中间导航栏开始 */
+.screen-nav-wrap{
+    width:100%;
+    height:30px;
+    background-image:linear-gradient(to right, rgb(255, 144, 0) 0px, rgb(255, 80, 0) 100%);
+
+}
+.screen-nav-wrap .screen-nav-con{
+    width:1190px;
+    height:30px;
+    margin:0 auto;
+}
+.screen-nav-wrap .screen-nav-con ul{
+    float:left;
+}
+.screen-nav-wrap .screen-nav-con ul li{
+    float:left;
+    
+}
+.screen-nav-wrap .screen-nav-con h2{
+    float:left;
+    width:190px;
+    height:30px;
+    background-color:rgb(255,80,0);
+    font-weight:700;
+    color:rgb(255,255,255);
+    text-align:center;
+    line-height:30px;
+    font-size:16px;
+}
+.screen-nav-wrap .screen-nav-con .screen-nav-con-left{
+    width:225px;
+    height:30px;
+}
+.screen-nav-wrap .screen-nav-con .screen-nav-con-left li a{
+    height:30px;
+    padding:0 5px;
+    margin-left:13px;
+    font-size:16px;
+    font-weight:700;
+    color:rgb(255,255,255);
+    text-align:center;
+    line-height:30px;
+}
+.screen-nav-wrap .screen-nav-con .screen-nav-con-midd{
+    width:367px;
+    height:30px;   
+}
+.screen-nav-wrap .screen-nav-con .screen-nav-con-midd li a{
+    height:30px;
+    padding:0 5px;
+    margin-left:7px;
+    font-size:14px;
+    font-weight:700;
+    color:rgb(255,255,255);
+    text-align:center;
+    line-height:30px;
+
+}
+
+.screen-nav-wrap .screen-nav-con .screen-nav-con-rig{
+    width:350px;
+    height:30px;
+   
+}
+.screen-nav-wrap .screen-nav-con .screen-nav-con-rig li a{
+    height:30px;
+    padding:0 5px;
+    margin-left:7px;
+    font-size:14px;
+    font-weight:700;
+    color:rgb(255,255,255);
+    text-align:center;
+    line-height:30px;
+}
+/* 中间导航栏结束 */
+
+
+/*  中间内容区域开始 ：包括：左边【main-inner:(商品分类导航、中间块（轮播+侧边图片）)    、底部块】、右边*/
+.screen-box-wrap .main{
+    width:1190px;
+    height:632px;
+    margin:0 auto;
+    border:1px solid blue;
+
+
+}
+.screen-box-wrap .main .main-inner{
+    width:900px;
+    height:632px;
+    /* border:1px solid red; */
+    
+}
+/* 中间内容区域左侧商品分类导航 */
+.screen-box-wrap .main-inner .inner-left{
+    width:190px;
+    height:522px;
+    float:left;
+}
+.screen-box-wrap .main-inner .inner-left ul{
+    
+    margin:0;
+    padding-top:10px;
+    width:190px;
+    height:496px;
+    background-color:white;
+    border:1px solid rgb(255,80,0);
+    border-top-color:none;
+}
+.screen-box-wrap .main-inner .inner-left ul li{
+    padding:5px 0 5px 10px;
+    z-index:3; 
+    background-image:url("http://img.mukewang.com/5411027300014f0200220030.jpg");
+    background-repeat:no-repeat;
+    background-position:right;
+    
+}
+.screen-box-wrap .main-inner .inner-left ul li a{
+    font-size:15px;
+    font-weight:400;
+    color:rgb(102,102,102);
+    padding:5px 3px;
+}
+
+/* 中间区域轮播图 */
+.screen-box-wrap .main-inner .inner-con{
+    width:700px;
+    height:505px;
+    /* border:1px solid black; */
+    float:left;
+    margin-top:6px;
+    margin-left:7px;
+    display:flex;
+    /* margin-left:10px; */
+    /* 问题：加margin-left后float会失效为什么？ */
+}
+.screen-box-wrap .main-inner .inner-con .container-top{
+    width:520px;
+    height:280px;
+}
+.screen-box-wrap .main-inner .inner-con .container-top img{
+    width:520px;
+    height:280px;
+    margin-left:6px;  
+}
+.screen-box-wrap .main-inner .inner-con .container-midd{
+    width:520px;
+    height:230px;
+    margin-left:6px;
+}
+/* 中间区域侧边 */
+.screen-box-wrap .main-inner .inner-con .inner-col{
+    width:160px;
+    height:512px;
+    
+    
+}
+.screen-box-wrap .main-inner .inner-con .inner-col .col-top{
+    width:160px;
+    height:280px;
+   
+}
+
+.screen-box-wrap .main-inner .inner-con .inner-col .col-bottom{
+    width:160px;
+    height:230px;
+}
+.screen-box-wrap .main-inner .inner-con .inner-col .col-bottom h5{
+    width:160px;
+    height:24px;
+    font-weight:400px;
+    line-height:24px;
+    background-color:rgb(241,241,241);
+    color:rgb(161,161,161);
+}
+
+
+/* 中间区域底部： */
+.screen-box-wrap .main .main-bottom{
+    display:flex;
+    width:856px;
+    height:73px;
+    padding:14px 14px 12px 20px;
+    background-color: rgb(255, 255, 255);
+    /* border:1px solid green; */
+    position:relative;
+    top:-110px;
+
+    
+    
+}
+.screen-box-wrap .main .main-bottom .h3{
+    width:180px;
+    height:73px;
+    
+}
+.screen-box-wrap .main .main-bottom  .bot-rig{
+    width:676px;
+    height:73px;
+    position:relative;
+    left:56px;
+    
+}
+.screen-box-wrap .main .main-bottom  .bot-rig h4{
+    height:28px;
+    line-height:28px;
+    display:inline-block;
+    font-size:16px;
+    font-weight:500;
+    color:rgb(51,51,51);
+    position:absolute;
+    top:10px;
+    padding: 0 10px;
+    
+
+
+
+}
+.screen-box-wrap .main .main-bottom  .bot-rig p{
+    display:inline-block;
+    font-size:14px;
+    font-weight:400;
+    height:36px;
+    line-height:18px;
+    color:rgb(153,153,153);
+    padding: 0 10px;
+    position:absolute;
+    bottom:1px;
+    /* 问题：为什么不能设置margin来改变尼~ */
+
+}
+
+/* main区域侧边栏 分五部分*/
+
+.screen-box-wrap .main .col-right{
+    width:280px;
+    height:615px;
+    
+    position:relative;
+    top:-725px;
+    left:908px;
+    /* 问题：加浮动不行，同底部方块一样，会溢出盒子； */
+}
+/* 第一部分开始 */
+.screen-box-wrap .main .col-right .member{
+    width:280px;
+    height:130px;
+    padding-top:3px;
+    padding-bottom:10px;
+    background-image:url("/images/main-col-right-bj.png");
+    background:no-repeat;
+    background-color: rgb(255, 255, 255);
+    background-size:290px 145px;
+}
+.screen-box-wrap .main .col-right .member .member-bd{
+    width:280px;
+    height:90px;
+}
+.screen-box-wrap .main .col-right .member .tx{
+    margin:0 auto;
+    width:74px;
+    height:56px;
+    padding-top:5px;
+    text-align:center;
+}
+
+.screen-box-wrap .main .col-right .member .tx a img{
+    border-radius:50%;
+}
+.screen-box-wrap .main .col-right .member span{
+    display:block;
+    width:280px;
+    height:17px;
+    line-height:17px;
+    text-align:center;
+    font-size:12px;
+    color:rgb(60,60,60);
+}
+.screen-box-wrap .main .col-right .member p{
+    width:280px;
+    height:17px;
+}
+.screen-box-wrap .main .col-right .member  p  a{
+    display:inline-block;
+    width:72px;
+    height:17px;
+    padding:0 10px 0 20px;
+    font-size:12px;
+    font-weight:400;
+    text-align:center;
+    line-height:17px;
+    color:rgb(255,80,0);
+    /* background-attachment:scroll;
+    background-clip:border-box; */
+    border-radius:9px;
+    border:1px solid rgb(255, 80, 0);
+
+}
+.screen-box-wrap .main .col-right .member  p   span{
+    width:16px;
+    height:16px;
+    margin-left:-16px;
+}
+
+
+
+.screen-box-wrap .main .col-right .member .member-ft{
+    width:280px;
+    height:40px;
+    line-height:40px;
+    margin-left:18px;
+    margin-top:8px;
+
+}
+.screen-box-wrap .main .col-right .member .member-ft a{
+    display:inline-block;
+    width:80px;
+    height:25px;
+    background-image: linear-gradient(to right, rgb(255, 80, 0) 0px, rgb(255, 111, 6) 100%);
+    font-size:14px;
+    font-weight:700;
+    text-align:center;
+    line-height:25px;
+    color:rgb(255,255,255);
+    border-radius:4px;
+
+}
+/* 第一部分结束 */
+
+/* 第二部分开始 */
+.screen-box-wrap .main .col-right .message{
+    width:280px;
+    height:26px;
+    background-color:#ffe4dd;
+}
+.screen-box-wrap .main .col-right .message a{
+    width:208px;
+    height:26px;
+    padding-left:72px;
+    font-size:12px;
+    font-weight:400;
+    /* text-align:center; */
+    line-height:26px;
+    color:rgb(255,68,0);
+}
+/* 第二部分结束 */
+
+/* 第三部分开始 */
+.screen-box-wrap .main .col-right .notice{
+    width:280px;
+    height:98px;
+    padding-top:10px;
+   
+}
+.screen-box-wrap .main .col-right .notice ul{
+    width:280px;
+    height:24px;
+    margin-left:27px;
+}
+.screen-box-wrap .main .col-right .notice ul li{
+    float:left;
+    margin-right:28px;
+   
+}
+.screen-box-wrap .main .col-right .notice ul li a{
+    font-size:12px;
+    font-weight:400;
+    color:rgb(60,60,60);
+    
+}
+.screen-box-wrap .main .col-right .notice .not-main{
+    width:280px;
+    height:65px;
+}
+.screen-box-wrap .main .col-right .notice .not-main ul li:hover{
+    color:rgb(255,68,0);
+}
+/* 第三部分结束 */
+
+
+/* 第四部分开始 */
+.screen-box-wrap .main .col-right .moudle{
+    width:280px;
+    height:232px;
+}
+.screen-box-wrap .main .col-right .moudle ul li{
+    float:left;
+    width:65px;
+    height:75px;
+    border:1px solid rgb(244,244,244);
+}
+.screen-box-wrap .main .col-right .moudle ul li a{
+    font-size:12px;
+    font-weight:400;
+    color:rgb(60,60,60);
+    text-align:center;
+
+}
+/* 第四部分结束 */
+
+/* 第五部分开始 */
+.screen-box-wrap .main .col-right .app{
+    width:280px;
+    height:111px;
+}
+.screen-box-wrap .main .col-right .app p{
+    width:276px;
+    height:30px;
+    padding-left:14px;
+}
+.screen-box-wrap .main .col-right .app  p span{
+    font-size:16px;
+    margin-right:150px;
+
+}
+.screen-box-wrap .main .col-right .app  p  a{
+    /* margin-left:60px; */
+    font-size:12px;
+    font-weight:400;
+    color:rgb(60,60,60);
+    
+
+}
+.screen-box-wrap .main .col-right .app ul{
+    width:267px;
+    height:84px;
+    padding:2px 13px 5px 13px;
+}
+.screen-box-wrap .main .col-right .app ul li{
+    float:left;
+    width:32px;
+    height:32px;
+    margin-right:20px;
+    margin-bottom:6px;
+}
+.screen-box-wrap .main .col-right .app ul li a img{
+    width:32px;
+    height:32px;
+    
+}
+/* 第五部分结束 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

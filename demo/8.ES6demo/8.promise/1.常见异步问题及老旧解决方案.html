@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 异步出现的问题
+        // 1.回调地狱
+        fs.readFile('./data/number.txt', 'utf-8', (err, data) => {
+            if (data) {
+                fs.readFile(data, 'utf-8', (err, data) => {
+                    if (data) {
+                        fs.readFile(data, 'utf-8',  (err, data) => {
+                            console.log(data);
+                        });
+                    }
+                })
+            }
+        });
+
+        // 2.try{}catch{}
+        // 无法捕获异步错误 ->控制台依旧报错
+        try {
+            setTimeout(() => {
+                console.log(a);
+            }, 1000);
+        }catch(e) {
+            console.log(e);
+        }
+        // 原生解决方案1
+        setTimeout(() => {
+            try {
+                console.log(a);
+            }catch(e) {
+                console.log(e);
+            }
+        }, 1000);  
+        // 原生解决方案2
+        window.onerror = function () {
+            console.log('skr');
+        }
+        console.log(a);
+        console.log('-----');
+        // nodejs解决方案
+        // process.on('uncaughtException', (err) => {
+        //     console.log(err, 'okok')
+        // });
+
+
+        // 3.同步并发的异步问题
+        let oStudent = {
+
+        };
+        function show (data) {
+            console.log(data);
+        };
+        // 并发异步执行，但并不清楚那个先执行完成
+        fs.readFile('./data/number.txt', 'utf-8',  (err, data) => {
+            if (data) oStudent.number = data;
+            // 巧妙利用 && 运算符
+            Object.keys(oStudent).length == 3 && show(oStudent);  
+        });
+        fs.readFile('./data/name.txt', 'utf-8',  (err, data) => {
+            if (data) oStudent.name = data;
+            Object.keys(oStudent).length == 3 && show(oStudent);   
+         
+        });
+        fs.readFile('./data/score.txt', 'utf-8',  (err, data) => {
+            if (data) oStudent.score = data;
+            Object.keys(oStudent).length == 3 && show(oStudent);  
+        });
+
+
+        // 解决方案1
+        // 直接引入使用Loadsh库中的after();函数或者自己封装实现after();也OK
+        let oStudent = {
+
+        };
+        function show (data) {
+            console.log(data);
+        };
+        fs.readFile('./data/number.txt', 'utf-8',  (err, data) => {
+            if (data) oStudent.number = data;
+            newShow(oStudent);
+        });
+        fs.readFile('./data/name.txt', 'utf-8',  (err, data) => {
+            if (data) oStudent.name = data;
+            newShow(oStudent);
+        });
+        fs.readFile('./data/score.txt', 'utf-8',  (err, data) => {
+            if (data) oStudent.score = data;
+            newShow(oStudent);
+        });
+
+        // 自己封装实现after(); -> 返回值为函数，函数执行times次，然后才执行回调函数cb
+        function after (times, cb) {
+            return function () {
+                --times == 0 && cb.apply(null, arguments);
+            }
+        }
+        let newShow = after(3, show);
+        // 等同
+        function after(num,func){
+            return function(){
+                if(--num == 0){
+                    func.apply(null,arguments);
+                }
+            }
+        }
+
+
+        // 解决方案2：发布订阅模式
+        let oStudent = {
+        };
+        function show (data) {
+            console.log(data);
+        };
+        fs.readFile('./data/number.txt', 'utf-8',  (err, data) => {
+            if (data) oStudent.number = data;
+            Store.fire(oStudent);
+        });
+        fs.readFile('./data/name.txt', 'utf-8',  (err, data) => {
+            if (data) oStudent.name = data;
+            Store.fire(oStudent);
+        });
+        fs.readFile('./data/score.txt', 'utf-8',  (err, data) => {
+            if (data) oStudent.score = data;
+            Store.fire(oStudent);
+        });
+        // 发布订阅 -> 相比于Lodash库的after();其方便扩展，修改也方便
+        let Store = {
+            list: [],
+            times: 3,
+            subscribe (func) {
+                this.list.push(func);
+            },//订阅
+            fire (...arg) {
+                --this.times == 0 && this.list.forEach((ele) => {
+                    ele.apply(null, arg);
+                });
+            }//执行
+        }
+        // 订阅
+        Store.subscribe(show); 
+        Store.subscribe(show1); 
+    </script>
+</body>
+</html>

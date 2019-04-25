@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div[data='wrap']{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+        /* 伪类选择器 */
+        /* :root{
+            width: 100%;
+            height: 100%;
+            border: 2px dotted pink;
+            background: red;
+        } */
+        input:read-only{
+            width: 300px;
+            border: 2px dotted red;
+        }
+        input:read-write{
+            width: 200px;
+            height: 200px;
+            background: yellow;
+        }
+        input:checked{
+            width: 100px;
+            height: 100px;
+            background: yellow;
+        }
+        div::selection{
+            background: yellow;
+        }
+        div::first-letter{
+            font-size: 18px;
+        }
+        div::first-line{
+            background: pink;
+        }
+        div::before{
+            content:'hello';
+            display:inline-block;
+            background: red;
+            width: 100px;
+            height: 100px;
+        }  
+    </style>
+</head>
+<body>
+    <!-- 
+        条件选择器：
+        div>.son{};//直接子元素
+        div+.son{};//后面紧挨着的兄弟节点
+        div~.son{};//后面所有的兄弟节点
+
+        属性选择器:
+        div[data='wrap'];//属性名只能为"wrap"
+        div[data^='w'];//以xx开头
+        div[data$='p'];//以xx结尾
+        div[data*='a'];//属性中存在xx的标签
+        div[data~='wrap'];//属性中存在xx单词
+     -->
+     <!--
+        <div class="demo" data="wrap"></div>
+        <div data="wrap wach"></div>
+     -->
+
+     <!-- 
+         伪类选择器：
+         :root{};//选择根标签 -> 等同于选择html标签 html{};//其也只能选择html标签
+         div:not([class='demo']);//:not(selector);//参数为选择器
+         div:empty{};//该标签下为空 -> 不包含任何节点(空格，换行也会形成文本节点)
+         div:target{};//URL参数有锚点#,指向某个具体的元素，该元素便是目标元素 -> :target 选择当前的目标元素；应用场景多为a标签跳转到某个具体的标签元素
+
+         父子嵌套的元素同样可以选中：
+         div:first-child{};//该元素作为第一个孩子，否则不能选中
+         div:last-child{};//该元素作为最后一个孩子
+         div:nth-child(n){};//n为0; nth-child(n+1){}; -> 从第1个孩子开始；
+         nth-child(2n/even){};//选择偶数个孩子  nth-child(2n+1/odd){};
+         div:nth-last-child(n){};//倒着数
+         div:only-child;//选择该标签下只有一个子元素
+
+         div:first-of-type{};//同类型下的首个孩子
+         div:last-of-type{};//同类型下的最后一个
+         div:nth-of-type(){};
+         div:nth-last-of-type(){}
+         div:only-of-type;//同类型下只有一个子元素
+
+
+         表单元素默认是可用的，可读可写的
+         input:enabled;//默认都是可用的
+         input:disabled;//选择不可用的
+         <input type="text" disabled>
+         
+         input:read-only;//选择只读,聚焦点为readonly属性(disabled不可用，其也是可读可写，系统是这样识别的 -> read-write;会选中所有没有readonly属性的元素)
+         input:read-write;//选择非只读
+         <input type="text" readonly>
+
+         input:checked{width:100px;height:100px;};//选中有checked属性的元素 -> type="checkbox";//点击后可回归原来状态，type='radio';//点击后不会回归原来状态
+         <input type="radio" checked>
+         <input type="checkbox" checked>
+      -->
+      <!-- 
+          <div class="demo"></div>
+          <input type="text" disabled>
+          <input type="text" readonly>
+          <input type="text"> 
+       -->
+
+      <!--      
+          伪元素选择器： ::selection{};//此伪元素使用必须加两个“冒号”，其它伪元素可以只写一个，系统可识别(补充为两个冒号)
+          div::selection{};//用来匹配突出显示的文本(用鼠标选择文本的时候) -> 聚焦点是文本，其他标签没效果(子标签中的文本也没效果)浏览器默认情况下，使用鼠标选中网页文本 -> 背景为蓝色，文本为白色
+          div::first-letter{};//选择文本中首个字母
+          div::first-line{};//选择文本中首行
+          div::before{content:''};//默认是行元素 -> 往往都是转换为display:inline-block;
+          div::after{};
+       -->
+      <!-- 
+        <div class="demo">所有主流浏览器均支持所有主流浏览器均支持所有主流浏览器均支持
+            <p style="width:100px;height:20px">dd</p>
+        </div>
+        文本背景为黄色，字体颜色不会改变
+        div::selection{
+            background: yellow;
+        } 
+      -->
+      <div class="demo">所有主流浏览器均支持所有主流浏览器均支持所有主流浏览器均支持
+            <p style="width:100px;height:20px">dd</p>
+      </div> 
+</body>
+</html>

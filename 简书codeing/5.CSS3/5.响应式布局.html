@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 媒体查询第一种方式  需写多个css文件-->
+    <!-- 
+        <link rel="stylesheet" media="screen and (max-width:500px)" href="./index.css">
+        <link rel="stylesheet" media="screen and (max-width:1000px) and(min-width:600px)" href="index.csss">
+     -->
+    <style>
+       /* 媒体查询第二种方式 建议此方式 */
+       /* @media screen and (max-width:700px) and (min-width: 500px){
+                div{
+                    height: 1000px;
+                    background: red;
+                }
+           } 
+       */
+        /* 媒体查询第三种方式 */
+        /* @import IE6/7不支持 */
+        @import url('./index.css') screen and (max-width: 500px);
+    </style>
+</head>
+<body>
+    <!-- 
+        meta标签就是为了页面在移动端和PC端展示效果相同，其就是模拟移动端的
+        viewport: 视口
+        content="width=device-width";//可是区宽等于设备宽度
+        initial-scale=1.0;//不缩放
+        minimum-scale=1.0;//最小缩放比
+        maximum-scale=1.0;//最大缩放比
+        user-scalable= no;//是否允许用户缩放
+    -->
+
+    <!--  
+       分辨率：1920*1080 ->横向1920个，纵向1080个，一共1920*1080个像素点，每个像素点都是多边形；分辨率越大，像素点越多，其就越清晰
+       像素 = 像素点+颜色+其他属性，例如透明度，位置等
+
+       物理像素： 最大分辨率 -> 终端厂商定义
+       实际分辨率：用户设置的终端分辨率 -> 自定义的
+
+       css像素：感官像素 -> 浏览器定义的(其是一个变化值，往往根据参考像素做调节，参考像素是根据逻辑像素/设备独立像素做调节)
+    
+       设备独立像素：-> 操作系统定义的(其和实际分辨率往往是1:1)
+
+       设备像素比 = 实际分辨率/css像素 = 物理像素/css像素;//一般实际分辨率：物理像素 = 1:1; 用户一般也不调节
+       同时css像素：设备独立像素 = 1:1;
+       所以 -> 设备像素比dpr= 物理像素/设备独立像素
+
+       window.devicePixelRatio;//查看设备像素比；-> 聚焦点是css像素的改变
+
+       位图像素：1个位图像素是栅格图像（如：png，jpg，gif等）最小的数据单元。每一个位图像素都包含这一些资深的现实信息（如：显示位置，颜色值，透明度等）
+     -->
+
+     <!-- 
+         1、响应式设计(RWD)：Response Web Design
+
+         随着用户访问web页面终端的多样化，web页面设计无法适应多样化的终端设备，为了提高开发效率，满足用户需求，Ethan Marcottee在A List Apart发表了一篇开创性的文章，将弹性网格布局、弹性图片、媒体/媒体查询整合起来，称其为响应式设计
+
+         - - - >>> 响应式设计的三个条件：(1).网站必须建立灵活的网格基础(设置的宽高不能是固定的)；(2).网页图片必须是可伸缩的(页面中图片不固定宽/高)；(3).媒体查询(MediaQuery)，不同终端上正常展示页面，用户体验不改变；
+
+         - - - >>>响应式设计中的术语：(1).流体网格：多个自适应盒子形成的便是"网格";(宽/高可伸缩，可用flex布局)；(2).弹性图片：图片自适应，可将引入的img图片变为使用背景图片，随div自适应；(3).媒体查询：网页在不同终端上呈现效果相同;(聚焦点并非是不同终端展示效果一模一样，而是强调用户体验相同);(4).屏幕分辨率：越大越清晰；(5).主要断点：设备宽/高的临界点(例如：600px 1000px)；
+
+         - - ->>>响应式布局的技巧：结构上不要冗余，不要使用内联元素，形成简单有语义的核心布局；样式上丢弃没用的绝对定位和浮动样式；尽量少的使用JS、Flash；
+     -->
+
+
+     <!-- 
+        //开发中使用相对单位-> 不同设备只需修改html{ font-size: 16px};其它便会随之修改
+        绝对单位: cm(厘米), mm(毫米), q(1/4毫米), in(英寸), pt(点), pc(派卡);//开发中不常用，其常用于打印时使用
+        相对单位: -> ch,rem,vw,vh,vmax,vmin;//CSS3新增单位
+            px(像素), em(元素), %(百分比), ex(元素的一半), ch(数字0的宽度), rem(相对根元素的元素单位)
+            vw(视口宽度), vh(视口高度), vmax(取视口宽高中较大的), vmin(取视口宽高中较小的) -> 整个视口100vh 100vw
+        // em; %; 相对于父元素; rem:相对于根元素html; ex;父元素的一半
+        // % 实现全屏其需要父级元素都设置100%; vw/vh可直接实现 -> %实现全屏body有margin, vw/vh实现全屏没有
+
+        PC端常用：px; em; %;
+        移动端常用： px; em; %; rem; vh; vw; vmax; vmin;  
+      -->   
+     <div>d</div>
+</body>
+</html>

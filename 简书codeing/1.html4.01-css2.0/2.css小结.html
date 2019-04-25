@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css"></style>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body>
+    <!-- html、css、javascript最终打包成一个包扔到服务器中，（服务器问题就是传输数据的问题，谁传输数据谁就是服务器）用户访问时通过域名进行访问取得（下载html.css/javascript文件）网页到自己的机器（浏览器中）
+    浏览器进行渲染加载，过程是同时进行，异步过程，  服务器地址指的是物理地址（方便用户索取数据），域名经过dns解析转化为物理地址
+    下载到浏览器中是网站的副本 -->
+    <!-- css:cascading style sheet 层叠样式表 -->
+    <!-- 例子1：引入css -->
+    <!-- 1、行内样式；2、嵌入样式（页面级）； 3、外联式 
+        <style type="text/css"></style> 
+    -->
+
+
+    <!-- 例子2：选择器 -->
+    id  class  标签  通配符*  父子选择器/派生选择器/后代选择器  （直接）子元素选择器、属性选择器、并列选择器、分组选择器、伪类、伪元素
+    属性选择器：属性名、属性值 ，优先级相等于class ,优先级相同的时候会出现样式覆盖现象；
+    <div id="only1" ></div>
+    <div class="demo" id="only"></div>
+    <!-- .demo{
+        background-color:black;
+    }
+    [id]{
+        background-color:red;
+    }
+    div{
+        background-color:green!important;
+    } -->
+
+    <!-- 父子选择器：如下，父子选择器遍历的顺序是从左到右or从右到左，
+    怎么选择选运行快的就行，由于是树结构，最终选择从右到左 -->
+    section div ul li a em{
+        background-color:red;
+    }
+    
+    并列选择器：多个条件来限定,中间无空格
+    <div>1</div>
+    <div class="demo">2</div>
+    <p class="demo">3</p>
+    div.demo{
+       background-color:pink;
+    }
+    分组选择器：技术规范中如下分行书写
+    em,
+    strong,
+    span,
+    div,
+    p{
+        background-color:red;
+    }
+
+    伪类选择器：
+    不要有只有a标签才有hover,,任何只要能被选择的标签都能加伪类；
+
+    标签选择器好多时候作用就是初始化属性，例如em是斜体，要使用初始化其的属性；起强调作用；
+    em{
+        font-style:normal;
+
+    }
+
+    通配符选择器：初始化元素的属性，例如快元素基本都有margin和padding，，img标签有border
+    *{
+        padding:0;
+        margin:0;
+        text-decoration:none;
+    }
+    img{
+        border:0;
+    }
+    
+
+
+    <!-- 例子3： -->
+     优先级、权值：!important > 行内样式 > id > class|属性选择器 > 标签选择器 >通配符 
+     css权重：浏览器内核就存在这个值，，存储着这个值；
+     ！important     Infinity:正无穷大（数学中是个无限的值但计算机中正无穷大是一个定量值，定量值可比较大小，infinity+1>infinity）
+     行内样式              1000
+     id                    100
+     class|属性|伪类        10
+     标签|伪元素             1
+     通配符                  0
+     <!-- 这里面的数字是256进制 -->
+     权重大小比较：求和比较，权值相同时给同一标签加样式，后者会覆盖前者；
+     <!-- div#idDiv p.classP{
+         background-color:red!important;
+     }
+     div.classP#idP{
+         background-color:green!important;
+     } 
+     样式最终是红色，！important无穷大+1 > 无穷大-->
+
+
+
+
+     <!-- 例子4 -->
+     颜色：人能看到3种视觉色：红、绿、蓝，技术规范中使用后两者情况多一些
+     1、red,green,black;
+     2、颜色代码：#ff4400;每两位代表一个原色，16进制【饱和度:00-ff】
+     3、颜色函数：rgb();    rgba();   0-255范围；
+
+     边框：可用来形成三角形、梯形；
+     border:1px solid red;  复合属性，可以拆为三个单独属性；
+     width  style  color;
+
+     居中：
+     水平居中：text-align:center/left/right；
+     单行垂直居中：line-height:值，值等于快高；
+     text-indent:2em; 缩进，em等于一个字体，相对单位 1em= 1 * font-size;
+     行高等于字体高度的1.2倍，line-height:1.2em;（初始值）
+     
+     <del>原价50元</del> 技术规范中基本不用，web开发标准要求结构、样式、行为相分离，若是标签管了css的事情
+     就会被废弃掉，如今很少用到该标签，同时局限性很强；
+     text-decoration:underline/none/overline/line-through;
+     cursor:pointer/help/e-resize;
+
+     行元素：内联元素，inline    不独占一行 ；span,a,em,i,strong,del,
+     快元素：block             独占一行；div h1 p pre,form ,address
+     行内快元素：inline-block   input ，img  
+     以上三者都有隐式的属性、属性值，display:inline; display:block; display：inline-block;
+     img标签设置宽高时，单独设置一个就好，另一个等比例缩小、放大了；
+     凡是带有inline的元素，都有文字特性，浏览器会分隔开；这就是多张img图片之间有间隙，差不多是4px;
+
+    企业开发：合成软件将html,css,javascript文件进行打包同时还要进行压缩（内容小，浏览器加载速度才快）
+             压缩：1、自动缩减空格，回车，2、标签字符替换，【多张img图片代码最终往往都被连在一起，所以开发过程
+             中最优写成一行，不要加margin，】
+    
+
+    <!-- 例子5 -->
+    盒模型：content、border、padding 、margin;
+    代码区：content： width/height;
+    可视区(标签/元素宽高)： 
+            width:content+border+padding;
+            height:content+border+padding;
+
+
+    网页布局模型：
+    1、流动模型（Flow）：文档流,若父元素设定宽高，则其它元素都以此为参考对象，内容宽高太大超出会溢出盒子；若父元素不设定宽高，子元素会撑开父元素，其的宽高等同于父元素的宽高【即使宽、高为0，那也是父元素设置宽高了】、【自适应现象中：高度是内容撑开，宽度为100%】
+    
+    2、浮动模型（Float）：会产生浮动流，浮动流并不完全脱离文档流，和层模型有很大区别
+       [产生浮动流的元素，快级元素看不到他们，浮动起来了，但产生了bfc的元素和文本类属性的
+       元素以及文本都能看到浮动元素，这里文本类属性的元素就是含有属性inline的，显式隐式都OK]  
+       
+       浮动重点：
+       1、虽然浮动起来了，但是宽高依旧限定于父元素，有边界，应用场景还OK；
+       2、产生浮动流的元素，快级元素看不到他们，顶上去了，但产生了bfc的元素和文本类属性的元素以及文本
+       都能看到浮动元素，这里文本类属性的元素就是含有属性inline的，显式隐式都OK]
+       综上，只有快元素看不到浮动元素；
+       3、如果有嵌套的父子元素，父元素不设定宽、高，子元素为快元素就会撑开这个盒子，但若是子元素都浮动
+       起来了，那父元素高度为0，当然我可以定义高度来解决，但是在开发中往往盒子是不固定的，所以需要
+       解决的是如何不加高度，使父盒子包裹住子元素；
+       清除浮动：clear:left/right/both;  直接使用clear:both; 添加一个P元素利用border设置
+      <div class="wrapper">
+           <div style="float:left;">1</div>
+           <div style="float:left;">2</div>
+           <div style="float:left;">3</div>
+           <p></p>
+           
+       </div>
+       p{
+           clear:both;
+           border-top:0 solid green;
+       }
+       <!-- border-top的宽度只有0，更多是一种逻辑的存在，完美解决了问题 -->
+
+    3、层模型（Layer）图层的感觉，脱离文档流的定位元素；
+    定位：position:fixed/relative/absolute;
+    脱离文档流，若有父元素，父元素不设定宽、高，里面元素是不会撑开父元素的；
+    fixed:固定定位，广告区
+    absolute:最近的有定位元素的父元素定位，没有则相对于文档，
+    relative:保留原来位置进行定位；一般作为父元素的定位元素，参考元素（参照物）
+    z-index：沿着z轴（垂直屏幕），仅能在定位元素上奏效，默认z-index：0，可以是负值；
+    position;absolute;
+    left:100px;
+    top:200px;
+    <!-- left,top是常用配合，网页布局有关，若是使用right、bottom，元素右边框距离右边，同理底边也是 -->
+
+    思维误区：
+    1、定位 top、left、right、bottom，常用的是top、left;
+    2、快元素居中固定写法的：
+        div{
+            position:fixed;
+            left:50%;
+            top:50%;
+            width:100px;
+            height:100px;
+            background-color:red;
+            margin-left:-50px;
+            <!-- margin-left:负的width的一半 -->
+            margin-top:-50px;
+            <!-- margin-top:负的height的一半 -->
+        }
+       
+    2、盒子模型中的margin的使用
+       问题1：margin-left/margin-right的正确理解，外边距；
+       问题2：margin合并问题 水平方向各是各的，互不影响；
+       <div style="margin-bottom:20px;"></div>
+       <div style="margin-top:30px"></div>
+       上面两个盒子会出现 margin合并现象，最后取大值，
+       
+       如何解决这个bug呢，
+       1、可以使用bfc进行处理，过程：增设一个父元素，给父元素加触动bfc的条件，最好不要使用，可以调节
+       两者之间的像素值来调节样式，不要随便改变html结构；
+       特殊现象，若是一个是display:inline-block; 一个是block;
+       垂直方向也不合并，各是各的；
+       
+
+       问题3：垂直方向嵌套的父子元素margin值会重叠，取最大的那个值；
+       例如父元素margin-top:100px; 子元素margin-top:150px;最终子元素没有移动，父元素实现了margin-top:150px;
+       这种现象为“margin塌陷”  父元素没“棚”啦、
+       （水平方向，互不影响）
+       bfc [block format context] 盒子遵循的特定的渲染规则；可改变渲染规则；
+       其可以解决margin塌陷问题；
+
+       解决方法：触发盒子的bfc,就可以解决，父元素和子元素各自实现自己的margin-top;
+       具体采用以下那种，灵活应用，减少影响；
+       如何触发一个盒子的bfc
+       1、position:absolute;
+       2、display:inline-block;
+       3、float:left/right;
+       4、overflow:hidden;
+
+       5、添加border，（不建议用，实际开发中对像素要求极高，不可随便加border）
+
+       
+       <div class="wrapper">
+            <div class="content"></div>
+       </div>
+       <!-- 
+           .wrapper{
+               margin-left:100px;
+               margin-top:100px;
+               width:100px;
+               height:100px;
+               bacckground-color:black;
+               overflow:hidden;
+           }
+           .content{
+               margin-left:50px;
+               margin-top:150px;
+               width:50px;
+               height:50px;
+               background-color:green;
+           }
+        -->
+  <!-- 例子6 -->
+     伪元素：有元素结构，也可被css操作，但是结构上不显示；
+             其是行元素，同时必须要加content:"";  才能显示出来；
+     如上所提到的清除浮动例子中，加入P标签清除浮动是可以解决问题，但是在这里充当的是一个“功能性”的标签，而html中
+     负责结构，不要随便改变其的结构，所以这里介绍第二种解决方案，添加尾部伪元素；
+      .wrapper::after{
+          content:"";
+          clear:both;
+          <!-- 能清楚浮动的必须是快级元素，伪元素是行元素，所以加入display：block；
+               clear属性只适用于快级元素； -->
+          display:block;
+      }
+      利用伪元素清除浮动是最佳解决方案，也算是技术规范了；
+
+      第三种解决方案：父元素触发bfc，也可以看到浮动元素；最佳是伪元素处理
+      凡是设置了position:absolute; float:left/right;
+      系统打内部把元素转换为inline-block;(不设置宽高由内部内容决定是否撑开)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    小知识点：
+    1、body默认margin：8px; 
+    2、多张img 之间是4px;
+    3、快元素肯定有宽高、margin、padding，
+    4、行元素的宽高,margin的top/bottom都不可设置；padding的左右上下，margin的左右都可以设置；
+               同时设置背景，由于没有宽高，所以其的背景色是整体的，算padding和margin;
+    
+               行内宽元素宽高 、margin、padding都可以设置，和快元素是一样的；
+
+
+    5、 emment速写，>左右无空格，表示子元素；
+            div.wrapper>div.box>div.content>div.cont
+            <div class="wrapper">
+                <div class="box">
+                    <div class="content">
+                        <div class="contet"></div>
+                    </div>
+                </div>
+            </div>
+     6、设置报纸布局中图片周围环绕文字的现象，由于img有inline-block的属性；inline有文字属性，
+        所以周围写文字后，同处一行，但不会环绕，可以给img设置浮动，这样文字依旧可以看到它 ,
+        img{
+            float:left;
+        }    
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+</body>
+</html>

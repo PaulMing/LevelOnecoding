@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .demo{
+            width: 100px;
+            height: 100px;
+            background: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo">demo</div>
+    <div class="demo1">demo1</div>
+    <script src="jQuery3.3.1.js"></script>
+    <script>
+        // 前端领域实现动画的效果就这些技术
+        // css  transition
+        // css  keyframes
+        // js   定时器
+        // jquery 1/2   js定时器
+        // jquery 3   jQuery3   animate();[底层也是定时器]；[ 补充：requestAnimationFrame(); // 最新，最快、最流畅的动画技术，用户体验感特别好，其不采用定时器(定时器效率不高，容易卡死)]
+
+
+
+        // 动画(效果)
+        // show(); hide(); toggle();(聚焦点：display:none/block)
+        // show(speed,函数,callback);参数选填:第二个参数默认是swing,也可为linear
+        $(".demo").show();
+        $(".demo").show("slow",function(){})//normal/slow/fast都是时间的别名，类似颜色值 时间为毫秒因为计算机执行是以毫秒计算的，所以平时涉及时间都是毫秒，而且大多参数也都是选填的，很少有很明确的规定；
+        $(".demo").show(4000,function(){$(this).text("hello js")})
+        $(".demo").hide();//同上
+        $(".demo").toggle();//切换，显示的隐藏，隐藏的显示
+
+
+        // 滑动slideDown(); slideUp(); slideToggle();(聚焦点：display:none/block)
+        // 三个参数，第二个参数默认是normal, slow/fast/linear(匀速)/swing(秋千慢快慢)
+        $(".demo").slideDown(2000, 'linear',function(){
+            console.log("callback")
+        });//隐藏->展示(从上到下)
+        $(".demo").slideUp();
+        $(".demo").slideToggle();//切换
+
+
+        // 淡入淡出fadeIn(); fadeOut(); fadeToggle();(聚焦点：opacity:0~1)
+        $(".demo").fadeIn(2000,"linear",function(){
+            console.log("fadeIn");
+        });
+        $(".demo").fadeOut();
+        $(".demo").fadeToggle();//切换
+        // 补充 fadeTo();将透明度直接调整到0.66
+        $(".demo").fadeTo("slow",0.66);
+
+        
+
+
+        // 自定义
+        // animate();底层使用定时器修改指定的属性，但其只能修改有数值的,类似width/height; 却不能把display:none -> block;
+        // 首个参数属性名，属性值最好都加上引号;(jQuery中涉及对象的写法都是属性值要加双引号，css();animate({})都是如此)
+
+        // animate();直接写最终状态即可(animate();底层封装的定时器)
+        // 四个参数：第1个参数为最终位置，2/3/4个参数选填，依次为时间，速率函数liner/swing,回调函数
+        $('.demo').animate({
+            left: 500,
+            top: 200,
+        },2000,"liner",function(){
+            console.log("hello jquery")
+        })//首个参数可以省略单位px,系统会补上；
+
+        // 补充： delay(); stop();
+        // delay();参数为时间毫秒，表示延迟多久后执行(不仅仅只有动画中使用，应用场景广泛)
+        $(".demo").slideDown().delay(800).fandeIn();
+        // stop();停止元素上正在运行的动画
+        $('div').delay(2000).animate({
+            left: 500,
+            top: 200,
+        },2000,"liner",function(){
+           $(this).stop();
+        })
+
+    </script>   
+</body>
+</html>

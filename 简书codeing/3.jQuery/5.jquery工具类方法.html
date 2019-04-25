@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="jQuery3.3.1.js"></script>
+    <script>
+        // 之前都为获取到的dom元素的系列方法 --->>> $是对象，其上的方法称之为工具类方法
+        // $.parseHTML();//解析html标签(不解析自定义标签)，两个参数，第二个参数选填默认为false，不解析script标签；当为true的时候，解析script标签
+        $.parseHTML("<div></div>");//解析为dom元素类数组 
+        // $.parseHTML("<div></div><script></scri");不解析
+        $.parseHTML("<div></div><script>console.log('hello jquery')<script>",true)
+        $.parseHTML("<div></div><p>k</p><data></data><script>")//[div,p],返回值为数组，同时不识别自定义标签和不完全的script标签
+
+
+        // 遍历对象或数组：回调函数参数i为索引，n为每个元素
+        $.each(obj,function(i,n){})
+        // $.type(data);//判断数据类型；(返回值更精确，原生js中封装过type方法)
+        $.type([1,2,3])//"array"
+        $.type(null); //"null"
+        // $.trim();//处理字符串，去掉起始和结尾的空格
+        $.trim("   abc   ");//"abc"
+        $.trim(["",1,""]);//",1," 先转换为字符串再去掉空格
+
+
+        // $.makeArray();//将类数组转换为数组(类数组也称为伪数组)
+        // 原生js中使用的方法：Array.prototype.slice.call(类数组,0);
+        $.makeArray($("div"))
+        // $.inArray();//其有两个参数，第一个为数值，第二个为数组，返回该数值在数组中的索引值，不存在则返回-1;
+        $.inArray(1,[2,3,1]);//2
+        // 将所有的DOM元素 -> 数组;
+        console.log($("li").toArray());//[<li id="foo">,<li id="bar">]
+
+
+        // 空方法，扩展插件的时候用到
+        $.noop;
+
+        // 改变方法的内部指向
+        function show(){
+            console.log(this);
+        }
+        // 第二个参数表示内部指向
+        $.proxy(show,document);//默认指向window,现在指向document
+
+        // $.noConflict();//无参默认是false,只交出$权限
+        // $.noConflict(true);//参数为true时，表示将jQuery权限交出($权限也交出)
+        // 也称为多库共存(防止冲突)
+        var a = $.noConflict();//交出$权限，赋值给新变量,之后使用这个新变量即可
+        a("div").addClass("xxx");
+
+        $.isEmptyObject(obj);//判断对象是否为空对象
+        $.isPlainObject(obj);//判断对象是否是字面量对象；
+        $.isNumeric(value);//判断该value是否是数值，返回布尔值
+        $.isNumeric("-10");//true
+
+        $.param();//将数据转换为串联的数组或字符串
+        $.param({"a":"1","b":"2"});//"a=1&b=2"
+   
+        
+        // $.merge();合并 其只能合并类数组和数组，默认是拼接数组
+        $.merge([1,2,3],[4,5,6]);//[1,2,3,4,5,6]
+        $.merge("a","b");//不行
+        $.merge({a:1},{b:2})//不行
+        $.merge({0:0,1:1,2:2,length:3},{0:4,1:5,length:2})//{0:0,1:1,2:2,3:4,4:5,length:5}
+
+
+        // $.extend();//聚焦点是参数(若是两个以上参数，表示的便是合并对象，也称为继承(当首个参数为true时，其表示的是深度克隆再合并对象)，若只有一个参数其表示的便是扩展) 
+        // 第一种情况：合并对象(继承)    
+        // 首个参数选填，不写默认为false,代表浅层克隆,为true时，代表深层克隆；
+        $.extend({a:1},{b:2})
+        // 第二种情况：扩展工具方法
+        $.extend({a:function(){}})
+        // 第三种情况：扩展实例方法
+        // $.fn.extend;等同于$.prototype.extend; -->>> $原型链上的方法
+        $.fn.extend({a:function(){
+            $(this).css("background","blue")
+        }})
+
+        // 补充：jQuery中使用同一套源码对静态和实例方法进行扩展; [聚焦点：参数的个数]
+        $.extend = $.fn.extend = function(){};//源码根据参数的不同来实现不同的功能，若是两个参数，表示的便是合并,若是只有一个参数，表示的便是扩展方法；
+
+        // 项目中经常用遇到的情况：
+        // 1.jQuery扩展方法原型
+        // extend(dest,src1,src2,src3...);//将src1 src2 src3扩展到dest对象中，修改了dest结构
+        // var newSrc = $.extend({},src1,src2,src3...);//合并过程中，出现相同的src，其会覆盖
+        // var newSrc = $.extend({},src1,src2,src3...);
+
+        // 2.省略dest参数,将src合并到到调用extend()方法的对象
+        $.extend(src);//将src合并到了$中，也就是jQuery的全局中
+        $.extend({
+            hello:function(){
+                alert("hello");
+            }
+        });//将hello();方法合并到jQuery的全局中
+        $.fn.extend({
+            hello: function(){
+                alert("hello");
+            }
+        });//将hello()；方法合并到jQuery实例对象中
+
+        $.extend({net:{}})
+        $.extend($.net,{
+            hello: function(){
+                alert("hello");
+            }
+        });//将hell();方法扩展到了jQuery中的net的命名空间中去了
+        // 3.extend 重载原型
+        extend(boolean,dest,src1,src2,src3,src4);//true/false;--> 深度/浅度
+
+    </script>  
+</body>
+</html>

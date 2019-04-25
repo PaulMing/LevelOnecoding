@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 数组去重
+        // 利用对象属性特性去重有bug -> 若属性为对象，其会隐式调用toString();因此其不能有效去重
+        let obj = { type:'small'}
+        let arr = [1,2,3,4,3,2,obj,5,6,obj,4,{type:'big'}]
+        let obj1 = {};
+        let newArr = [];
+        for(let i=0; i<arr.length; i++){
+            if( !obj[arr[i]] ){
+                obj[arr[i]] = true;
+                newArr.push(arr[i]);   
+            }
+        }
+        console.log(newArr);//(7) [1, 2, 3, 4, {}, 5, 6];//有bug,其不能有效识别引用值
+
+
+        // Set对象去重 -> 有效识别引用值，更加完善
+        let oS = new Set(arr);
+        console.log([...oS]);//(8) [1, 2, 3, 4, {…}, 5, 6, {…}]
+
+
+
+
+        // 求并集、交集、差集 ->少量数据前端处理，大量数据都是后台处理
+        // 并集
+        let arr1 = [1,2,3,4,4,2];
+        let arr2 = [3,2,4,4,5,2];
+        let oS = new Set([...arr1,...arr2]);
+
+        // 交集
+        let arr1 = [1,2,3,4,4,2];
+        let arr2 = [3,2,4,4,5,2];
+        let oS1 = new Set(arr1);
+        let oS2 = new Set(arr2);
+        let newArr = [...oS1].filter(ele => {
+            return oS2.has(ele);
+        })
+        let newArr = [...oS1].filter( ele => oS2.has(ele) );//省略return
+
+
+        // 差集
+        let arr1 = [1,2,3,4,4,2];
+        let arr2 = [3,2,4,4,5,2];
+        let oS1 = new Set(arr1);
+        let oS2 = new Set(arr2);
+        let newArr1 = [...oS1].filter(ele => !oS2.has(ele));
+        let newArr2 = [...oS2].filter(ele => !oS1.has(ele));
+      
+    </script>
+</body>
+</html>

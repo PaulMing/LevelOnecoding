@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="btn">click</div>
+    <script>
+        // 单对象编程 -> 实际就是命名空间的应用
+        // 一个js文件中放置一个对象，对象中有若干属性(变量+方法)，属性之间进行逻辑操作来实现某个功能
+        var list = {
+            // 初始化/入口
+            init:function(){
+                this.ms = "skr";
+                this.dom = document.getElementsByClassName('btn')[0];
+                this.bindEvent();
+            },
+            bindEvent:function(){
+                // this.dom.onclick = this.showMessage();//这种方式显然是错误的，事件绑定的是函数，怎么能是函数执行，若是函数执行，返回值赋值给this.dom.onclick,逻辑就错误了
+
+                // this.dom.onclick = this.showMessage;//this指向为this.dom，显然this.ms找不到，返回undefined
+                this.dom.onclick = this.showMessage.bind(this);//使用bind()返回新函数，this指向也改变了
+        
+                // this.dom.onclick = this.showMessage.call(this);//错误，使用call();/apply();虽然改变了this指向，但其会立即执行，等同于this.showMessage();//逻辑错误
+            },
+            showMessage:function(){
+                console.log(this.ms);
+            }
+        }
+        list.init();
+    </script> 
+</body>
+</html>

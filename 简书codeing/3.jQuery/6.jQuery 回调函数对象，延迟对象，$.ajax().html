@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script src="jQuery3.3.1.js"></script>
+    <script>      
+        // 回调函数对象 -->> 手动调用; [之前用到的都是满足条件后执行回调函数，系统来进行调用的]
+        // 回调函数对象$.Callbacks();//其的作用便是管理函数(后续开发中会涉及到众多函数参与/嵌套/调用)
+        function fn1(a){
+            console.log("fn1",a);
+        }
+        function fn2(b){
+            console.log("fn2",b);
+        }
+        function fn3(b){
+            console.log("fn3",b);
+        }
+        function fn4(b){
+            console.log("fn4",b);
+        }
+        // 执行队列
+        var cb = $.Callbacks();//生成执行队列
+        cb.add(fn1,fn2);//把函数放到其中但并没有执行
+        cb.fire(1);//执行，参数传入到fn函数中
+        // cb.remove(fn1);其可以把fn1从队列中移除掉
+        cb.add(fn3,fn4);
+        cb.fire(2);//由于其是执行队列，所以都会执行一遍
+        cb.fire();
+
+        // 补充: var cb = $.Callbacks("unique") 表示执行队列中同一个函数只能执行一次，即使多次cb.add();队列中不能重复
+        // var cb = $.Callbacks("once"); 只执行到第一次cb.fire();的地方；也就是说只执行一次fire()操作
+        // var cb = $.Callbacks("memory"); 表示每次执行cb.fire(); 都会把代码中写的cb.add()内的都执行
+        var cb = $.Callbacks("memory");
+        cb.add(fn2);
+        cb.add(fn1);
+        cb.add(fn2);
+        cb.fire(1,2);
+        cb.add(fn3);//类似于此: cb.fire();执行  其下面的语句也会执行，类似于提升了下面的语句
+
+        // 三个参数 可以复合使用，也可单独使用
+        var cb = $.Callbacks("unique","once","memory");
+        // 补充 var cb = $.Callbacks("stopOnFalse");//如果执行过程中某函数中有return false语句，便阻止后面的代码执行；
+        function fn2(b){
+            console.log("fn2",b);
+            return false;
+        }
+
+        // 补充： callbacks = $.Callbacks();
+        // callbacks.remove(fn/callbacks);//删除函数或该列表
+        // callbacks.has(fn);//判断该fn是否在列表中
+        // callbacks.empty();//把列表中的内容都删除掉
+        // callbacks.disable(fn);//列表中禁止使用该函数
+        // callbacks.disabled(fn);//判断列表中该函数是否被禁用
+        // callbacks.lock();//锁定当前状态的回调列表
+        // callbacks.locked();//判断该列表是否被锁定
+        // callbacks.fired();//回调列表中的函数至少被调用一次
+        // callbacks.fireWith([context][fn]);//执行上下文中的fn
+
+
+
+
+        // 延迟对象$.Deferred();//其是管理异步，利用对象上的系列方法来解决异步 
+        // 解决网络传输的问题，异步的过程中判断是否加载完成
+        function dfd(){
+            var d = $.Deferred();
+            d.resolve();//成功
+            // d.reject();//数据获取不成功，拒绝
+            // d.notify();//数据传输正在进行中
+            return d;
+        }
+        var d = dfd();
+        d.progress(function(){
+            console.log('progress');//进行 对应notify();
+        }).fail(function(){
+            console.log('fail');//失败 对应reject();
+        }).done(function(){
+            console.log('done');//完成 对应reslove();
+        })
+        // $.when(); ----->>> Promise.all();
+        // d.promise();//表示若是使用其，后面的状态不能进行更改；
+        // $.when();//表示传入延迟对象的状态都为成功便执行回调函数
+        $.when($.get("test.json"),$.get("student.json")).done(function(){console.log();})//当前面两个状态都返回时才执行后面的函数
+
+        // 延迟对象demo
+        setTimeout(function(){alert(1)},1000); 
+        alert(2);
+        //必然先弹出2,再弹出1；可能我们希望先弹出1，再弹出2，需要使用延迟对象来操作
+        var dfd = $.Deferred();//调用此方法，返回延迟对象
+        setTimeout(function(){
+                alert(1);
+                dfd.resolve();
+        },1000);
+        dfd.done(function(){
+            alert(2);
+        })//先弹出1，再弹出2;//底层先执行resolve(); 里面有回调函数，执行done();
+
+     
+
+
+
+        // $.ajax();//获取数据的方式，底层封装原生的ajax，同时其功能更加强大，还提供了jsonp跨域访问接口;
+        // 获取数据的系列方法：
+        $.getJSON();$.getScript();$.get();$.post();$().load();//底层调用的都是ajax();其的功能更加“专注”
+        // $.getJSON();/$.getScript();//两个方法底层调用的都是get(); 而$.get();/$.post();底层直接调用ajax();
+        $.ajax({
+            /*
+            type: 'GET'//请求数据的方式
+            url: //地址
+            data: string/object;//发送给服务器的数据(GET:作为参数拼接在URL后，POST:请求体中； -> 系统都封装好了)
+            dataType: json/jsonp/text(其中script/html/xml几乎不再使用);//服务器返回的数据类型，默认是string,如果填写了，则其会将返回的数据转换为相应的格式：json -> 返回的数据是json对象，jsonp -> 其会动态创建script标签，将返回的数据引入到此标签下，一般结合jsonp/jsonpCallback字段(属性)使用
+            success: function(data){};//data服务器返回的数据；当然也可以直接写函数名 success: dealdata;
+            error: function(e){e.status,e.statusText};//失败回调函数
+            context: 成功回调函数中的ths指向；
+            complete:function(){};//请求完成的时候便会触发
+            async:true/false;//是否异步,默认true异步(ajax多数操作都采用异步方式请求数据 -> 不阻塞页面其他操作)
+            cache:true/false;//是否将请求到的数据存储在浏览器的缓存中(浏览器本地缓存中，非cookie -> 后期详解)
+            jsonp:'cb';//URL上的参数名
+            jsonpCallback:'aa';//获得数据的回调函数名   
+            beforeSend:function();//发送请求前触发
+            contentType://发送数据到服务器时内容的编码类型，默认：application/x-www-form-urlencoded   
+            timeout: 800ms;//设置请求时间，大于则终止请求
+            */
+        })
+
+        $.getJSON(url,data,callback);//只有三个参数
+        $.getScript(url,undefiend,callback,"script");//用来请求js的，所以第二个参数为undefined;
+
+        $(window).onload(function(){});
+        $(function(){
+            $('#div').load('1data.html',function(){
+                alert('1');
+            })
+        })
+        // load()首个参数可以再精准(只加载1.data.html下的ul) -> 有“过滤”效果
+        $(function(){
+            $('#div').load('1data.html ul',function(){
+                alert('1');
+            })
+        })
+        // load();还可再传参，表示对数据的动态处理
+        $(function(){
+            $('#div').load('1data.html ul',{"test":"hellojs"},function(){
+                alert('1');
+            })
+        })
+
+    </script>
+</body>
+</html>

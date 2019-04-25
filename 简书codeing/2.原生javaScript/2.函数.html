@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>函数</div>
+    <script>
+        //  var a= 0;
+        //   a %= 5;
+        //   document.write(a);
+
+        //   document.write(typeof(undefined));
+        //   document.write(typeof(nan));
+        //   document.write(typeof(b));
+        //   document.write(1 =="1");
+        //   document.write(NaN == NaN);
+
+        //   var a = "123abc"; document.write(typeof(! !a));
+    
+    // 函数：
+    function test(){
+
+    }//functin 和 var 一样就是个关键字；
+
+    // 1、命名函数表达式：
+    var test = function abc(){
+        document.write("b");
+    }//后面这个function是表达式，表达式就是忽略名字的，所以abc();//undefined;
+       document.write(test());//b
+       document.wriet(abc());//undefined;
+    // 2、匿名函数表达式：
+    var demo = function(){
+        document.write("b");
+    }
+    //两者的区别，第一个test.name; //abc    demo.name;// demo
+    //由于匿名函数表达式比较常用，所以平时提到的函数表达式指代的便是匿名函数表达式；除非特殊提到了命名函数表达式；
+    
+    
+    // 参数的使用：使函数的功能更加丰富了；形参、实参；
+    // 参数个数不确定（形参可以比实参多，实参可以比形参多，两者也可相等）
+    function sum(a,b,c,d){
+        //var a,b,c,d; //形参a,b,c,d等同于var了四个变量；实参传入三个，则d=undefined;
+    }
+    sum(1,2,3);
+
+    // 实参列表arguments[],（类数组，当作数组就OK）
+    function sum(a,b,c,d){
+        for(var i=0; i<arguments.length;i++){
+            console.log(arguments[i]);
+        }//遍历实参；
+    }
+    sum(1,2,3)
+
+    // 形参和实参的映射规则（你变我也变）,前提：个数对应；
+    function sum(a,b){
+        // arguments [1,2]
+        var a = 2;
+        console.log(arguments[0]);//2
+
+        arguments[0] = 3;
+        console.log(a);//3;
+    }
+    sum(1,2);
+    
+    // 特殊：若是形参和实参个数不对应，实参列表几个值就是几个值，不会随意添加；
+    function sum(a,b){
+         b = 2;
+         console.log(arguments[1]);//undefined;
+    }
+    sum(1);
+
+    //例子，如果需要计算n个数的和（Excel表格中求和功能）不定参数的和；形式参数由于不能设置添加不定参数，所以需要借助实参列表解决；
+    function sum(){
+        // arguments [1,2,3,4,5,5,6,7];
+        var res = 0;
+        for(var i=0; i<arguments.length; i++){
+            res += arguments[i];
+        }
+        console.log(res);
+    }
+    sum(1,2,3,4,5,5,6,7);
+
+    
+
+
+
+
+
+
+
+
+    // arguments,类数组，当作数组就OK，在函数中表示实参列表；
+
+
+
+
+
+    // 函数结束条件即返回值，return,(如果不写，函数隐式加上这个)
+    function sum(a,b){
+        console.log('a');
+        return;//执行到这里就直接结束函数运行了
+        console.log("b");
+    }
+    sum(1,2);
+
+    function sum(){
+        return 123;
+        console.log("b");   
+    }
+    var num = sum();
+    console.log("num");//123
+
+
+
+
+    function scream(a){
+        if(a="gou"){
+            consolo.log("wangwang");
+        }
+    }
+    scream("gou");
+
+    function scream(a){
+        switch(a){
+            case "dog":
+            document.write("wang!");
+            case "cat":
+            document.write("miao~");
+            case "tuzi":
+            document.write("guagua");
+
+        }
+    }
+
+    // 作用域：里面的可以看到外面的，外面变量不可访问里面的；
+    // 越到里面权限越低，；
+
+
+
+    //递归：有很强抽象规律的，阶乘、斐波那契数列是典型的两个案例，[递归可以使代码更加简捷，缺点：运行速度较慢，往往有很强抽象规律使用]
+    // 1、找规律 2、找出口（防止进入死循环）
+    // 函数体里：return 公式  就OK；
+
+    // 阶乘
+    // for循环实现
+    function mul(n){
+        var num=1;
+        for(var i=1; i<=n; i++){
+            num *= i;
+        }
+        return num;
+    }
+    mul(5);
+
+    // 递归 n! = n * (n-1)!
+    // n==1;是出口，n==0;规定：0的阶乘是1，负数没有阶乘；
+    function mul(n){
+        if(n==1 || n==0){
+            return 1;
+        }
+        return n * mul(n-1);//规律
+    }
+    mul(5);
+
+
+    // for循环
+    var n = parseInt(window.prompt('input'));
+    var first = 1,
+        second = 1,
+        third;
+    if(n>2){
+        // n-2表示遍历次数
+        for(var i=0; i<n-2; i++){
+            third = first + second;
+            first = second;
+            second = third;
+        }
+    document.write(third);
+    }else{
+        document.write(1);
+    }
+    // 斐波那契数列 fb(n) == fb(n-1) + fb(n-2);
+    function fb(n){
+        // 第一位、第二位都为1，其为出口；不研究负数；
+        if(n ==1 || n ==2){
+            return 1;
+        }
+        return fb(n-1) + fb(n-2);//规律
+    }
+
+
+        /*错误分为两种：
+        1、低级错误(语法解析错误)：
+        不涉及逻辑的错误，例如缺个括号、中英文标点符号错用等；[编辑器会通篇扫描一遍，若有问题则一行都不执行]
+        2、逻辑错误：
+        代码问题，例如变量未声明便使用等，其出现在函数解释执行的过程中；[出错后面代码便不执行，不管什么错误都只局限于当前代码块，不会影响其他js代码块]
+
+
+    // 预编译
+    // js运行三部曲：语法分析、预编译、解释执行；
+
+    // imply global:暗示全局变量:
+    1.若变量未经声明便赋值，此变量就为全局对象所有，等同于var 变量；
+    // console.log(a);//报错，a is not defined；从来就没有这个变量；
+    // a = 10; //不报错，这就是全局变量，为全局对象所有，相当于是window.a = 10;
+    2.全局下声明的变量都是全局对象的变量；window就是全局对象/全局的域；
+    var a=10,b=11,c=12, 等同于 window {a:10,b:11,c:12}
+    console.log(a);  等同于 console.log(window.a);//window.a === 全局下var a;
+    3.window对象表示全局，可省略不写；
+    //例
+    function test(){
+        var a=b=123;
+    }//赋值是从右到左,123赋值给b，显然此时b还未声明,其就是全局的的，等同于全局var b;(暗示全局变量)
+    // var a,b,c;同时声明了三个变量，var a=b=123;只是声明了a变量并未声明b,所以要区分变量声明、赋值、变量定义的形式；
+    test();
+    console.log(window.b);//123;
+    console.log(window.a);//undefined;
+
+
+
+
+    // 预编译：AO对象处理函数执行前预编译，GO对象处理全局的预编译（过程类似，没有形参而已）；
+    // 1、创建AO对象；
+    // 2、找形参和变量声明，形参和变量名作为AO对象的属性名，属性值为undefined;
+    // 3、实参值和形参统一；
+    // 4、在函数体内找函数声明，函数名为属性名，属性值为函数声明；
+    function fn(a){
+        console.log(a);//function a(){}
+        var a = 123;
+        console.log(a);//123;
+        function a(){}
+        console.log(a);//123
+        var b = function(){}
+        console.log(b);//function(){}
+        function d(){}
+    }
+    fn(1);
+    AO{
+        a:function a(){};
+        b:undefined;
+        d:function d(){}
+    }
+
+
+
+
+
+
+
+
+
+    //GO：Global Object；   AO:Activation Object;
+    //先形成Go对象，再形成Ao对象；
+    //GO{
+    //     a:undefined;
+    //     test: function test(){}
+    //     c:234;
+    // }  
+    function test(){
+        console.log(b);//undefined;
+        if(a){
+            var b = 100;
+        }
+        console.log(b);//undefined;
+        c = 234;
+        console.log(c);//234
+    }
+    var a;
+    //AO{
+    //    b:undefined;
+    //}
+    test();
+    a = 10;
+    console.log(c);//234
+
+
+
+
+
+
+
+
+    AO{
+        a:3;
+        b:2
+        c:0
+        d:function d(){};
+
+    }
+    AO{
+        a:function a(){};
+        b:undefined;
+
+
+    }
+    //fun
+    //und
+    234
+    123
+    123
+    function(){}
+
+
+    // 全局：
+    // 1、生成了一个GO对象 Global Object
+    // Go{
+
+    // }
+
+    // 先形成Go对象，再形成Ao对象；
+    // Go对象就是全局执行的前一刻；AO函数执行前一刻；
+
+    //例子1
+    function bar(){
+        return foo;
+        foo = 10;
+        function foo(){
+
+        }
+        var foo = 11;
+    }
+    console.log(bar());//先预编译，然后执行return foo; return foo后的语句就不执行了；
+    //例子2
+    console.log(bar());//11
+    function bar(){
+        foo = 10;
+        function foo(){
+
+        }
+        var foo = 11;
+        return foo;
+    }
+
+
+    
+    a = 100;
+    function demo(e) {
+        function e(){}
+        arguments[0] = 2;
+        console.log(e);//2
+        if(a){
+            var b = 123;
+            function c(){
+                //hello world
+            }//有些小bug,如今if条件语句中不允许写函数；
+        }
+        var c;
+        a = 10;
+        var a;
+        console.log(b);//undefined;
+        f = 123;
+        console.log(c);//undefined; fn
+        console.log(a);//10
+    }
+    var a;
+    demo(1);
+    console.log(a);//100
+    console.log(f);//123
+
+    // 例子
+    global = 100;
+    function fn(){
+        console.log(global);//undefined;
+        global = 200;
+        console.log(global);//200
+        var global = 300;
+    }
+    AO{
+        global: undefined;
+    }
+    fn();
+    var global;
+
+   
+    //升华例子1：类型转换
+    var str = false + 1;
+    document.write(str);//加号隐式转换number类型，false为0，结果：1；
+    var demo = false == 1;
+    document.write(demo); //从右面执行，false==1；结果false，赋值给demo;
+    if(typeof(a)&& -true +(+undefined) +""){
+        document.write("写的很OK");
+    }//typeof(a)结果是字符串undefined; -true 隐式转换number类型，-1；再+undefined 结果就是NaN；再加上空串，就是NaN串;  
+    //"undefined"&& "NaN" 结果就是真，可以打印；
+    if(11 + "11" *2 == 33){
+        document.write("很nice");
+    }//*号隐式转换为Number类型，左边：22+11=33 右边：33； 所以结果true;
+    !!" " + !!"" - !!false ||document.write("你觉得能打印，就差劲啦兄弟");
+    //!!可以转化为布尔值结果，!!" " //空格字符串，true;  !!""//false;   !!false //false;
+    //true + false -false  结果1+0-0 = 1  就是ture;  或运算符第一个表达式为真就直接返回啦；
+
+
+    // 升华例子2：
+    (window.foo || (window.foo = "bar"));
+    求window.foo //bar
+    // 执行顺序：先是与运算符，然后是赋值；(var a = 1||2)
+    (window.foo || window.foo = "bar");//不加括号会报错，会先执行||，再执行=赋值运算；
+    // 加括号后，先执行括号内赋值，||运算符第一个值是true,直接输出就好；
+    // 运算符顺序不清楚也能做对，window.foo 字符串undefined;true，直接返回值；
+
+
+
+
+    // 作用域、作用域链；
+    function test(){
+
+    }//函数也是对象：函数类对象，对象都有属性，
+
+
+
+    // AO 是函数执行前一刻，的执行期上下文；
+
+
+    //立即执行函数；
+    // 除非js执行完了，才能结束，有很多函数执行完一次就再也不用了；
+    // 无论如何有的函数只执行一次（只被执行一次，我们想要其执行一次，或者执行一次返回结果的函数），我们称之为初始化函数或初始化功能；
+     //形式1 无参数
+     (function (){
+        var a = 123;
+        var b = 234;
+        console.log(a+b);
+    } ())
+
+    // 形式2 有参数
+    (function (a ,b ,c){
+        console.log(a + b + c*2);
+    } (1,2,3))//在后面的括号里填充参数；
+
+    // 形式3  有返回值
+    var num = (function (a,b,c){
+        var d = a+b+c*2 - 2;
+        return d;
+    }(1,2.3))
+
+    //一般初始化功能的函数（立即执行函数），最终都需要返回值来，要不然呀这个函数干嘛；
+
+
+
+    // 立即执行函数
+    // 针对初始化功能的函数
+    (function (){} ()); //W3C 建议第一种；
+    (function (){})();
+    //只有表达式才能被执行符号执行,变成立即执行函数；
+    //这里的执行符号指的就是括号();
+
+    // 表达式与函数声明是有区别的；函数声明不是表达式
+    function test(){
+        var a = 123;
+    }()  //报错，这是函数声明不是表达式；
+
+    var test = function(){
+        console.log();
+    }() // 不报错，这是函数表达式；//加上括号后也成为了立即执行函数；执行一次后就销毁；
+
+    //改造一下：只要变为表达式就OK，这里是正、负号；&&  || 也可以[但需要前面有表达式进行判断，执行到后面表达式再说]  
+    // 加减乘除不行
+    +funcction test(){
+        console.log("a");
+    }();
+    -function test(){
+        console.log("a");
+    }();
+    !function test(){
+        console.log("a");
+    }();
+
+    // 回归到最初所提到的：(function (){} ());  (function (){})();这两种立即执行函数形式，可以理解为外面的括号将函数声明变为了表达式，然后被执行符号执行，变为立即执行函数；
+
+
+    //阿里面试题
+    function test(a,b,c,d){
+        console.log(a+b+c+d);
+    }(1,2,3,4)   
+    //考查点就是立即执行函数，直观上显然会报错(不是表达式)，但实际运行结果并没有报错；计算机会拆解这个语句，其变为了一个函数声明和一个括号表达式，分别开始运行；计算机不愿意去经常报错，实在有很大的错误才报错；
+    function test(a,b,c,d){
+        console.log(a+b+c+d);
+    }
+
+
+
+    （1,2,3,4）；
+
+
+
+
+    // 闭包
+    // 作用域就是函数的一个属性，对吧，就是scope属性而已；
+    // 闭包的效果，里面函数活的比外面函数还长，生命周期更长，发生混乱了
+    // 虽然闭包有坏处，但是也可以发挥一些积极正向的作用；
+
+    //函数累加器：
+    function add(){
+        var num = 0;
+        function a(){
+            console.log(++num);
+        }
+        return a;
+    }
+    var myAdd = add();
+    myAdd();
+    myAdd();
+    myAdd();
+
+    // 缓存  :现象就是你这次所使用的是上次处理过的；
+    function test(){
+        var food = "apple";
+        var obj = {
+            eatFood : function(){
+                if(food != ""){
+                    console.log("I am eating" + food);
+                    food = "";
+                }else{
+                    console.log("There is nothing!");
+                }
+            },
+            pushFood : function(myFood){
+                food = myFood;
+            }
+        }
+        return obj;
+    }
+    var person = test();
+    person.eatFood();//I am  eating apple;
+    person.eatFood();// There is nothing!
+    person.pushFood("banana");
+    person.eatFood();//I am eating banana;
+    //test defined ---->  Go  执行时，AO   两个函数使用的还是test的AO/GO，即使执行时候会产生自己的AO 但是food变量依旧在test的AO上，
+
+
+    // 使用立即执行函数解决
+    function test(){
+        var arr = [];
+        for(var i=0; i<10; i ++){
+            arr[i] = function(){
+                console.log(i);
+            }
+        }
+        return arr;
+    }
+    var myArr = test();
+    for(var j=0; j<10; j++){
+        myArr[j]();
+    }//10 10 10 10 10 10 10 10 10 10 
+
+    // 使用立即执行函数解决
+    function test(){
+        var arr = [];
+        for(var i=0; i<10; i++){
+            (function(j){
+                arr[j] = function(){
+                    console.log(j);
+                }
+            }(i))
+        }
+    }
+    var myArr = test();
+    for(var j=0; j<10; j++){
+        myArr[j]();
+
+    }//0 1 2 3 4 5 6 7 8 9 
+
+    //闭包：test()函数定义期间生成了GO全局对象，执行时生成了AO对象，执行过程中a()函数定义时，用的就是test()函数的GO/AO对象，函数结束后，返回了a对象，之后执行a函数才会生成AO对象；
+    function test(){
+        var temp = 100;
+        function a(){
+            console.log(temp);
+        }
+        return a;
+    }
+    var demo = test();
+    demo();
+
+    // 阿里面试题
+    var x = 1;
+    if(function f(){}){
+        x += typeof f;
+    }
+    console.log(x);//1undefined
+    //分析：if()括号内是判断条件，首先里面的语句不是布尔值为flase的六个值，所以为true，下面的语句可以顺利执行，（function f(){}）括号括起来，里面不再是函数声明而是表达式，里面的f就消失了，typeof f 首先这是不会报错的（typeof 未声明的变量不会报错，会返回字符串undefined） 
+    
+</script>
+ 
+</body>
+</html>

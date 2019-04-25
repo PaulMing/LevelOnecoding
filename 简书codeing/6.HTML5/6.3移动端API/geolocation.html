@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // window.navigator.geolocation;//navigator对象上的属性，获取用户地理位置信息
+        // 需要"翻墙",否则谷歌浏览器默认使用谷歌地图中的用户位置
+        function success(e){
+            console.log('success',e);
+        }
+        function error(e){
+            console.log("error",e);
+        }
+        var options = {
+            timeout: 1000,
+            enableHighAccuracy: true
+        }
+        // 方法：
+        // 三个参数 -> 获取位置成功的回调函数，失败的回调函数，options配置参数
+        window.navigator.geolocation.getCurrentPosition(success,error,options);   
+        // 设备的地理位置发生改变自动被调用
+        var watcher = window.navigator.geolocation.watchPosition(success,error,option);
+        window.navigator.geolocation.clearWatch(watcher);//清除监听 -> 与watchPosition()配对使用
+        
+       
+        // 属性：
+        window.navigator.geolocation.latitude;//纬度；
+        longitude;//经度；
+        altitude;//海拔
+        accuracy;//定位精准度 m
+        altitudeAccuracy;//海拔精准度 单位m
+        heading;//方向
+        speed;//速度
+    
+    </script>  
+</body>
+</html>

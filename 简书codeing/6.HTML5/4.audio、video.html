@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        audio{
+            width: 600px;
+            height: 300px;
+        }
+        video{
+            width: 400px;
+            height: 300px;
+        }   
+    </style>
+</head>
+<body>
+    <audio id="audio" src="./音乐.flac"  controls autoplay loop preload="none"></audio>
+    <video id="video" src="./视频.mp4" controls  preload="none" loop autoplay poster="http://img0.imgtn.bdimg.com/it/u=116895718,4074171296&fm=26&gp=0.jpg"></video>
+
+    <!-- 
+        属性：
+        controls;  控件属性;//若不写，系统设置audio默认是display:none !important; video会显示大小，但没内容  -> chrome浏览器
+        autoplay;  自动播放;//不同浏览器效果不同,chrome不会自动播放(内部有防止噪音的设置)，但服务器下访问如果有缓存的话，其会自动播放
+        loop; 循环播放音视频
+
+        preload= 'none';/'metadata';/'auto';//预加载，规定是否在页面加载后载入音视频 
+        // 默认值为auto -> 浏览器会加载其认为适量的媒体内容
+        // none -> 浏览器不会加载媒体内容
+        // metadata: 元数据(时长/比特率/音视频帧大小等)，浏览器会加载完元数据后，载入媒体内容
+
+        poster = "1.jpg";//video独有 -> 视频封面
+
+        //多类型资源 -> 不同浏览器能识别的资源type类型不同 -> 解决方案：写入同一资源的不同文件格式，浏览器能识别哪个便识别哪个即可
+        // audio、video都适用
+        <audio>
+            <source src="1.mp3" type="audio/mpeg">
+            <source src="1.ogg" type="audio/ogg">
+        </audio>
+     -->
+   
+    <script>
+        var audio = new Audio();//video不能采用此种方式，其没有构造函数Video();
+        //var audio = document.createElement('audio');
+        audio.src="./音乐.flac";//特性
+        audio.controls = true;//audio.setAttribute('controls','controls');//controls=true/controls;都OK
+        audio.setAttribute('autoplay','autoplay');    
+        document.body.appendChild(audio);
+
+        // 方法        
+        audio.play();//播放
+        audio.pause();//暂停      
+        audio.load();//重新加载音频/视频 -> 加载后其会立即播放    
+
+        // 属性
+        audio.volume = 1;//0~1;//音量调节
+        audio.playbackRate = 2;//1.0默认正常速度  >1表示“快进”  0~1表示“慢放”  负值表示回放;//不同浏览器效果不同
+
+        audio.currentTime;//可读可写 ->音频/视频播放的当前位置
+        audio.duration;//返回当前音频/视频的总时长 ->单位s
+
+        // audio.played;//返回对象，一共多少段 ->点击几下(正向点击，反向点击不计算入内)
+        audio.played.start(0);
+        audio.played.end(0);//传入参数，表示当前段开始/结束的位置,返回的是时长 -> 单位s
+
+        audio.buffered;//返回对象，缓存过程中分为几段，一般length都为1,大点音视频可能需要分几段来缓存
+        audio.buffered.start(0);
+        audio.buffered.end(0);
+
+        audio.seekable;//返回用户可跳转的时间段，用户可随便点击，返回值为1
+
+        audio.paused;//返回布尔值，是否暂停
+        audio.seeking;//返回布尔值，是否调到一个新的播放点
+        audio.ended;//返回布尔值，播放完媒体并且停下来为true,如果有loop属性，其永远为false,同时中间点击暂停，其也是false，聚焦点：媒体全部播放完成并且停下来
+ 
+        audio.canPlayType('audio.mp3');//判断媒体内容类型是否支持某种格式，主要是处理兼容性的 -> 浏览器根据其设定不同的反馈
+        var audio = new Audio();
+        if(audio.canPlayType('audio.mp3')){
+            audio.src = "./1.mp3";
+            audio.play();
+        }else{}
+
+    </script> 
+</body>
+</html>

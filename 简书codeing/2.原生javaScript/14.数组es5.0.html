@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 扩展方法和核心实现 -->
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <script>
+        var personArr = [
+            {name: "赵丽", sex: "m",age:18},
+            {name: "冯天天", sex: "fe", age:19},
+            {name: "刘化", sex: "fe", age:20},
+            {name: "王网", sex: "fe", age:21},
+            {name: "孙体", sex: "m", age:22},
+        ]
+        // forEach(function(ele,index,self){});
+        // 第一个参数为匿名函数，系统进行调用，第二个参数选填；若是填写其表示this指向，不填，函数中this指向window;
+        // 数组循环的圈数是数组的length; 每循环一次操作一次；
+        personArr.forEach(function(ele,index,self){
+            this[index].innerText = ele.name;
+            console.log(this);
+
+        },document.getElementsByTagName("li"))
+        // 封装底层实现方法 -> 首个参数必填，循环圈数length, 函数的this指向  
+        Array.prototype.myForEach = function(func){
+            var _arr = this, len = _arr.length,  params = arguments[1] || window;
+            for(var i=0; i<len; i++){
+                func.apply(params,[_arr[i],i,_arr])
+            }
+        }    
+        personArr.myForEach(function(ele,index,self){
+            this[index].innerText = ele.name;
+            console.log(ele,index,self,this);
+        },document.getElementsByTagName("li"))
+
+
+
+
+        // filter();  聚焦返回值
+        // 过滤方法，返回新数组，根据return true/false来决定是否该元素返回到新数组中
+        var newArr = personArr.filter(function(ele,index,self){
+            // if(ele.sex == "fe"){
+            //     return true;
+            // }else{
+            //     return false;
+            // }
+            // 简化版
+            return ele.sex == "m";   
+        },document.getElementsByTagName("li"))
+
+        // 封装底层实现方法
+        Array.prototype.myFilter = function(func){
+            var _arr = this, 
+                len = _arr.length,
+                params = arguments[1] || window,
+                newArr = [];
+            for(var i=0; i<len; i++){
+                func.apply(params,[_arr[i],i,_arr]) ? newArr.push(_arr[i]) : "";
+            }
+            return newArr;
+        }
+        var newArr = personArr.myFilter(function(ele,index,self){
+            return ele.sex == "m";
+        })
+
+
+
+        // map: 映射，返回新数组  集中操作；聚焦点是return 值；
+        // es5.0这些方法都不改变原数组，但如果操作的是引用值，就会改变原数组中的值，所以拿到的_arr[i]每一个对象最好都利用一下深度克隆的方法；
+        var newArr = personArr.map(function(ele,index,self){
+            ele.name = ele.name + 10;
+            return ele;
+        })
+        console.log(personArr);//元素的值也改变了
+        newArr[0].name = "dfafadafaf"; console.log(personArr[0].name);//原数组的值也改变了，如果开发中以为是拿到的是复制的，随意操作，实际已经更改了原数组； */
+
+        // 封装底层实现方法
+        Array.prototype.myMap = function(func){
+            var _arr = this, 
+                len = _arr.length,
+                params = arguments[1] || window, 
+                newArr =[];
+            for(var i=0; i<len; i++){
+                // 解决引用值的bug;
+                // newArr.push(deepClone({},func.apply(params,[_arr[i],i,_arr])))
+                newArr.push(func.apply(params,[_arr[i],i,_arr]))
+            }
+            return newArr;
+        }
+        var newArr = personArr.myMap(function(ele,index,self){
+            ele.name = ele.name + 10;
+            return ele;
+        })
+        console.log(newArr);
+
+
+
+
+        // every   返回值为布尔值，所有都满足条件return true，才返回true;聚焦点是查询；是否满足规则
+        // some   返回值为布尔值，只要有一个满足条件，即返回true；若是不写return,默认return undefined; 也是false吧;
+        var flag = personArr.every(function(ele,index,self){
+            // 所有数据返回true，flag才为ture;
+            // if(ele.age>20){
+            //     return true;
+            // }
+            return ele.age > 20;
+        })
+        console.log(flag);//false;
+        
+        // 封装实现方法：
+        Array.prototype.myEvery = function(func){
+            var _arr = this,
+               len = this.length;
+               params = arguments[1] || window,
+               flag = true;
+            for(var i=0; i<len; i++){
+                if(!func.apply(params,[_arr[i],i,_arr])){
+                    flag = false;
+                    break;//break 直接跳出for循环
+                }
+            }
+            return flag;
+        }
+        var flag = personArr.myEvery(function(ele,index,self){
+            return ele.age > 20;
+        })
+
+
+        // reduce:从左向右去遍历；执行后返回一个值，系统提供的方法只有两个参数，当然也可以自定义添加其他参数；
+        // 第一个参数函数中四个参数 prevValue curValue index self，第二个参数必填的initialValue，之前的方法是选填的 
+        // 第二个参数并不是第一个函数的this指向，其代表的是prevValue,cerValue还是ele,
+        var initialValue = {name: "huahua"}
+        personArr.reduce(function(prevValue,ele,index,self){},initialValue)
+        // 封装实现方法：每次遍历都会将第一次函数的返回值赋给第一个参数，不写默认return undefined;
+        Array.prototype.myReduce = function(func,initialValue){
+            var _arr = this, 
+                len = this.length,
+                params = arguments[2] || window;
+            for(var i=0; i<len; i++){
+                initialValue = func.apply(params,[initialValue,_arr[i],i,_arr])
+            }
+            return initialValue;
+        }
+        // 手动添加第三个参数；
+        var lastValue = personArr.myReduce(function(pervValue,curValue,index,self){
+            prevValue.name += 1;
+            return pervValue;
+            console.log(this);
+        },initialValue,{name:"huahua"})
+
+        // reduce();等同于reduceleft;//遍历数组从左向右    
+        // reduceRight;//遍历数组从右向左
+        Array.prototype.myReduce = function(func,initialValue){
+            var _arr = this, 
+                len = this.length,
+                params = arguments[2] || window;
+            for(var i=len; i>0; i--){
+                initialValue = func.apply(params,[initialValue,_arr[i],i,_arr])
+            }
+            return initialValue;
+        }
+
+        
+
+
+        // 解析document.cookie;
+        var str = document.cookie;
+        var str = "BAIDUID=8D03601F599F3FDFA8E8594A7CDB8B62:FG=1; BIDUPSID=8D03601F599F3FDFA8E8594A7CDB8B62; PSTM=1528076956; BD_UPN=12314753; BDORZ=B490B5EBF6F3CD402E515D22BCDA1598; MCITY=-176%3A; ispeed_lsm=2; BD_HOME=1; H_PS_PSSID=1462_21108_18559_20929; BDRCVFR[feWj1Vr5u3D]=I67x6TjHwwYf0; BD_CK_SAM=1; PSINO=2; delPer=0; BDRCVFR[S4-dAuiWMmn]=I67x6TjHwwYf0; H_PS_645EC=5b86skz6vercoHFttcnOimdmjW%2BmlpomKQPjAni3LpXyIwqjqXcPcjSYXHBlnDis2w";
+        
+        function parseCookie(str){
+            var arrCookie = str.split("; ");
+            var cookieObj = {};
+            arrCookie.reduce(function(prevValue,curValue,index,self){
+                var curArr = curValue.split('=');
+                cookieObj[curArr[0]] = curArr[1];
+                return prevValue;
+            },cookieObj)
+            return cookieObj;
+        }
+
+
+
+
+
+
+
+
+
+        
+
+
+        
+
+
+
+
+
+
+    
+    
+    </script>
+    
+    
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        ul li{
+            width: 100px;
+            height: 100px;
+            background: red;
+        } 
+        .demo{
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        body{
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo" style="width:100px;height:100px;background:red"></div>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+    <script src="jQuery3.3.1.js"></script>
+    <script>     
+        // jQuery事件发展史
+        bind();/unbind();//底层封装原生js中的addEventListener();
+        // jquery中的事件底层封装的都是addEventListener();没有句柄的方式
+        // 验证：
+        $("button").bind("click",function(){
+            console.log("jquery");
+        })
+        $("button").bind("click",function(){
+            console.log("jqueryAPI");
+        })
+
+        // 绑定 --> 解除事件
+        $("button").bind("click",function(){
+            console.log("jquery");
+        })
+        $("button").unbind("click",function(){ 
+        })//方式错误，js引擎解析代码(先绑定后解除，等同于没绑定)
+        // --> 正确方式
+        $("button").bind("click",function(){
+           $(this).html("").unbind("");
+        })
+
+        // 简化操作：
+        // $("button").bind("click",function(){})  --->> 简化操作 --> $("button").click(function(){});
+
+        // --->> one();[底层封装bind()/unbind();绑定后解除]
+
+        // --->>> 以上绑定的缺陷，其只能对当前存在的元素绑定事件处理函数，后续再添加也不会进行绑定；解决方案：事件代理(委托)
+        delegate();undelegate();//3.0后废弃
+        $("parent").delegate(".btn","click",function(){
+            console.log(this);//this指向事件源对象
+        })
+        // 补充：live();/die(); 1.7后废弃；//其是把选定元素的指定事件委托给document
+
+        // -->> 如今使用on();/off();即可
+        // 两种形式:
+        // (实现类似bind();/unbind()的函数功能)
+        $(".demo").on("click",function(){
+            console.log("click")
+        })
+        // (实现类似delegate();/undelegate())
+        $("ul").on("click","li",function(){
+            console.log(this);
+        })
+
+        
+        // 面试题：下述两个事件绑定的区别  
+        $(document).ready(function(){});//绑定的本质：document.addEventListener("DOMContentLoaded",fn,false);//DomContentLoaded事件是在dom树解析完成后便执行(系统调用，参考原生js中的js加载时间线)，IE不支持(没有)该事件，jQuery底层封装来模拟该事件；
+        window.onload = function(){};//表示整个document文档加载完成(html/css/js/图片资源等)后执行；(若是有1kb的资源没加载成功都不会触发该事件，所以不要把主程序写在该函数体内)
+        
+        // 总结：$(document).ready(fn);执行必然在window.onload = fn;之前，--->> dom解析完成必然发生在整个文档加载完成之前，即使只有html文件，没有css样式,js以及img，执行顺序依旧不会改变，只不过两个事件间隔时间很短，其也是先后执行；
+        
+        
+
+        // 事件绑定的方式：1.on("事件类型","选填",function(){}); 2.事件方法的使用;//相比于第2种方式，第1种方式可以使用”事件委托“
+        $(".demo").on("click",function(){
+            console.log("click")
+        })
+        $("ul").on("click","li",function(){
+            console.log(this);//<li></li>
+            console.log(event.target);//<li></li>
+        })//点击li,li会冒泡向父元素ul
+        $(".demo").click(function(e){console.log(e)})
+
+
+
+        // 事件类型：
+        // 鼠标事件：
+        // hover();参数为两个函数，底层封装的便是mouseenter/mouseleave
+        $("ul li:first-of-type").hover(function(e){
+            //阻止冒泡：jQuery内部已处理好了兼容性
+            e.stopPropagation();
+            console.log("enter");
+        },function(){
+            console.log("leave");
+        })
+        // click(); dblclick();每双击触发一次(若一直点击，除以2计算次数(单击也是如此)，500ms以内来区分一次还是两次)
+        $(".demo").click().dblclick();
+        // 其他
+        $(".demo").mousedown(function(){
+            console.log("down");
+        }).mouseenter(function(){
+            console.log("enter");
+        }).mouseleave(function(){
+            console.log("leave");
+        }).mousemove(function(){
+            console.log("move");
+        }).mouseup(function(){
+            console.log("mouseup");
+        })
+
+        
+        // 键盘事件(input也可监听键盘事件，dom元素基本都可监听。并非只有document)
+        // document不用加引号
+        $(document).keydown(function(e){
+            console.log('down')
+        }).keypress(function(){
+            console.log("press");
+        }).keyup(function(){
+            console.log("up");
+        })
+
+
+        // 文本操作事件(没有原生js中的input事件)
+        $("input").focus(function(){
+            console.log("focus");
+        }).change(function(){
+            console.log("change");
+        }).blur(function(){
+            console.log("blur");
+        })
+
+        // 窗体操作类window上的事件
+        // $(document);$(window) 两种选择元素没有加引号；
+        $(document).scroll(function(e){
+            console.log("scroll",$(window).scrollTop());
+        })
+
+
+        // 基本事件处理
+        // one();//一次性事件处理函数
+        $("div").one("click",function(){})
+
+        // trigger();自动触发事件，不用交互行为
+        $(".demo").one('click',function(e){
+            console.log("demo");
+            // 手动/自动触发事件   执行到此处就触发mousedown事件
+            $(".demo").trigger("mosedown");
+        })
+
+        // toggle();切换,隐藏->显示,显示->隐藏，然后执行回调函数；(聚焦点：display:none/block)
+        // toggle();已经展示的隐藏，隐藏的展示出来,然后执行回调函数
+        $("ul li:first").toggle(function(){});
+
+        // off(); 移除事件 --> on(); 若不写参数则移除所有绑定的事件
+        $(".demo").off();
+        $('.demo').on('click',"li",function(e){
+            $(this).css("background","blue");
+            $(this).off("onmouseenter") 
+        })
+
+
+        // 事件对象event:(jQuery已经封装了兼容性写法)
+        e.preventDefault();
+        e.stopPropagation();
+        e.target;
+        e.pageX/pageY;//相对于视口位置的X/Y坐标
+        e.which;
+
+    </script>    
+</body>
+</html>

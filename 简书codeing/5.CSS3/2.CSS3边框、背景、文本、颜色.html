@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .demo{
+            width: 100px;
+            height: 100px;
+            padding: 50px;
+            border: 10px solid #ccc;
+            /* background: red; */
+            /* box-shadow:  4px 2px 5px 6px pink outset; */
+            background-image: url(http://img5.imgtn.bdimg.com/it/u=623026210,1720830229&fm=26&gp=0.jpg);
+            background-size: 100px 100px;
+            background-repeat: no-repeat;
+            /* background-clip: padding-box; */
+            /* background-position: top right; */
+            background-attachment:fixed;
+
+            /* 文本效果 */
+            text-shadow: 12px 6px 3px red;
+        }
+        p{
+            font-family:'myFont';
+        }
+        /* @font-face{
+            font-famil:'myFont';
+            src: url('./fontFamily/font234/Iriccione-Light.otf');
+        } */
+        .box{
+            width: 100px;
+            height: 100px;
+            text-overflow:clip;
+            white-space: nowrap;
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+        .wrapper{
+            width: 300px;
+            height: 200px;
+            border: 1px solid #ccc;
+            background-image: linear-gradient(30deg,red 10px,yellow 50px,blue 60px);     
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        边框border
+        border: 1px solid #ccc;//复合属性同时也是简写属性;//CSS2.0
+        // solid实线;dashed虚线;dotted点;double双线;
+
+        border-radius:50%;//圆形 ->简写属性 ->巧妙应用制作1/4圆,半圆
+        border-radius: 10px 20px;//左上/右下10px; 右上/左下20px
+        border-radius: 10px 20px 30px;//左上10px; 右上/左下20px; 右下30px;
+        // 拆分写法->先上下(top/bottom)后左右 ->可写两个值
+        border-top-left-radius: 10px;//上、左都为10px
+        border-top-left-radius: 10px 20px;//上10px;左10px
+        border-bottom-right-radius: 20px;
+        //补充一种写法
+        border-radius: 10px 30px 40px 40px/20px 20px 30px 30px;//可写8个值,前后配对 ->10px 20px构成border-top-left-radius: 10px 20px;
+
+        border-image: url() 100 stretch;//引入图片、按xx切割、四个角填充完成后，其余部分如何填充
+        // 拆分写法
+        border-image-source: url();//其也可写渐变色[线性/径向]:border-image-source: linear-gradient();
+        border-image-slice: xx;//省略单位px,只能写数值/%,表示按xx切割，开发中常常按“整数”切割;默认值100%(四个角会填充满，其余为空) ->其也是简写属性：border-image-slice: 10 20 30 40; border-image-slice: 10 20;
+        border-image-repeat:stretch//四个角填充完成后，其余部分如何填充 ->默认值stretch拉伸; repeat重复; round[铺满:内容宽或高/截取下的宽或高=数;//此数字四舍五入来决定放几个图片];space,
+        border-image-width: 1/50px/auto;//border-image所占宽度:默认值1表示1倍;auto表示其取值border-image-slice，但要注意的是其取到的是有单位的值,例如border-image-slice:100,border-image-width:100px;
+        border-image-outset: xxpx;//border-image向外扩展xxpx
+
+        box-shadow: inset 4px 2px 5px 6px #ccc;//复合属性,不写默认为外阴影outset;//x轴偏移量(可写负值) y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色 ->阴影扩散方向都是从border开始扩散，扩展半径表示阴影的宽/高都进行扩展xxpx
+        //同一盒子可同时加多个阴影(不限量)，阴影之间用逗号","分隔 ->利用此可制作很多“炫酷”效果 ->先设置的阴影在最上面(z轴)
+        box-shadow: inset 4px 2px 5px 6px #ccc, -4px -2px 6px #000, 4px 3px 3px 6px #ff0, 6px 2px 4px 6px #f40;
+    -->
+    <!--
+        // 背景图片/颜色包含content+padding,不包含border
+        background: url() no-repeat left top/100% 100%;//背景位置和大小放到一起，中间要用"/"分隔开   
+        background: red;//等同于background-color:red;
+        background-image: url()/渐变函数;//括号内加不加引号都OK
+        background-repeat: repeat/no-repeat/repeat-x/repeat-y/inherit;//默认值为repeat
+        background-origin: border-box/padding-box(默认值)/content-box;//背景图片的起始位置
+        background-clip: border-box(默认值)/padding-box;/content-box;//背景图片从某位置开始剪切->例如border-box，其表示超出border以外的部分进行剪除
+        background-size: auto(默认值)/200px/20%/cover/contain;
+        // 属性值为数值时：设置两个表示宽、高;仅设置一个值,等比例缩放
+        // cover: 等比例放大缩小背景图片,最先"符合"内容区宽/高的较大值
+        // contain: 等比例放大缩小背景图片,最先"符合"内容区宽/高的较小值
+
+        // 如果仅写一个值，另一个值默认为center;
+        background-position: 100px 100px;//设置背景起始位置
+        background-position: 0% 50%;//左上角为0% 0%; 右下角为100% 100%
+        background-position: top left;//top/bottom/left/right可任意组合
+        // 居中设置
+        background-position: center;
+        background-position: 50% 50%;//其同"快元素居中定位"略有不同,背景图片直接居中展示了
+
+        补充：
+        background-attachment:scroll(默认)/local/fixed;//scroll表示图片相对于容器定位，容器滚动图片不会随之滚动，但其会随着外层祖先元素/body滚动 ->其滚动聚焦点为祖先元素/body; local表示图片相对于"容器内容"定位，容器内容的背景图片，所以容器滚动其也滚动; fixed表示图片相对于视口固定; ->测试过程中body内设置容器div,div中内容超出盒子并且设置overflow-y:scroll;
+
+        // 渐变的背景颜色(其等同于设置背景图片) ->函数执行
+        线性渐变: background-image: linear-gradient(30deg/t0 bottom,red 10px,yellow 50px,blue 60px);//首个参数表示方向：30deg ->顺时针变化,其可简写为to bottom/to left/to top; 其它参数：颜色值、xxpx或%表示该颜色从什么位置开始
+        径向渐变: background: radial-gradient(circle at(50% 50%),red 10px,yellow 50px,blue 60px);//首个参数表示:圆形/椭圆(circle/ellipse)圆心的位置;其它参数同上    
+    -->
+    <!-- 
+        文本
+        text-shadow: 6px 8px 5px #ccc;//x轴偏移量(可设负值) y轴偏移量 模糊程度 颜色 ->其与盒子阴影不同，不分外阴影、内阴影
+        white-space: nowrap/normal/pre/pre-wrap;
+        text-overflow: clip/ellipsis;//只有两个属性值-> clip:修剪; ellipsis:省略符号;
+        溢出容器，打点展示
+        white-space;nowrap;overflow:hidden;text-overflow:ellipsis;
+        其它：word-break;text-align;word-spacing;letter-spacing;text-indent;vertical-align;line-height;text-decoration
+        补充：-webkit-text-stroke: 1px red;//文本描边->描边粗细、颜色
+
+        引入字体 ->@font-face直接写在样式中即可(也只能写在样式中)
+        @font-face{
+            font-family:'myFont';//自定义引入字体的名字
+            src:url(),
+                url(),
+                url('Sansation_Light.eot')format('eot');//format();字体格式提示器->帮助浏览器更好识别字体后缀名; 可引入多种字体，中间使用逗号分隔
+        }
+        p{
+            font-family:'myFont';
+        } 
+    -->
+    <!-- 
+        多列布局
+        columns: cloumn-width column-count;//多列布局 -> 实现报纸、杂志等多列布局效果
+        column-width: 100px;//每列宽度，根据容器宽度自适应-> 一般都不设置，直接设置column-count
+        column-count: 3;//3列
+        column-gap:12px;//列与列之间的宽度,不设置默认为浏览器font-size大小(或者自己设置font-size大小)
+        column-rule: 1px solid #ccc;//包裹列,复合属性:column-rule-width/style/color;->等同于border
+        column-span: 1/all;//该属性设置在布局元素的子元素上,表示子元素是否可以跨列->默认值1，不支持跨列; all可跨列 ->应用场景：新闻标题要横跨所有内容列
+    -->
+    <!-- 
+        颜色值
+        颜色别名: red blue green
+        颜色进制: #f40  #ffffff->简写#fff
+        颜色函数: rgb(); rgba();
+        rgba(0~255,0~255,0~255,0~1);//取值也可为0%~100%;超出范围的数值将被截取至取值极限，透明度不可为负值
+        HSL();//H:色调  S:饱和度  L:亮度
+        补充：transparent透明色也是颜色值
+
+        透明度 opacity:[0~1];//0:完全透明,1:完全不透明,可简写0.6->.6
+     -->
+    <div class="box">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Modi id quaerat beatae quae tenetur quibusdam impedit culpa laudantium inventore quia! Autem a corporis porro dolores commodi eligendi sunt nisi iste.</div>
+    <div class="demo">所有主流浏览器均支持所有主流浏览器均支持所有主流浏览器均支持</div>
+    <div class="wrapper"></div>
+</body>
+</html>

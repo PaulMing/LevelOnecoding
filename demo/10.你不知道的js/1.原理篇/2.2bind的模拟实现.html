@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // bind()/call()/apply();的区别
+        // 1.其都可改变this指向，函数中首个参数为this新指向的元素，其它参数为函数的形参，若是无参数，this默认指向window
+        // 2.其都是函数原型链上的方法 -> Function.prototype -> 所有函数都可调用其改变this指向
+        // 3.call()/apply();//改变this指向后该函数会执行； bind();//改变this指向后返回新函数
+
+        // 手动封装bind();
+        // 测试探寻bind();的使用规则
+        // demo1
+        var a = 10;
+        var tre = {
+            a: 30,
+        }
+        function show(){
+            var a = 20;
+            console.log(this.a);
+        }
+        show();//10
+        // show.call(tre);//30
+        // show.bind(tre);//其改变了this指向，返回新函数，但函数并未执行，所以无效果
+        var newShow = show.bind(tre);
+        newShow();//30
+
+        // demo2
+        var x = 10;
+        function show(a,b){
+            console.log(this.x,a,b);
+        }
+        show(1,2);//10,1,2
+        var tre = {
+            x = 20
+        }
+        var newShow = show.bind(tre,1,2);
+        newShow();//20,1,2
+        // bind();改变this指向，若有参数传递，实际系统会将该参数传到新函数的形参中
+        var newShow = show.bind(tre,1);
+        new Show(2);//20,1,2
+        var newShow = show.bind(tre);
+        new Show(1,2);//20,1,2 
+
+        // demo3
+        console.log(new newShow().constructor);//ƒ show(){var a = 20;console.log(this.a)};//constructor指向的构造函数还是之前的show();
+
+        // 综上：
+        // 手动封装bind()满足条件：1.改变this指向； 2.参数传递； 3.constructor的指向
+        Function.prototype.newBind = function(target){
+            // target: this指向的新元素
+            var self = this;
+            var args = [].slice.call(arguments,1);
+            var temp = function(){};
+            var f = function(){
+                var _arg = [].slice.call(arguments,0);
+                return self.apply(this instanceof temp ? this :(target || window),args,concat(_arg));
+            }
+            temp.prototype = self.prototype;
+            f.prototype = new temp();
+            return f;
+        }    
+    </script>    
+</body>
+</html>

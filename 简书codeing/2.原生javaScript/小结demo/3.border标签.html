@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>关于border</title>
+    <style>
+        .box{
+            border-width: 6px;
+            border-style: solid dashed dotted double;
+            border-color: red green pink rgb(236, 5, 5);
+            /* border-top: 6px solid #ccc; */
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        border既是复合属性又是简写属性: border: 2px solid #ccc;//width/color可省略,但style不可以省略,style省略此border不显示(width默认3px;color默认black;)
+        border-width: thin medium thick 10px;//thin：细边框,medium:中等, thick:粗;也可以直接写px
+        border-style: solid dashed dotted double;//实线，虚线，点，双实线
+        border-color: red green pink #ccc;
+
+        border-width/color: thin以及red颜色值实际是px/#ccc的别名，所以可以混用
+        同时上述都是简写属性：border-color: red pink;//上下为red,左右为pink;
+     -->
+    <div class="box">hello javaScript</div>
+</body>
+</html>

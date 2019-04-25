@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>五环(fixed定位的灵活应用)</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        /* fixed的经典用法 */
+        .wrapper {
+            width: 380px;
+            height: 180px;
+            /* position:absolute 相对于文档流
+            position:fixed   相对于视口 */
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            margin-top: -90px;
+            margin-left: -160px;
+            background-color: pink;
+        }
+        /* 分组选择器的使用 */
+        .circle1,
+        .circle2,
+        .circle3,
+        .circle4,
+        .circle5 {
+            width: 100px;
+            height: 100px;
+            /* background-color:white; */
+            border-width: 10px;
+            border-style: solid;
+            border-radius: 50%;
+        }
+        .circle1 {
+            border-color: blue;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .circle2 {
+            border-color: black;
+            position: absolute;
+            left: 130px;
+            top: 0;
+            z-index: 6;
+        }
+        .circle3 {
+            border-color: red;
+            position: absolute;
+            left: 260px;
+            top: 0;         
+        }
+        .circle4 {
+            border-color: yellow;
+            position: absolute;
+            left: 55px;
+            top: 55px;
+        }
+        .circle5 {
+            border-color: green;
+            position: absolute;
+            left: 185px;
+            top: 55px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+        <div class="circle3"></div>
+        <div class="circle4"></div>
+        <div class="circle5"></div>
+    </div>
+</body>
+</html>

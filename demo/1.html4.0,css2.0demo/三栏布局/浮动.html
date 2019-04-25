@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .left,
+        .right{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+        .left{
+            float: left;
+        }
+        .right{
+            float: right;
+        }
+        /* 中间需要设置高度，否则不显示 */
+        .container{
+            height: 100px;
+            background: yellow;
+            margin-left: 110px;
+            margin-right: 110px;
+        }    
+    </style>
+</head>
+<body>
+    <!-- 三栏布局：即实现两端固定中间自适应；前端开发中必会 -->
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="container"></div>
+</body>
+</html>

@@ -1,0 +1,692 @@
+*{
+    margin:0;
+    padding:0;
+    list-style:none;
+    text-decoration:none;
+}
+html,body{
+    width:100%;
+    height:100%;
+    
+}
+.iphone6_plus{
+    width:414px;
+    height:3000px;
+    margin:50px auto;
+    position:relative;
+    background-color: rgb(245, 245, 245);
+   
+    
+}
+/* 顶部框 */
+.m_common_tip{
+    width:414px;
+    height:45px;
+    background-color:#333333;
+    border-color:rgb(0,0,0);
+}
+.m_common_tip .m_common_tip_left1{
+    float:left;
+    width:33.1167px;
+    height:45px;
+    text-align:center;
+    line-height:45px;
+}
+.m_common_tip .m_common_tip_left1 img{
+    width:10px;
+    height:10px;
+}
+.m_common_tip .m_common_tip_left2{
+    float:left;
+    width:41.4px;
+    height:45px;
+    text-align:center;
+    line-height:45px;
+}
+.m_common_tip .m_common_tip_left2 img{
+    width:30px;
+    height:30px;
+    vertical-align:middle;
+    /* margin-top:7.5px; */
+    /* 问题：必须再加margin-top调节居中或者使用vertical-align, line-height不起作用 */
+}
+.m_common_tip .m_common_tip_left3{
+    float:left;
+    width:235.967px;
+    height:43px;
+    padding-top:2px;
+    text-align:center;
+    line-height:45px;
+    font-size:14px;
+    font-weight:400;
+    color:rgb(255,255,255);
+    
+}
+.m_common_tip .m_common_tip_left4{
+    float:left;
+    width:103.5px;
+    height:43px;
+    background-color:rgb(246,53,21);
+    padding-top:2px;
+    text-align:center;
+    line-height:45px;
+    font-size:14px;
+    font-weight:400;
+    color:rgb(255,255,255);
+}
+/* 顶部搜索框 */
+.search_wrapper{
+    width:414px;
+    height:55.2167px;
+    background:#e8e8e8;
+    position:absolute;
+  
+    z-index:20;
+    
+
+}
+.search_wrapper .search_wrapper_top{
+    width:394px;
+    height:55.2167px;
+    margin:0 auto;
+    background-color:rgb(194, 183, 183);
+    position:relative;
+}
+.search_wrapper .search_wrapper_top .search-icon{
+    float:left;
+    width:33.1167px;
+    height:55.2167px;  
+    line-height:55.2167px;
+    text-align:center;
+}
+.search_wrapper .search_wrapper_top .search-icon a img{
+    width:25px;
+    height:25px;
+    /* 问题：vertical-align不是以a为基准 */
+    vertical-align: middle;
+}
+
+.search_wrapper .search_wrapper_top form{
+    float:left;
+    width:311.183px;
+    height:55.2167px;
+}
+.search_wrapper .search_wrapper_top  form .search-main{
+     width:311.183px;
+     height:33.1333px;
+     border-radius:16.5667px;
+     border-color:rgb(0,0,0);
+     margin-top:11px;
+     margin-left:10px;
+     position:relative;
+     background-color:green;
+}
+.search_wrapper .search_wrapper_top form .search-main .logoicon{
+    display:inline-block;
+    width:22.0834px;
+    height:22.0833px;
+    margin:5.5px 0px 0 16.56px;
+}
+.search_wrapper .search_wrapper_top form .search-main .logoicon img{
+    width:22.0834px;
+    height:22.0833px;
+}
+.search_wrapper .search_wrapper_top form .search-main .sousuo{
+    display:inline-block;
+    width:15.4667px;
+    height:15.4667px;
+    margin:5.5px 5.5px 0 11px;
+    
+}
+.search_wrapper .search_wrapper_top form .search-main .sousuo img{
+    width:15.4667px;
+    height:15.4667px;
+    margin-bottom:2px;
+}
+.search_wrapper .search_wrapper_top form .search-main .mainipt{
+    display:inline-block;
+    width:218.366px;
+    height:33.1333px;
+    padding:0 10 0 82px;
+    /* margin-top:5px;   问题：这样设置的margin-top是基于那个盒子的 */
+    position:relative;
+    top:-5px;
+}
+.search_wrapper .search_wrapper_top form .search-main .mainipt input{
+    width:218.367px;
+    height:17.6667px;
+    
+}
+.search_wrapper .search_wrapper_top .message-box{
+    float:left;  
+    width:22.0833px;
+    height:55.2167px;
+    background-color:pink;
+    margin-left:20px;
+    line-height:55.2167px;
+
+}
+.search_wrapper .search_wrapper_top .message-box a img{
+    width:20.0833px;
+    height:20.2167px;
+    /* vertical-align: middle; */
+    /* 问题：基准就是div，不是a标签 */
+
+}
+.search_wrapper .search_wrapper_top .message-box a div{
+    width:22px;
+    height:20px;
+    font-size:10px;   
+    position:relative;
+    top:-22px;
+    line-height:20px;
+    color:rgb(221, 213, 213);
+
+}
+/* 顶部背景 */
+.slider_wrapper{
+    width:414px;
+    height:202px;
+    position:relative;
+    z-index:2;
+    /* 问题在:z-index的使用，与定位元素的关系 */
+}
+.slider_wrapper img{
+    width:414px;
+    height:202px;
+}
+
+/* appenter区域 */
+.app_enter{
+    width:414px;
+    height:178.883px;
+    margin-top:-5px;
+    background-color:rgb(255,255,255);
+    border-top-left-radius:11.0333px;
+    border-top-right-radius:11.0333px;
+    position:relative;
+    z-index:10;
+    
+}
+
+.app_enter ul li{
+    float:left;
+    width:82.8px;
+    height:67.2833px;
+    margin-top:15px;
+    margin-bottom:10px;
+
+}
+.app_enter ul li a{
+    display:inline-block;
+    width:82.8px;
+    height:64.0333px;
+    text-align:center;
+}
+.app_enter ul li a img{
+    width:44.1667px;
+    height:44.1667px;
+    
+}
+.app_enter ul li a span{
+    display:block;
+    width:82.8px;
+    height:15.4667px;
+    font-size:13.25px;
+    font-weight:400;
+    line-height:15.4667px;
+    text-align:center;
+    color:rgb(104,104,104);
+}
+
+/* 滚动新闻 */
+.scroll_news{
+    width:388px;
+    height:30px;
+    padding:0 5px;
+    background-color:pink;
+    background-color:rgb(255,255,255);
+
+}
+.scroll_news .scroll-img{
+    display:inline-block;
+    width:73px;
+    height:16px;
+    vertical-align:top;
+    margin-left:10px;
+   
+}
+.scroll_news .scroll-img img{
+    width:73px;
+    height:16px;
+}
+
+.scroll_news .main-new{
+    display:inline-block;
+    width:251px;
+    height:30px;
+    vertical-align:top;
+   
+}
+.scroll_news .main-new div{
+    width:271px;
+    height:16px;
+    font-size:12px;
+    font-weight:400;
+    color:rgb(24,24,24);
+}
+.scroll_news .main-new div span{
+    font-size:12px;
+    color:orangered;
+    margin-right:12px;
+    margin-left:12px;
+
+}
+
+.scroll_news .more{
+    display:inline-block;
+    width:30px;
+    height:17.2667px;
+    font-size:12px;
+    font-weight:400;
+    color:rgb(24,24,24);
+    vertical-align:top;
+}
+
+/* fooler_warpperone */
+.floor_wrapperone{
+    /* width:414px;
+    height:127px; */
+    /* 不设置宽高，宽高以里面的图片大小为准，不过img是默认与外面盒子有边框的 */
+    margin-top:5px;
+    /* 里面内容宽高等同与外面的盒子，所以设置margin有效 */
+}
+.floor_wrapperone img{
+    width:414px;
+    height:127px;
+}
+
+/* floor_wrappertwo */
+.floor_wrappertwo{
+    width:414px;
+    height:170.417px;
+    background-color:rgb(255,255,255);
+    /* background-color:pink; */
+    
+}
+.floor_wrappertwo .fl-top{
+    width:414px;
+    height:34px;
+}
+.floor_wrappertwo .fl-top .fl-top-lef{
+    display:inline-block;
+    width:260.517px;
+    height:36.2167px;
+    line-height:36.2167px;
+    font-size:12px;
+    color:rgb(35,35,35);
+    margin-left:10px;
+    
+}
+.floor_wrappertwo .fl-top .fl-top-lef strong{
+    font-size:17.6667px;
+    font-weight:700;
+    color:rgb(240,43,43);
+    /* line-height:36.2167px; */
+}
+.floor_wrappertwo .fl-top .fl-top-lef span{
+    font-size:13px;
+    font-weight:700;
+    color:rgb(35,35,38);
+}
+
+.floor_wrappertwo .fl-top .fl-top-rig{
+    display:inline-block;
+    width:110px;
+    height:36.2167px;
+    padding-right:20px;
+    font-size:10px;
+    font-weight:400;
+    color:rgb(242,48,48);
+    text-align:right;
+    line-height:36.2167px;
+}
+
+.floor_wrappertwo .fl-bott{
+     width:414px;
+     height:136.417px;
+     overflow:hidden;
+}
+.floor_wrappertwo .fl-bott ul{
+    display:flex;
+    margin:0;
+    padding:0;
+    width:414px;
+    height:136.417px;
+    
+}
+.floor_wrappertwo .fl-bott ul li{
+    width:89.0333px;
+    height:132px;
+}
+.floor_wrappertwo .fl-bott ul li a{
+    text-align:center;
+}
+
+.floor_wrappertwo .fl-bott ul li a img{
+    width:89.0333px;
+    height:78px;
+}
+.floor_wrappertwo .fl-bott ul li div{
+    width:89.0333px;
+    height:44px;
+}
+.floor_wrappertwo .fl-bott ul li div .price{
+    display:block;
+    font-size:16px;
+    font-weight:700;
+    color:rgb(242,48,48);
+    text-align:center;
+
+}
+.floor_wrappertwo .fl-bott ul li div .priceold{
+    display:block;
+    font-size:12px;
+    font-weight:400;
+    color:rgb(104,104,104);
+    text-decoration:line-through;
+    text-align:center;
+
+}
+
+/* floor_box区域 */
+.floor_box{
+    width:414px;
+    height:304.65px;
+    
+}
+.floor_box .floor_box-top{
+    width:414px;
+    height:38.65px;
+    text-align:center;
+    background-color:#ffffff;
+}
+.floor_box .floor_box-top img{
+    width:212.017px;
+    height:38.65px;
+
+}
+.floor_box .floor_box-midd{
+    width:414px;
+    height:132.5px;
+    background-color:rgb(255,255,255);
+
+}
+/* 问题：float浮动，若是只给right盒子浮动，不行 */
+.floor_box .floor_box-midd .box-lef,
+.floor_box .floor_box-midd .box-rig{
+    float:left;
+    width:206px;
+    height:119.8px;
+    padding: 7.18333px  0  5.51667px  0;
+    
+}
+.floor_box .floor_box-midd  .box-l-top{
+    width:185.033px;
+    height:41.9667;
+    padding:0 11.0333px 0 9.9px;
+    text-align:center;
+
+}
+.floor_box .floor_box-midd  .box-l-top span{
+    font-size:17.6667px;
+    font-weight:400;
+    color:rgb(0,0,0);
+}
+.floor_box .floor_box-midd  .box-l-top p{
+    font-size:13.25px;
+    font-weight:400;
+    color:rgb(100,142,255);
+}
+.floor_box .floor_box-midd  .box-l-bot{
+    width:175.067px;
+    height:71.7667px;
+    padding:0 15.4667px 0 19px;
+    margin-top:5px;
+
+}
+.floor_box .floor_box-midd  .box-l-bot img{
+    width:71.7667px;
+    height:71.7667px;
+    /* margin-left:5px; */
+}
+
+.floor_box .floor_box-bott{
+    width:414px;
+    height:132.5px;
+    padding-top:6px;
+    padding-left:6px;
+    background-color:rgb(255,255,255);
+}
+.floor_box .floor_box-bott ul{
+    margin:0;
+    padding:0;
+    display:flex;
+    
+}
+.floor_box .floor_box-bott ul li{
+    width:102.5px;
+    height:132.5px;
+}
+.floor_box .floor_box-bott ul li a div{
+    width:91.4667px;
+    height:41.9667px;
+}
+.floor_box .floor_box-bott ul li a div span{
+    font-size:17.6667px;
+    font-weight:400;
+    color:rgb(0,0,0);
+}
+.floor_box .floor_box-bott ul li a div p{
+    font-size:13.25px;
+    font-weight:400;
+    color:rgb(100,142,255);
+}
+.floor_box .floor_box-bott ul li a  img{
+    width:71.7667px;
+    height:71.7667px;
+}
+
+/* floor_box3区域 */
+.floor_box3{
+    width:414px;
+    height:438.15px;
+    padding-top:10px;
+}
+
+.floor_box3 .floor_box3-midd{
+    width:414px;
+    height:265px;
+    background-color:rgb(255,255,255);
+}
+.floor_box3 .floor_box3-midd ul{
+    margin:0;
+    padding:0;
+    display:flex;
+    width:414px;
+    height:132.5px
+  
+}
+.floor_box3 .floor_box3-midd ul li{
+    width:206px;
+    height:132.5px;
+}
+.floor_box3 .floor_box3-midd ul li a div{
+    width:196.067px;
+    height:41.9667px;
+    padding-left:10px;
+}
+.floor_box3 .floor_box3-midd ul li a div span{
+    font-size:17.6667px;
+    font-weight:400;
+    color:rgb(0,0,0);
+}
+.floor_box3 .floor_box3-midd ul li a div p{
+    font-size:13.25px;
+    font-weight:400;
+    color:rgb(255,89,89);
+}
+.floor_box3 .floor_box3-midd ul li a img{
+    width:71.7667px;
+    height:71.7667px;
+    margin-top:6.06667px;
+    margin-right:7.73px;
+    margin-left:15px;
+}
+
+
+/* floor_box4 区域 */
+.floor_box4{
+    width:414px;
+    height:527.483px;
+}
+#floor_box4-ul1 li, #floor_box4-ul2 li{
+    width:206px;
+    height:97.717px;
+    padding:7.1833px 0 5.51667px 0;
+    position:relative;
+  
+}
+#floor_box4-ul1 li a .box-img{
+    position:absolute;
+    top:13px;
+    left:75px;
+}
+#floor_box4-ul1 li a .box-img img{
+    width:88.3333px;
+    height:88.3333px;
+}
+
+/* floor_box5 区域 */
+.floor_box5{
+    width:414px;
+    height:438.15px;
+    margin-top:35px;
+} 
+.floor_box5 .floor_box5-midd{
+    width:414px;
+    height:132.5px;
+}
+
+/* 分割线区域 */
+.separ_area{
+    width:404px;
+    height:14px;
+    margin:14px 5px 14px 5px;
+    font-size:14px;
+    font-weight:400;
+    color:rgb(132,134,137);
+    text-align:center;
+    line-height:14px;
+}
+.separ_area span img{
+    width:16px;
+    height:16px;
+    vertical-align:middle;
+}
+
+/* 商品展示区域 */
+.login_link{
+    width:408px;
+    height:23.2px;
+    padding:3px 3px 14px 3px;
+    text-align:center;
+}
+.login_link a p{
+    font-size:15.4667px;
+    font-weight:400;
+    color:rgb(242,48,48);
+}
+
+.commodityshow{
+    width:414px;
+    height:1000px;
+}
+.commodityshow ul{
+    margin:0;
+    padding:0;
+    width:414px;
+    height:3730.2px;
+    /* 弹性布局：水平排列了 */
+    /* display:flex; */
+}
+.commodityshow ul li{
+    width:205px;
+    height:300px;
+    float:left;
+}
+.commodityshow ul li a img{
+    width:205px;
+    height:205px;
+}
+.commodityshow ul li a .commodittext{
+    width:197px;
+    height:33px;
+    font-size:13px;
+    font-weight:400;
+    color:rgb(35,35,38);
+    flex-wrap:wrap; 
+}
+.commodityshow ul li a .commoditprice{
+    width:205px;
+    height:23px;
+    font-size:16px;
+    font-weight:400;
+    color:red;
+    line-height:23px;
+    margin-top:3px;
+}
+.commodityshow ul li a p .shopevaluate{
+    display:inline-block;
+    width:137px;
+    height:25px;
+    font-size:11px;
+    font-weight:400;
+    color:rgb(153,153,153);
+}
+.commodityshow ul li a p .shopsimiler{
+    display:inline-block;
+    width:49px;
+    height:24px;
+    border:1px solid rgb(104,104,104);
+    font-size:12px;
+    font-weight:400;
+    color:rgb(104,104,104);
+    text-align:center;
+    line-height:24px;
+}
+
+
+/* 底部导航栏 */
+.foot_commonnav{
+    width:414px;
+    /* height:55.1833px; */
+    height:300px;
+    background-color:rgb(255,255,255);
+    /* margin-top:200px; */
+}
+.foot_commonnav a{
+    display:inline-block;
+    width:79.6px;
+    height:55.1833px;
+    text-align:center;
+    line-height:55.1833px;
+
+}
+.foot_commonnav a img{
+   
+    width:66.2333px;
+    height:50.9333px;
+}
+
+

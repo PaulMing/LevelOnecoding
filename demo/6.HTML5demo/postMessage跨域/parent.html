@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <iframe src="./son.html" frameborder="0"></iframe>
+    <script>
+        var oFrame = document.getElementsByTagName('iframe')[0];
+        oFrame.onload = function(e){
+            oFrame.contentWindow.postMessage({
+                test: '123'
+            },"./son.html")
+        }
+        window.onmessage = function(e){
+            console.log(e.data);
+        }
+    </script>
+</body>
+</html>

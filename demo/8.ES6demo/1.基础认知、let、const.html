@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+        1995: js
+        1996: javaScript 1.0 1.1
+        1997: 网景 -> javaScript
+              微软 -> jScript -> IE3
+              Nonbas ScripteEase
+            ECMA -> javascript1.1为蓝本 -> ECMAScript1.0
+        1999: HTML4.0    ajax: 最初是IE提出的异步传输处理方案，提出的ActiveXRequest对象，革命性的异步处理，以前都没有异步处理，这也是web2.0版本
+        2008: chrome -> v8引擎， 浏览器大战 -> IE输掉了，现在也没缓过来，
+              这一年也是移动端发力了
+              ES4就提出了class 类继承 模块，等概念， 但是不受重视，就放到ES3.1版本，最后形成了ES5
+        2009： ES5
+        2015： ES6
+
+        - - - >>> ECMAScript6.0规范， 人们习惯叫js, javaScript
+        ES6对前面的API依旧支持，只是废弃了少许不友好的API，例如With();eval(); 其向前兼容
+     -->
+    <script>
+        /*
+        ES3.0/5.0 
+        var声明变量:
+            变量声明提升、可重复定义、全局变量挂载到window
+            作用域：全局作用域、局部作用域即函数作用域
+        */
+        var a = 10;//等同于 window.a = 10;//全局变量挂载到window
+        var name = 10;//等同于 window.name = 10;但是window.name本身指代"窗口名称",容易造成命名冲突
+        var top = 20;//window.top在iframe框架中表示"顶级窗口"-> var声明变量很容易造成命名冲突
+        console.log(c);//c is not defined;//未声明的变量必然报错,不要理解为window.c,打印出undefined;ES5中未声明的变量直接使用不报错只有一种情况 console.log(typeof c);//"undefined"
+        console.log(window.c);//undefined;
+
+        /*
+        ES6 
+        let声明变量:
+            不进行变量声明提升、不能重复定义、不会挂载到window
+            作用域(变量生命周期): 快级作用域 ->大括号内形成 if(){}; while(){}; for(){}; switch(){}等
+                                快级作用域中的变量,外界无法进行访问,但是若嵌套多层，里面依旧可访问外面变量;
+            作用域中会产生临时死区TDZ:Temporal Dead Zone;
+            let声明变量可解决闭包问题 ->底层封装的也是“立即执行函数”
+        */ 
+        console.log(a);//报错
+        let a = 10;
+        console.log(window.a);//undefined;
+        
+        {
+            let b = 20;
+            //var b = 30;
+        }
+        console.log(b);//b is not defined;
+
+        {
+            let c = 30;
+            {
+                console.log(c);//30
+            } 
+        }
+
+        let d = 10;
+        {
+            console.log(d);//d is not defined;报错,下面的代码也无法执行
+            let d = 20;//形成暂时性死区
+            {
+                console.log(d);
+            }
+        }
+
+        // let快级作用域{} ->let的生命周期仅存在于{},var变量并不受{}影响，其只分全局、局部,全局便会挂载到window  
+        if(true){
+            let e = 10;
+            console.log(e);//10;
+            var f = 20;
+            console.log(f);//20
+        }
+        console.log(e);// e is not defined;
+        console.log(f);//20
+
+        // let变量解决闭包 -> 底层封装的也是“立即执行函数”
+        var arr = [];
+        for(var i=0; i<10; i++){
+            arr[i] = function(){
+                console.log(i);
+            }
+        }
+        arr[0]();//10
+        arr[1]();//10
+        arr[2]();//10
+
+        // 解决闭包
+        var arr = [];
+        for(let i=0; i<10; i++){
+            arr[i] = function(){
+                console.log(i);
+            }
+        }
+        arr[0]();//0
+        arr[1]();//1
+        arr[2]();//2
+
+        // 解决定时器形成的闭包
+        for(let i=0; i<10; i++){
+            setTimeout(function(){
+                console.log(i);
+            },0);
+        }
+         
+
+        /*
+        ES6 
+        const声明常量:
+             const PI = 20;//只能定义常量，声明、赋值不能分开写
+             const PI; PI = 20;//报错
+
+             常量的值确定后不能进行更改,否则报错
+             const PI = 30;//报错
+             //深层剖析：存储常量的空间不能进行改变,若存储引用值,引用值的内容可进行更改
+             const PI = {};
+             PI.name = 20;//不会报错 ->灵活性很高
+             PI = 30;//报错 ->不能改变值
+
+             
+             其它规范同let声明变量几乎相同：
+                   不进行变量声明提升、不能重复定义、不会挂载到window
+                   其会形成快级作用域，作用域中会形成TDZ
+
+                   其不能解决闭包，因为其定义变量后值不能进行更改;
+                   for(const i=0; i<10, i++){};//i在改变,报错    
+        */ 
+
+
+
+    // 案例1：
+    // {}内写函数声明function a(){};等同于var a = function(){}; ->其进行变量声明提升，所以console.log(a);//undefined;
+    console.log(a);//undefined;  
+    {
+        function a(){}
+    }
+
+    {
+        var a = function(){}
+    }
+
+    // 案例2
+    function test(x,y){
+        var x = 10;
+    }
+    test();//不会报错
+    function test(x,y){
+        let x = 10;
+    }
+    test();//报错 ->间接证明形参x等同于var x;
+
+
+    // 实战开发中建议使用 const > let > var;
+    // const执行效率更高，浏览器对const常量会减少“追踪”,提供的算力更小;浏览器对let,var变量需要时刻监控其的变化,耗费性能
+    // 建议不要混着写，最好都使用const,let; -> ES6箭头函数经常与ES3/5普通函数混合使用，因为其需解决this指向等系列问题
+  
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* .container{
+            margin-left: 100px;
+            margin-right: 100px;
+        } */
+        .center{
+            float: left;
+            width: 100%;
+            height: 100px;
+            background: yellow;
+        }
+        .left{
+            float: left;
+            width: 100px;
+            height: 100px;
+            background: red;
+            margin-left: -100%;
+        }
+        .right{
+            float: left;
+            width: 100px;
+            height: 100px;
+            background: green;
+            margin-left: -100px;
+        } 
+        .inner{
+            margin-left: 100px;
+            margin-right: 100px;
+            height: 100px;
+        }  
+    </style>
+</head>
+<body>
+    <!-- 
+        双飞翼布局中center盒子宽度为100%的时候，left/right盒子margin-left=-100%;/-100px;可移动到上一行应该出现的位置，inner盒子设置高度,margin即可
+        相比于圣杯布局，其的优势是不用进行相对定位了 
+    -->
+    <div class="container">
+        <div class="center">
+            <div class="inner"></div>
+        </div>
+        <div class="left"></div>
+        <div class="right"></div>
+    </div>
+</body>
+</html>

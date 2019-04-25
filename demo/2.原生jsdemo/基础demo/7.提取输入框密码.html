@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="password">
+    <script>
+        // 提取input框密码：巧妙利用keypress事件
+        var input = document.getElementsByTagName("input")[0];
+        var str = "";
+        input.onkeypress = function(e){
+            var inputStr = String.fromCharCode(e.charCode);
+            str += inputStr;
+            console.log(str);
+        } 
+        // console.log(str); 
+    </script>   
+</body>
+</html>

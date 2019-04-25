@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    
+        #drop_area{
+            width: 300px;
+            height: 200px;
+            background: orange;
+        }
+        #progress{
+            display: inline-block;
+            margin-top: 10px;
+            border-radius: 15px;
+            width: 200px;
+            height: 20px;
+            border: 1px solid #888;
+            overflow: hidden;
+        }
+        #val{
+            width: 0;
+            height: 20px;
+            background: #ccc;
+            border-radius: 15px;
+        }
+
+    
+    </style>
+</head>
+
+<body>
+    <!-- <button id="paused">暂停</button> -->
+    <div id="drop_area">将图片拖拽到此区域</div>
+
+    <div id="progress">
+        <div id="val"></div>
+    </div>
+    <span id="num">0%</span>
+    <div id="preview"></div>
+
+
+    <script src="./loadFile.js"></script>
+    <script src="./ajax.js"></script>
+    <script>
+            
+            
+
+
+            var events = {
+                load: function (data) {
+                    console.log(data);
+                    ajax('post', 'http://localhost/HTML5/lesson5/fileReader/fileReader/upload.php', cb, data, true);
+                },
+                progress: function (percent) {
+                    val.style.width = percent * 2 + 'px';
+                    num.innerHTML = Math.round(percent)+ '%';
+                },
+                success: function () {
+                    console.log('success');
+                }
+            };
+            function cb() {
+                console.log('ss')
+            }
+            drop_area.addEventListener('dragover', function(e) {
+                e.preventDefault();
+            })
+            var loader;
+            drop_area.addEventListener('drop', function(e) {
+                e.preventDefault();
+                var file = e.dataTransfer.files[0];
+                loader = new FileLoader(file, events);
+            })
+
+            // document.getElementById('paused').onclick = function () {
+            //     loader.abort();
+            // }
+        </script>
+
+
+
+</body>
+
+</html>

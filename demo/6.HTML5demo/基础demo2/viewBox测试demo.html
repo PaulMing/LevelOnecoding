@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        div{
+            float: left;
+            margin: 10px 50px;
+        }
+        svg {
+            border: 2px solid #f00;
+        }
+        .outer {
+            fill: #0fc;
+        }
+
+        .inner {
+            fill: #09c;
+        }
+
+        select {
+            display: block;
+            margin: 20px 0;
+        }
+
+
+        pre {
+            font-size: 20px;
+            color: #999;
+            background: #000;
+            clear: both;
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        <p>width 400 height 300</p>
+        <svg width="400px" height="300px">
+            <rect class="outer" x="0" y="0" width="40" height="30"></rect>
+            <rect class="inner" x="5" y="5" width="30" height="20"></rect>
+        </svg>
+    </div>
+    <div>
+        <p>width 400 height 300 viewBox="0,0,40,30"</p>
+        <svg width="400px" height="300px" viewBox="0,0,40,30">
+            <rect class="outer" x="0" y="0" width="40" height="30"></rect>
+            <rect class="inner" x="5" y="5" width="30" height="20"></rect>
+        </svg>
+    </div>
+    <div>
+        <p>svg大小和viewbox大小不同比例</p>
+        <svg id="test" width="400px" height="200px" viewBox="0,0,40,30">
+            <rect class="outer" x="0" y="0" width="40" height="30"></rect>
+            <rect class="inner" x="5" y="5" width="30" height="20"></rect>
+        </svg>
+    </div>
+    <div>
+        <p>配置参数：</p>
+        <p>meet/slick</p>
+        <select name="type" id="type">
+            <option value="meet">meet</option>
+            <option value="slice">slice</option>
+        </select>
+        <p>x轴对齐方式</p>
+        <select name="x-type" id="x-type">
+            <option value="xMin">xMin</option>
+            <option value="xMid">xMid</option>
+            <option value="xMax">xMax</option>
+        </select>
+        <p>y轴对齐方式</p>
+        <select name="y-type" id="y-type">
+            <option value="YMin">YMin</option>
+            <option value="YMid">YMid</option>
+            <option value="YMax">YMax</option>
+        </select>
+    </div>
+    <pre>
+
+        < rect class="outer" x="0" y="0" width="40" height="30"></ rect>
+        < rect class="inner" x="5" y="5" width="30" height="20"></ rect>
+
+    </pre>
+    <script>
+        var svg = document.getElementById("test"),
+                select0 = document.getElementById("type"),
+                select1 = document.getElementById("x-type"),
+                select2 = document.getElementById("y-type");
+
+        if (svg && select0 && select1 && select2) {
+            [select0, select1, select2].forEach(function(select) {
+                select.onchange = function() {
+                    svg.setAttribute("preserveAspectRatio", select1.value + select2.value + " " + select0.value);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

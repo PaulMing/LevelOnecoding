@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 事件中的闭包现象 -->
+    <div>
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+    </div>
+    <script>
+        var lis = document.getElementsByTagName('li');
+        len=lis.length;
+        for(var i=0; i<len; i++){
+            // lis[i].onclick= function(){console.log(i);}
+            lis[i].addEventListener('click',function(){
+                console.log(i);
+            },false)
+        }//有bug; 点击每个li输出的都是4,for循环执行完后才执行里面的处理函数，这时的i已经是4；
+        //[事件一旦出现在循环当中，重点考虑函数与for循环是否形成闭包，若出现闭包，使用立即执行函数解决；]
+        for(var i=0; i<len; i++){
+            (function(i){
+                lis[i].addEventListener('click',function(){
+                    console.log(i);
+                },false)
+
+            }(i))
+        } 
+   </script>
+    <script>
+
+
+        
+        
+        
+    </script>
+</body>
+</html>

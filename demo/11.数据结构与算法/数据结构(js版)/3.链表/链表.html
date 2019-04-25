@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // c语言中next();指向地址    js中next();指向对象
+
+        // 封装链表
+        var likedList = function(){
+            var head = null;
+            var length = 0;
+            // 辅助类
+            var Node = function(element){
+                this.element = element;
+                this.next = next;
+            }
+            // 链表尾添加元素
+            this.append = function(element){
+                var node = new Node(element);
+                if(head == null){
+                    head = node;
+                }else {
+                    var current = head;
+                    while(current.next){
+                        current = current.next
+                    }
+                    // while循环执行后 ->current已经是链表最后一项
+                    current.next = node
+                }
+                length ++;
+            }
+            // 链表某个位置添加元素
+            this.insert = function(position,element){
+                // 越界
+                if(position > -1 && position < length){
+                    var node = new Node(element)
+                    if(position == 0){
+                        var current = head
+                        head = node
+                        head.next = current
+                    } else {
+                        var index = 0
+                        var current = head
+                        var previous = null
+                        while(index < position){
+                            previous = current
+                            current = current.next
+                            index ++
+                        }  
+                        previous.next = node
+                        node.next = current
+                    }
+                    length ++
+                }
+            }
+            // 移除：往往都有返回值(拿出来使用呀)
+            this.removeAt = function(position){
+                if(position > -1 && position < length){
+                    if(position == 0){
+                        var current = head
+                        head = current.next
+                    } else {
+                        var current = head
+                        var previous = null
+                        var index = 0
+                        while(index < position){
+                            previous = current
+                            current = current.next
+                            index++
+                        }
+                        // 跳出循环的时候 index == position
+                        previous.next = current.next
+                    }
+                    length--
+                    return current
+                }
+                return null
+            }
+            // 获取索引
+            this.indexOf = function(element){
+                var current = head
+                var index = 0
+                while(current){
+                    if(current.element == element){
+                        return index
+                    }
+                    current = current.next
+                    index++
+                }
+                return -1
+            }
+            //removeAt(position)   删除某个位置的元素
+            //indexOf(element)     获取某个元素的位置
+            this.remove = function(element){
+                // length --
+                return this.removeAt(this.indexOf(element))
+            }
+            this.isEmpty = function(){
+                return length == 0
+            }
+            this.size = function(){
+                return length
+            }
+            this.getHead = function(){
+                return head;
+            }
+        } 
+    </script>
+</body>
+</html>

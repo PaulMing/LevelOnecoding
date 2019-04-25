@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        svg{
+            border: 2px solid #000;
+        }
+        path{
+            fill: transparent;
+            stroke: #eee;
+            stroke-width: 10px;
+        }
+        #demo{
+            stroke: red;
+            transition: stroke-dashoffset 2s;
+
+        }  
+    </style>
+</head>
+<body>
+    <input type="text" id="inp">
+    <svg width="500" height="500">
+        <path d="M 100 200 A 60 60 0 1 1 200 200"></path>
+        <path d="M 100 200 A 60 60 0 1 1 200 200" id="demo"></path>        
+    </svg>
+    <script>
+        demo.style.strokeDashArray = demo.getTotalLength();
+        demo.style.strokeDashoffset = demo.getTotalLength();
+        inp.onblur = function(){     
+            if(Number(this.value)){
+                demo.style.strokeDashoffset = (100- Number(this.vale)) * demo.getTotalLength()/100
+            }
+        }
+         
+    </script>
+</body>
+</html>

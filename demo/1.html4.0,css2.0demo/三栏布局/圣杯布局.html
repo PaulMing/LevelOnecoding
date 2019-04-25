@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container{
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+        .center{
+            float: left;
+            width: 100%;
+            height: 100px;
+            background: yellow;
+        }
+        .left{
+            float: left;
+            width: 100px;
+            height: 100px;
+            background: red;
+            /* margin-left: -10%; */
+            margin-left: -100%;
+            position: relative;
+            left: -110px;
+        }
+        .right{
+            float: left;
+            width: 100px;
+            height: 100px;
+            background: green;
+            margin-left: -100px;
+            position: relative;
+            left: 110px;
+        }   
+    </style>
+</head>
+<body>
+    <!-- 
+        补充知识点：margin负值会改变元素占据的空间,所占据的空间=width+margin负值，所以当margin负值等于元素宽度的时候，元素所占据的空间变为0，那么元素便可以移到上一行了(上一行可以放的下了)，此时right盒子margin-left:110px;便会移动到右边，同理left盒子也可移动到上一行，在这个时候可以计算下百分比，在此基础上再移动剩下的center盒子距离即可，总共移动了100%;然后进行相对定位移动即可(相对定位是以盒子左边为基准)
+     -->
+    <div class="container">
+        <div class="center"></div>
+        <div class="left"></div>
+        <div class="right"></div>
+    </div> 
+</body>
+</html>

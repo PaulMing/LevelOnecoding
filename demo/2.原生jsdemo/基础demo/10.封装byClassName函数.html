@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="wrapper">
+        <p class=" demo   box  active">
+            <span class=""></span>
+        </p>
+    </div>
+    <script>
+        //Element  Document都有该方法，都可以进行封装；
+        Element.prototype.getElementsByClassName = Document.prototype.getElementsByclassName = document.getElementsByClassName || function(_className){ 
+            var allDomArray = document.getElementsByTagName("*");
+            var lastDomArray = [];
+            function trimSpace(strClass){
+                var reg = /\s+/g;
+                var newStrClass = strClass.replace(reg,"");
+                return newStrClass;
+            }
+            for(var i=0;i<allDomArray.length;i++){
+                var lastStrClass = trimSpace(allDomArray[i].className).trim();
+                var classArray = lastStrClass.split("");
+                for(var j=0; j<classArray.length; j++){
+                    if(classArray[j] == _className){
+                        lastDomArray.push(allDomArray[i]);
+                        break;
+                    }
+                }
+            }
+            return lastDomArray;
+        }    
+    </script>
+    <!-- allDomArray[i].className.indexOf("demo");//字符串的方法，判断demo是否在该数组中 无法排除<div class="demodemo"><div> -->
+   
+</body>
+</html>

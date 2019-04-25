@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>关于table表格</title>
+</head>
+<body>
+    <!-- table标签分为三部分：<thead><tbody><tfooter>;若省略不写这三个标签，则table表格整体加载完成后显示，若加上这些表格结构，tbody部分的内容加载完优先展示 -->
+    <!-- 样式简写：summary:'摘要语义化' -->
+    <!-- colspan:n;列与列合并(水平方向占n个单元格);//colspan,rowspan只能作用td标签，其聚焦点是单元格合并  -->
+    <table border='1' bordercolor='red' summary="NBA简介">
+        <caption>NBA-职业篮球联盟</caption>
+        <thead>
+            <tr>
+                <th>火箭</th>
+                <th>雷霆</th>
+                <th>湖人</th>
+                <th>勇士</th>    
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan='2' >哈登</td>
+                <td rowspan='2'>威少</td>
+                <td>詹姆斯</td>
+                <td>库里</td>
+            </tr>
+            <tr>
+                <td >哈登</td>
+                <td rowspan='2'>威少</td>
+                <td>詹姆斯</td>
+                <td>库里</td>
+            </tr>
+        </tbody>
+    </table>  
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{padding:0px; margin:0px;}
+        div{
+            width: 100px;
+            height: 100px;
+            background: pink;
+            position: absolute;
+            left: 600px;
+            top: 0;
+        }
+        span{
+            width: 2px;
+            height: 100px;
+            position: absolute;
+            left: 300px;
+            top: 0px;
+            background: black;
+        }
+        #oBtn{
+            margin-top: 130px;
+            
+        }   
+    </style>
+</head>
+<body>
+    <!-- 优化版：物体从左向右到达指定位置或从右到左都OK -->
+    <div></div>
+    <button id="oBtn">start</button>
+    <span></span>
+    <script>
+        var oDiv = document.getElementsByTagName("div")[0];
+        oBtn.onclick = function(){
+            startMove(oDiv);
+        }
+        var timer = null;
+        function startMove(obj){
+            var iSpeed;
+            if(obj.offsetLeft > 300){
+                iSpeed = -8;
+            }else{
+                iSpeed = 8;
+            }
+            clearInterval(timer);
+            timer = setInterval(function(){
+                if(Math.abs(300-obj.offsetLeft)< Math.abs(iSpeed)){
+                    clearInterval(timer);
+                    obj.style.left = "300px";
+                }else{
+                    obj.style.left = obj.offsetLeft + iSpeed+"px";
+                }    
+            },30)      
+        }   
+    </script>  
+</body>
+</html>

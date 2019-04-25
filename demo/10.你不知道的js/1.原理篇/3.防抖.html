@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+        防抖 -> 输入框：每次input中的value值改变，ajax()都向后台获取数据，触发事件太频繁 -> 解决方案 -> 使用定时器可解决(其它可根据用户生理行为来优化定时器时间，提升用户体验)
+     -->
+    <input type="text" id="inp">
+    <script>
+        var oInp = document.getElementById('inp');
+        var timer = null;
+        function ajax(e){
+            console.log(e,this.value);
+        }
+        oInp.oninput = function(e){
+            var _self= this;
+            var _arg = arguments;
+            clearTimeout(timer);
+            timer = setTimout(function(){
+                ajax.apply(_self,_arg);
+            },1000)
+            // 补充：this指向、事件对象e的处理
+            // onInp.oninput = ajax;//e就是事件对象,只不过这种写法，用户行为会频繁发送ajax请求数据，影响性能；改进后发现ajax()函数中事件对象e为undefined; -> 解决bug -> 巧妙利用了arguments -> ajax.apply(_self,_arg);
+            // console.log(arguments);//arguments就是event事件对象,说明系统将事件对象e作为参数传入函数，实参列表arguments就是e
+            // ajax.apply(_self,arguments);//错误 -> 每个函数中的arguments不同         
+        }
+
+        // 封装防抖函数：
+        // handler:函数   delay:延迟时间
+        function debounce(handler,delay){
+            var timer = null;
+            return function(){
+                var _self = this, _arg = arguments;
+                clearTimeout(timer);
+                timer = setTimeout(function(){
+                    handler.apply(_self,_arg);
+                },delay)
+            }
+        }
+        function ajax(e){
+            console.log(e,this.value);
+        }
+        oInp.oninput = debounce(ajax,2000);
+    </script>
+</body>
+</html>

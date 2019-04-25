@@ -1,0 +1,431 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #f0efed;
+}
+
+i {
+  font-style: normal;
+}
+
+#gotop {
+  text-align: center;
+  display: none;
+  width: 43px;
+  height: 43px;
+  background: #06C1AE;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 30px;
+  line-height: 43px;
+  position: fixed;
+  right: 10px;
+  bottom: 50px;
+}
+
+header {
+  height: 50px;
+  background: #06c1ae;
+  text-align: center;
+  display: flex;
+  line-height: 50px;
+  color: #fff;
+}
+header h3 {
+  flex: 1;
+  font-size: 20px;
+}
+
+.forback {
+  width: 50px;
+  font-size: 30px;
+  font-family: simsun;
+  border: none;
+  background: none;
+  color: #fff;
+}
+
+.header-right {
+  width: 70px;
+  display: flex;
+}
+.header-right p {
+  line-height: 20px;
+  flex: 1;
+  margin-right: 5px;
+  margin-top: 1px;
+}
+.header-right p span {
+  display: block;
+  font-size: 30px;
+}
+.header-right button {
+  line-height: 20px;
+  margin-right: 10px;
+  flex: 1;
+  background: none;
+  border: none;
+  color: #fff;
+  padding-bottom: 10px;
+}
+.header-right button span {
+  display: block;
+  font-weight: bolder;
+  font-size: 33px;
+}
+
+.down {
+  max-width: 320px;
+  margin: 5px auto;
+}
+.down img {
+  max-width: 100%;
+}
+
+nav {
+  width: 100%;
+  position: relative;
+}
+nav a {
+  color: #bbb;
+  text-align: left;
+}
+
+.classify {
+  flex: 1;
+  height: 44px;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  line-height: 44px;
+  position: relative;
+}
+
+.trigon {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border: 6px solid #b7b7b7;
+  border-bottom-color: #fff;
+  border-left-color: #fff;
+  border-right-color: #fff;
+  position: relative;
+  top: 5px;
+  left: 5px;
+}
+
+.main {
+  display: flex;
+  text-align: center;
+  background: #fff;
+}
+
+.item-list {
+  width: 100%;
+  position: absolute;
+  z-index: 100;
+  background: #fff;
+  display: none;
+}
+.item-list li {
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  border-bottom: 1px solid #ddd;
+  text-indent: 10px;
+}
+.item-list span {
+  margin-top: 15px;
+  line-height: 15px;
+  display: inline-block;
+  height: 15px;
+  background: #ccc;
+  border-radius: 4px;
+  float: right;
+  padding-right: 10px;
+  color: #fff;
+  margin-right: 15px;
+}
+
+.item-list-1 {
+  height: 600px;
+  display: block;
+}
+.item-list-1 .item-meishi {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+.item-list-1 .item-meishi .item-meishi1 {
+  width: 45%;
+  height: 100%;
+  overflow-y: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+.item-list-1 .item-meishi .item-meishi1 li {
+  background: #fff;
+}
+.item-list-1 .item-meishi .item-meishi2 {
+  overflow-y: auto;
+  width: 60%;
+  height: 100%;
+  border-right: 1px solid #ddd;
+  margin-left: -10px;
+  position: absolute;
+  top: 0;
+  right: -10px;
+  z-index: 101;
+}
+.item-list-1 .item-meishi .item-meishi2 li {
+  background: #f6f4f0;
+}
+
+.item-list-2 h3 {
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+.item-list-2 h3 strong {
+  padding: 5px 30px;
+  border: 1px solid #ddd;
+}
+.item-list-2 h3 strong:nth-child(1) {
+  background: #666;
+  border-radius: 4px 0 0 4px;
+  color: #fff;
+}
+.item-list-2 h3 strong:nth-child(2) {
+  background: #fff;
+  border-radius: 0 4px 4px 0;
+}
+.item-list-2 .shangqu {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.item-list-2 .subway {
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.item-list-2 span {
+  float: right;
+  padding-right: 15px;
+}
+
+section .foodcontent {
+  background: #fff;
+  width: 100%;
+  height: 100%;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+}
+section .foodcontent .title {
+  border-bottom: 1px solid #ddd;
+  height: 60px;
+}
+section .foodcontent .title .left {
+  padding-left: 10px;
+  float: left;
+}
+section .foodcontent .title .left h4 {
+  color: #9B9B9B;
+  padding: 10px 0;
+}
+section .foodcontent .title .left h4 mark {
+  color: #fff;
+  font-size: 12px;
+  border-radius: 2px;
+  margin: 5px 1px 0 1px;
+}
+section .foodcontent .title .left h4 .m1 {
+  padding: 1px 3px;
+  background: #06C1AE;
+  margin-left: 5px;
+}
+section .foodcontent .title .left h4 .m2 {
+  padding: 1px 3px;
+  background: #FF9900 !important;
+}
+section .foodcontent .title .left p span {
+  font-size: 16px;
+  color: #FF9900;
+}
+section .foodcontent .title .left p i {
+  font-style: normal;
+  color: #FF9900;
+  padding: 0 7px;
+}
+section .foodcontent .title .left p .m3 {
+  background: none;
+  border: 1px solid #ddd;
+  padding: 0 6px;
+  border-radius: 2px;
+  color: #888;
+}
+section .foodcontent .title .right {
+  float: right;
+  position: relative;
+  top: 72%;
+  right: 10px;
+}
+section .foodcontent .title .right a {
+  display: block;
+  color: #666;
+}
+section .foodcontent .addpic {
+  position: relative;
+  padding: 10px 0;
+  border-top: 1px solid #ddd;
+}
+section .foodcontent .addpic a {
+  padding-left: 10px;
+  display: block;
+  float: left;
+}
+section .foodcontent .addpic a img {
+  max-width: 100px;
+  float: left;
+}
+section .foodcontent .addpic a h4 {
+  float: left;
+}
+section .foodcontent .addpic .goods-title {
+  float: left;
+  padding: 5px 10px;
+  color: #A5A5A5;
+}
+section .foodcontent .addpic .goods-title h4 {
+  font-size: 14px;
+}
+section .foodcontent .addpic .goods-title .pricebox {
+  position: relative;
+  top: 60px;
+}
+section .foodcontent .addpic .goods-title .pricebox span:nth-child(1) {
+  color: #06C1AE;
+  font-size: 18px;
+  font-weight: bold;
+}
+section .foodcontent .addpic .goods-title .pricebox span:nth-child(1) i {
+  font-size: 14px;
+  font-weight: normal;
+}
+section .foodcontent .addpic .goods-title .pricebox span:nth-child(2) {
+  color: #666;
+}
+section .foodcontent .addpic p {
+  float: right;
+  position: absolute;
+  top: 93px;
+  right: 10px;
+}
+section .foodcontent .viemore {
+  padding: 15px 0;
+  text-align: center;
+  border-top: 1px solid #ddd;
+  color: #1CC6B5;
+  font-size: 16px;
+}
+section .foodcontent .viemore .pointer {
+  display: inline-block;
+  padding-left: 5px;
+  font-weight: bolder;
+  transform: rotate(90deg);
+}
+section .food-list .addpic {
+  border-top: 1px solid #ddd;
+  padding: 10px 0;
+}
+section .food-list .addpic p {
+  float: right;
+  position: absolute;
+  top: 76.5%;
+  right: 10px;
+}
+section .tpage {
+  width: 100%;
+  padding: 20px 0;
+  padding-left: 10px;
+  background: #fff;
+}
+section .tpage span {
+  border-radius: 5px;
+}
+section .tpage span:nth-child(1) {
+  padding: 5px 15px;
+  background: #DCDCDC;
+}
+section .tpage span:nth-child(2) {
+  padding: 5px 5px;
+}
+section .tpage span:nth-child(3) {
+  padding: 5px 15px;
+  border: 1px solid #2CCABA;
+  color: #2CCABA;
+}
+
+footer a {
+  color: #2CCABA;
+}
+footer .footer-top {
+  color: #2CCABA;
+  padding: 15px 0 15px 10px;
+}
+footer .footer-top button {
+  padding: 7px 18px;
+  border: 1px solid #2CCABA;
+  border-radius: 5px;
+  margin: 20px 10px 0 0;
+  color: #2CCABA;
+}
+footer .footer-top .currentcity {
+  float: right;
+  margin-top: 30px;
+  margin-right: 10px;
+  color: #999;
+}
+footer .footer-top .currentcity strong {
+  padding: 7px 25px;
+  border: 1px solid #2CCABA;
+  border-radius: 5px;
+  color: #2CCABA;
+}
+footer .footer-center {
+  text-align: center;
+  margin: 15px;
+}
+footer .footer-center ul {
+  display: flex;
+  margin: 0 10px;
+  padding-bottom: 10px;
+}
+footer .footer-center ul li {
+  flex: 1;
+  border-right: 1px solid #666;
+}
+footer .footer-center ul li:nth-child(4) {
+  border: none;
+}
+footer .footer-bottom {
+  text-align: center;
+}
+footer .copyright {
+  padding: 20px 0;
+  margin: 0 10px;
+}
+footer .copyright fieldset {
+  text-align: center;
+  border-top: 1px solid #aaa;
+}
+footer .copyright fieldset legend {
+  padding: 0 15px;
+  color: #999;
+  font-size: 12px;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img{
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <input type="file" id="inp">
+    <script>
+        /* 
+        创建fileReader对象： var reader = new FileReader();
+
+        方法：
+        abort();//终止读取
+        // 通过不同的方式读取文件
+        readAsBinaryString(file);//将文件读取为二进制编码
+        readAsDataURL(file); 将文件读取为DataURL编码base64
+        readAsText(file, [encoding]); 将文件读取为文本
+        readAsArrayBuffer(file);​​​​​​​ 将文件读取为arraybuffer
+        File.slice(起始字节，终止字节);//file分割方法
+        
+        事件：
+        onloadstart 读取开始时触发
+        onprogress 读取中
+        onloadend 读取完成触发，无论成功或失败
+        onload 文件读取成功完成时触发
+        onabort 中断时触发
+        onerror 出错时触发  
+        
+        */ 
+        var inp = document.getElementById('inp');
+        var reader = new FileReader();
+        inp.onchage = function(){
+            reader.readAsDataURL(inp.files[0]);
+        }
+        reader.onloadstart = function(e){
+            consle.log(onloadstart);
+        }
+    </script>  
+</body>
+</html>

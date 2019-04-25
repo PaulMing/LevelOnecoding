@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 柯里化(函数式编程)
+        // 有缺点 -> 并不是所有函数都适用 -> 反柯里化
+
+        // demo1
+        function add(a,b,c,d){
+            return a + b + c + d;
+        }
+        add(1,2,3,4);
+        function FixedParmasCurry (fn){
+            var _arg = [].slice.call(arguments,1);
+            return function(){
+                var newArg = _arg.concat([].slice.call(arguments,0));
+                return fn.apply(this,newArg);
+            }
+        }
+        var newAdd = FixedParmasCurry(add,1);
+        newAdd(2,3,4);
+
+
+
+
+
+
+        
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        
+        
+        
+        
+    </script>
+    
+</body>
+</html>

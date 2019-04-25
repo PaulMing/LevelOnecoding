@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <audio src="./音乐.flac" id="" controls autoplay></audio>
+    <!-- <video src="./视频.mp4" id="" controls></video> -->
+    <button id="btn_add">+</button>
+    <button id="btn_sub">-</button>
+    <button id="play">播放</button>
+    <button id="pause">暂停</button>
+    <button id="reload">重新加载</button>
+    <script>
+        var audio = document.getElementsByTagName('audio')[0];
+        btn_add.onclick = function(){
+            if(audio.volume>=0 && audio.volume<1){
+                audio.volume += 0.1;
+            } 
+            console.log(audio.volume);
+        }
+        btn_sub.onclick = function(){
+            if(audio.volume >0 && audio.volume<1){
+                audio.volume -= 0.1;
+            }
+            console.log(audio.volume);
+        }
+        play.onclick = function(){
+            audio.play();
+        }
+        pause.onclick = function(){
+            audio.pause();
+        }
+        reload.onclick = function(){
+            audio.load();//重新加载音频/视频
+        }
+    </script>
+</body>
+</html>

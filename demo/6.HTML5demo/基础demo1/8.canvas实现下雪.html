@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            background: black;
+        }
+    
+    </style>
+</head>
+<body>
+    <canvas id="oCanvas" width="1200" height="600"></canvas>
+    <script>
+        var oCanvas = document.getElementById('oCanvas');
+        var ctx = oCanvas.getContext('2d');
+        var width = oCanvas.width;
+        var height = oCanvas.height;
+        var rotateCount = 0;
+        // 随机生成雪的信息
+        function randomSnow() {
+            var left = parseInt(Math.random() *  width);
+            var top = 50;
+            var fontSize = parseInt(Math.random() * 50 + 10);
+            var snowRotateDeg = parseInt(Math.random() * 15 + 5);
+            var snowLength = parseInt(Math.random() * 10 + 10);
+            var snowSpeedX = parseInt(Math.random() * 10 + 10);
+            var snowSpeedY = parseInt(Math.random() * 10 + 5);
+            if (Math.random() < 0.4) {
+                // console.log();
+                var temp = left;
+                left = top;
+                top = temp;
+            }
+            return {
+                left: left,
+                top: top,
+                fontSize: fontSize,
+                snowLength: snowLength,
+                snowRotateDeg: snowRotateDeg,
+                snowSpeedX: snowSpeedX,
+                snowSpeedY : snowSpeedY
+            }
+        }
+       
+        function drawSnow(deg, snow) {
+            ctx.beginPath();
+            var realDeg = deg % 60 * (2 * Math.PI / 360);
+            ctx.moveTo(snow.left + snow.snowLength * Math.sin(realDeg), snow.top - snow.snowLength * Math.cos(realDeg));
+            ctx.lineTo(snow.left - snow.snowLength * Math.sin(realDeg), snow.top + snow.snowLength * Math.cos(realDeg));
+            ctx.strokeStyle = "#fff";
+            ctx.lineCap = 'round';
+            ctx.lineWidth = 6;
+            ctx.stroke();
+            ctx.beginPath();
+            var realDeg2 = (60 - deg % 60) * (2 * Math.PI / 360);
+            ctx.moveTo(snow.left - snow.snowLength * Math.sin(realDeg2), snow.top - snow.snowLength * Math.cos(realDeg2));
+            ctx.lineTo(snow.left + snow.snowLength * Math.sin(realDeg2), snow.top + snow.snowLength * Math.cos(realDeg2));
+            ctx.strokeStyle = "#fff";
+            ctx.lineCap = 'round';
+            ctx.lineWidth = 6;
+            ctx.stroke();
+            ctx.beginPath();
+            var realDeg3;
+            if(deg % 60 + 60 > 90) {
+                realDeg3 = (deg % 60 - 30) * (Math.PI / 180);
+                ctx.moveTo(snow.left + snow.snowLength * Math.cos(realDeg3), snow.top + snow.snowLength * Math.sin(realDeg3));
+                ctx.lineTo(snow.left - snow.snowLength * Math.cos(realDeg3), snow.top - snow.snowLength * Math.sin(realDeg3));
+            } else {
+                realDeg3 = (30 - deg % 60) * (Math.PI / 180);
+                ctx.moveTo(snow.left - snow.snowLength * Math.cos(realDeg3), snow.top + snow.snowLength * Math.sin(realDeg3));
+                ctx.lineTo(snow.left + snow.snowLength * Math.cos(realDeg3), snow.top - snow.snowLength * Math.sin(realDeg3));
+            }
+            ctx.strokeStyle = "#fff";
+            ctx.lineCap = 'round';
+            ctx.lineWidth = 6;
+            ctx.stroke();
+        }
+        var snowArr = [];
+        setInterval(function () {
+            var snow = randomSnow();
+            snowArr.push(snow);
+            snowArr = snowArr.filter(function (item) {
+                return item.top < height;
+            })
+        }, 50);
+        setInterval(function () {
+            ctx.clearRect(0, 0, width, height);
+            for (var i = 0; i < snowArr.length; i ++) {
+                drawSnow(snowArr[i].snowRotateDeg * rotateCount, snowArr[i]);
+                snowArr[i].top += snowArr[i].snowSpeedY;
+                snowArr[i].left += snowArr[i].snowSpeedX;
+            }
+            rotateCount ++ ;
+        }, 50);
+    </script>
+</body>
+</html>

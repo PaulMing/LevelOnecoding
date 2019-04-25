@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            Map:地图； Set:集合； WeakMap; WeakSet;
+            集合：空集、子集、并集、交集、差集    -> 特点：无重复性(不会出现重复元素)
+        */ 
+        // 封装集合
+        var MySet = function(){
+            var items = [];
+
+            this.has = function(value){
+                return items.hasOwnProperty(value);
+            }
+
+            this.add = function(value){
+                if(!this.has(value)){
+                    items[value] = value;
+                    return value;
+                }
+                return false;
+            }
+        }
+//         基础元素 + 基础操作          数据结构中代码是让你理解的
+
+// js中数组是泛型，也就是弱类型，数组元素什么类型都OK
+// c语言中数组存储是严格的，就是链表形式；
+
+// 不定范围的值转化为固定位置的值，实际就是利用hash算法固定位置，临街链表产生联系，最终存储的地方称之为桶，拿数组做个桶
+        
+        
+        
+    </script>
+</body>
+</html>

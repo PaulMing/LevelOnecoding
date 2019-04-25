@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        path {
+            stroke: #000;
+            stroke-width: 2px;
+        }
+
+        .dash-1 {
+            stroke-dasharray: 10;
+        }
+
+        .dash-2 {
+            stroke-dasharray: 10;
+        }
+
+        .dash-3 {
+            stroke-dasharray: 490 490;
+            stroke-dashoffset: 490;
+            animation: show 1s linear infinite alternate;
+        }
+
+        @keyframes show {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .dash-4 {
+            fill: transparent;
+            stroke-linecap: round;
+            stroke-width: 5px;
+        }
+
+        .dash-4-base {
+            stroke: #666;
+        }
+
+        .dash-4-move {
+            stroke: #0fc;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+        }
+
+        .dash-4-move.active {
+            animation: show .8s linear forwards;
+        }
+
+    </style>
+</head>
+<body>
+    <h2>dasharray 10</h2>
+    <svg width="500px" height="50px">
+        <path class="dash-1" d="M10 10 H 500"></path>
+    </svg>
+    <h2>dasharray 10 5</h2>
+    <svg width="500px" height="50px">
+        <path class="dash-2" d="M10 10 H 500"></path>
+    </svg>
+    <h2>抽风的路径</h2>
+    <svg width="500px" height="50px">
+        <path class="dash-3" d="M10 10 H 500"></path>
+    </svg>
+    <h2>仪表盘样式</h2>
+    <input id="input" type="text"/>
+    <br/>
+    <svg width="400px" height="200px">
+        <path class="dash-4-base dash-4" d="M160 169 A 80 80 0 1 1 240 169"></path>
+        <path class="dash-4 dash-4-move" d="M160 169 A 80 80 0 1 1 240 169"></path>
+    </svg>
+    <script>
+        var ele = document.getElementById('input');
+        var svgPath = document.getElementsByClassName('dash-4-move')[0];
+
+        ele.onfocus = function() {
+            svgPath.classList.remove('active');
+        };
+
+        ele.onblur = function() {
+            var num = parseInt(this.value);
+            // 用 svgPath.getTotalLength() 更方便
+            var allLen = Math.round(Math.PI*2*80*(5/6));
+            var moveLen = Math.round(num/100*allLen);
+
+            //设置动画
+            svgPath.style.strokeDasharray = moveLen + ' 1000';
+            svgPath.style.strokeDashoffset = moveLen;
+            svgPath.classList.add('active');
+        };
+
+    </script>
+</body>
+</html>

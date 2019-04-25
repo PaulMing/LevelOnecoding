@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            width: 3000px;
+            height: 3000px;
+        }
+        div {
+            width: 160px;
+            height: 160px;
+            background-color: blue;
+            position: absolute;
+            left: 300px;
+            top: 800px;
+            /* opacity: 0.3; */
+        }
+    </style>
+</head>
+<body>
+    <!-- 模仿懒加载 -->
+    <div id="demo" style="opacity:0.3"></div>
+    <script>
+        // var oDiv = document.getElementById("demo");
+        function check(_id) {
+            var oDiv = document.getElementById(_id);
+            if (oDiv.offsetTop <= window.innerHeight + window.pageYOffset) {
+                oDiv.timer = setInterval(function () {
+                    if (oDiv.style.opacity == '1') {
+                        clearInterval(oDiv.timer);
+                    } else {
+                        oDiv.style.opacity = parseFloat(oDiv.style.opacity) + 0.01;
+                    }
+                }, 60);
+            }
+        }
+        window.onscroll = function () {
+            check("demo");
+        }   
+    </script>
+
+    <!-- 图片预加载 -->
+      <!--  
+       <div id="demo"style="width:300px;height:300px;"></div>
+       <script>
+           // var oImg = new Image();这种写法也是OK的；
+           var oImg = document.createElement("img");     
+           oImg.onload = function(){
+               // 可以简写：document.getElementById("demo").appendChild(this);
+               // 也可以：demo.appendChild(this);
+               var oDiv = document.getElementById("demo");
+               oDiv.appendChild(this);
+           }    
+           oImg.src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_8c34dffa67078c0b70.png"    
+       </script> -->
+</body>
+</html>

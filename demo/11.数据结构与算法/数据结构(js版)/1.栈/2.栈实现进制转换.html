@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var Stack = function(){
+            var items = [];
+            // 入栈(栈顶添加元素)
+            this.push = function(ele){
+                items.push(ele);
+            };
+            // 出栈(栈顶拿出元素)
+            this.pop = function(){
+                return items.pop();
+            };
+            // 栈顶(查看栈顶元素)
+            this.peek = function(){
+                return items[items.length - 1]
+            };
+            // 查看栈是否为空
+            this.isEmpty = function(){
+                return items.length == 0
+            };
+            // 清除栈
+            this.clear = function(){
+                items = []
+            };
+            // 获取栈的大小
+            this.size = function(){
+                return items.length
+            };
+            // 检查items
+            this.getItems = function(){
+                return items
+            }
+        }
+
+        // 10进制转换为2进制 -> 先入栈、后出栈
+        var divBy2 = function(number){
+            var stack = new Stack();
+            var yushu;//余数
+            var str = '';
+            // 入栈
+            while(number > 0){
+                yushu = number % 2;
+                stack.push(yushu);
+                number = Math.floor(number / 2);
+            }
+            // 出栈
+            while(!stack.isEmpty()){
+                str += stack.pop();
+            }
+
+            return str;
+        }    
+        console.log(divBy2(13));//1101
+    </script>   
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+        算法：
+          1.开发所写都是算法 -> 例如if~else~ for循环、表达式等等,平时谈到的算法只不过是算法中的明星 -> 本质就是更加高效的解决方案
+          2.算法聚焦"优劣性"：不同的算法实现相同的功能耗费的资源不同
+          3.算法强调时间与空间的关系，时间少则空间需要的就大 -> 寻求“平衡点”
+        
+        程序 = 算法 + 数据结构;//“明星级”算法 + 优化的数据结构 -> 程序便会很nice;
+    -->
+    <script>
+        // 数组去重下述6种方法,利用对象属性特性去重效率较高，但是其去重引用值时会出现问题，所以推荐使用ES6 Set数据结构
+
+        // 利用对象属性特性：属性相同其会覆盖
+        var arr = [1,2,4,5,19,20,2,29,5,4]
+        Array.prototype.unique = function(){
+            var newArr = [];
+            var obj = {};
+            var len = this.length;
+            for(var i=0; i<len; i++){
+                if(!obj[this[i]]){
+                    obj[this[i]] = true;
+                    newArr.push(this[i]);
+                }
+            }
+            return newArr;
+        }
+        console.log(arr.unique());//[1, 2, 4, 5, 19, 20, 29]
+
+        // 利用数组indexOf();
+        var arr = [1,2,4,5,19,20,2,29,5,4];
+        Array.prototype.unique1 = function(){
+            var newArr = [];
+            var len = this.length;
+            for(var i=0; i<len; i++){
+                if(newArr.indexOf(this[i]) == -1){
+                    newArr.push(this[i]);
+                }
+            }
+            return newArr;
+        }
+        console.log(arr.unique1());//[1, 2, 4, 5, 19, 20, 29]
+
+        // 利用数组filter() + indexOf();
+        var arr = [1,2,4,5,19,20,2,29,5,4];
+        Array.prototype.unique2 = function(){
+            return this.filter(function(ele,index,self){
+                return self.indexOf(ele,index+1) == -1;
+
+            })
+        }
+        console.log(arr.unique2());//(7) [1, 19, 20, 2, 29, 5, 4]
+
+        // 利用双重for循环
+        var arr = [1,2,4,5,19,20,2,2,5,4];
+        Array.prototype.unique3 = function(){
+            var len = this.length;
+            for(var i=0; i<len; i++){
+                for(var j=i+1; j<len; j++){
+                    if(this[i] == this[j]){
+                       // console.log(this[i]);//查找重复元素
+                       this.splice(j,1);
+                       len --;//提升性能
+                       j--;//回滚,防止漏掉数字
+                    }
+                }
+            }
+            return this;
+        }
+        console.log(arr.unique3());//(7) [1, 2, 4, 5, 19, 20, 29]
+
+        // 利用单层for循环 -> 先排序,后去重
+        var arr = [1,2,4,5,19,20,2,29,5,4];
+        Array.prototype.unique4 = function(){
+            var len = this.length;
+            this.sort(function(a,b){return a-b});
+            for(var i=0; i<len; i++){
+                if(this[i] == this[i+1]){
+                    this.splice(i,1);
+                    len --;
+                    i --;
+                }
+            }
+            return this;
+        }
+        console.log(arr.unique4());//(7) [1, 2, 4, 5, 19, 20, 29]
+
+        // 利用ES6 Set数据结构
+        var arr = [1,2,4,5,19,20,2,29,5,4];
+        var oS = new Set(arr);//生成Set对象的时候其已经去重
+        var newArr = [...oS];//Set对象转换为数组
+        console.log(newArr);//(7) [1, 2, 4, 5, 19, 20, 29]
+
+        var newArr1 = [];
+        for(var prop of oS){
+             newArr1.push(prop);
+        }
+        console.log(newArr1);//[1, 2, 4, 5, 19, 20, 29]
+
+
+
+
+
+        // 补充
+        var arr = [1,2,4,5,19,20,2,2,5,4];
+        Array.prototype.unique3 = function(){
+            var len = this.length;
+            for(var i=0; i<len; i++){
+                for(var j=0; j<len; j++){
+                    if(this[i] == this[j] && i != j){
+                       // console.log(this[i]);//查找重复元素
+                       this.splice(j,1);
+                       len --;//提升性能
+                       j--;//回滚,防止漏掉数字
+                    }
+                }
+            }
+            return this;
+        }
+        console.log(arr.unique3());//(7) [1, 2, 4, 5, 19, 20, 29]
+
+
+    </script>
+</body>
+</html>

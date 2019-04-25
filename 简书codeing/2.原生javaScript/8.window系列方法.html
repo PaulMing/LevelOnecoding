@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Dom基本操作    封装工具库-->
+    <script>
+        // 滚动条在x轴、y轴移动的距离；
+        window.pageXOffset / pageYOffset
+        // IE8以及IE8以下不兼容 以上，支持以下
+        document.body.scrollLeft;//x轴
+        document.body.scrollTop;//y轴
+        // document.documentElement.scorllLeft/Top
+        // 这三个兼容性混乱，如果一个能用，有值。另一个一定是0，解决方案就是：同时取两个值相加，封装方法实现:
+
+
+        // 滚动条滚动距离
+        function getScrollOffset() {
+            if (window.pageXOffset) {
+                return {
+                    x: window.pageXOffset,
+                    y: window.pageYOffset,
+                }
+            } else {
+                return {
+                    x: document.body.scrollLeft + document.documentElement.scrollLeft,
+                    y: document.body.scrollTop + document.documentElement.scrollTop,
+                }
+            }
+        }
+
+
+
+
+
+        // 可视区窗口：指的是HTML文档展示的视图，不包括浏览器的其他部分，控制台、地址栏什么的不包括；
+        window.innerWidth / innerHeight //该方法ie8及ie8以下不兼容；
+        // 得出的是像素，1440代表着1440个像素，不一定设备屏幕大就大于1440.屏幕小就小于1440；
+
+        // 每个浏览器都有两个模式：标准模式、怪异模式（也叫混杂模式）这个怪异模式是向后兼容的，兼容以前浏览器的语法，每个浏览器怪异模式支持的区间不同，chrome浏览器支持区间是5个版本；实际情况，谷歌浏览器差异没那么大，而ie浏览器不同版本之间的差距也不是“天壤之别”，也就是几个问题而已；
+        // 启动怪异模式： 把HTML页面中的顶标签去掉，< !DOCTYPE html > 删除
+
+        // DOCTYPE html 文档类型 大小写无所谓，DTD   emmet语法：html:5
+
+        // ie8及以下兼容
+        // 标准模式下，任意浏览器都兼容
+        document.documentElement.clientWidth / clientHeight;
+        // 怪异模式下的浏览器
+        document.body.clientWidth / clientHeight;
+
+        // 封装兼容性方法，获取可视区窗口宽高：getViewportOffset();
+        function getViewportOffset() {
+            if (window.innerWidth) {
+                return {
+                    w: window.innerWidth,
+                    h: window.innerHeight
+                }
+            } else {
+                if (document.compatMode === 'BackCompat') {
+                    return {
+                        w: document.body.clientWidth,
+                        h: document.body.clientHeight
+                    }
+                } else {
+                    return {
+                        w: document.documentElement.clientWidth,
+                        h: document.documentElement.clientHeight
+                    }
+                }
+            }
+        }
+
+        // es5.0的方法
+        // 查看元素的几何尺寸方法1
+        // 每个dom元素都有该方法，返回的是一个对象，包含该元素的很多信息，兼容性很好，
+        div.getBoundingClientRect();
+        // height和width老版本IE并未实现，解决方案：width:right-left;
+        // 返回的结果不是“实时的”
+
+
+        Element.prototype.getElementOffset = function(){
+            var objData = this.getBoundingClientRect();
+            if (objData.width) {
+                return {
+                    w: objData.width,
+                    h: objData.height
+                }
+            } else {
+                return {
+                    w: objData.right - objData.left,
+                    h: objData.bottom - objData.top
+                }
+            }
+        }
+
+  
+
+
+
+
+
+
+
+
+
+
+
+        // 查看元素的几何尺寸方法2
+        任何dom元素都有该方法
+        div.offsetWidth / div.offsetHeight
+
+        // 以上两种方法所求都为：视觉上的宽、高，（内容区+padding+border）
+        div.offsetLeft, div.offsetTop
+        dom.getElementPosition()
+              // 封装函数：获取元素相对于文档的坐标；
+              Element.prototype.getPosition = function () {
+            if (!this.offsetParent) {
+                return {
+                   w: this.offsetLeft,
+                   h: this.offsetTop
+                }
+            }
+            var width = this.offsetLeft,
+                height = this.offsetTop,
+                ele = this.offsetParent;
+            while (ele.offsetParent) {
+                width += this.offsetParent.offsetLeft;
+                height += this.offsetParent.offsetTop;
+                ele = ele.offsetParent;
+            }
+            return {
+                w: width,
+                h: height
+            }
+        }
+
+
+
+
+
+        // 滚动条滚动到相应的位置
+        // 
+        window.scroll();
+        window.scrollTo();
+
+        window.scrollBy();
+
+
+
+
+
+
+
+        // 脚本化css（控制css）
+
+        // dom元素都有该方法,间接改变css样式
+        div.style;//返回一个类数组；可读可写,改变的是行内样式,如果不是写到行内的样式，不可读取
+        div.style.width = "";
+        div.style.height = "";
+        div.style['height'];
+        div.style.backgroundColor = '';//js中命名规则中不支持特殊字符，有特殊字符的变为“小驼峰”命名规则
+        div.style.borderRadius = "";
+
+        // 保留字属性，语法：前加入css前缀，  
+        div.style.cssFloat =
+        // 复合属性必须拆解，border: 1px solid red;
+        div.style.borderWidth = '';
+        // 现在也可以啦：div.style.border="2px solid black";
+
+        // 有bug,.style 只能获取行间样式；
+
+
+        // 除了.style可以写入，接下来学到都只能读；只能查看
+        // 计算样式，其也是个对象；获取属性是获取的是最终展示的那个值，不分什么行内样式什么的
+        window.getComputedStyle(div, null);
+        // 获得值是计算过的，例如写个width:10em  返回的就是160px;
+        window.getComputedStyle(div, null).width
+
+        // ie8以及ie8以下不兼容其使用下式
+        // ele.currentStyle----->>> 同样操作，其也是获取最终展示的那个值（权值最高），但获得的值就是原来的，不是个width: 10em  返回的就是10em
+
+        div.currentStyle.width
+
+
+        //封装计算样式的方法：
+        function getStyle(obj,prop,fake){
+            var fake = fake || null;
+            if(obj.currentStyle){
+                return obj.currentStyle[prop];
+            }else{
+                return window.getComputedStyle(obj,fake)[prop];
+            }
+        }
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // 扩充，window.getComputedStyle(div,"after").width 第二个参数可以写伪元素，这样便可以获取样伪元素的属性值了；
+        // 怎么改变伪元素的样式：通过改变div的样式来间接改变；
+        // 【往往把状态提前设置好，转成那个状态就好；】
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

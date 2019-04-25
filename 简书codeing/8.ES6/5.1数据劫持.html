@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="demo">
+    <div id="show"></div>
+    <script>
+        var oInput = document.getElementById('demo');
+        var oDiv = document.getElementById('show');
+        // 数据
+        var oData = {
+            value: 'skr'
+        };
+        // 更新视图
+        function upData(){
+            oDiv.innerText = oData.value;
+        }
+        upData();
+
+        // input框修改数据
+        oInput.oninput = function(){
+            oData.value = this.value;
+        }
+        // 检测数据的变化
+        function Observer(data){
+            if(!data || typeof data != 'object'){
+                return data;
+            }
+            Object.keys(data).forEach(function(key){
+                definedRective(data,key,data[key]);
+            })     
+        }
+        function definedRective(data,key,val){
+            Observer(val);//递归思想 -> 如果监控的属性为引用值，地址没变化，即使里面的值发生改变，该属性也等同于没变化，不能做到有效监控
+          
+            Object.defineProperty(data,key,{
+                get () {
+                    return val;
+                },
+                set(newValue){
+                    if(newValue == val) return;//提升性能
+                    val = newValue;
+                    upData();
+                }
+            })
+        }
+
+        Observer(oData);
+
+
+
+        // 有bug -> 无法监控数组
+        // 监控数据，数据最常见的形式便是对象、数组 -> 以上监控对象可以，Object.defineProperty();无法操作数组 ->vue采取的解决方案：其重写了数组原型上的系列方法，从而达到监控数据的效果
+        // let arr = [];
+        // let {push} = Array.prototype;
+        // function upData () {
+        //     console.log('更新');
+        // }
+        // // 重写(即可实现原有功能，有可监控数据) -> push(); pop(); unshift(); shift(); slice();等
+        // Object.defineProperty(Array.prototype,'push',{
+        //     value: (function(){
+        //         return (...arg) => {
+        //             push.apply(arr,arg);
+        //             upData();
+        //         }
+        //     })()
+        // });
+        // arr.push(1,2); 
+
+
+
+        // 除此 -> 其也不能监控后续新增的对象属性，解决方案：再次调用Observe(data); 后续推出的Proxy Reflect可解决数组、新增属性的问题，但是兼容性不好，VUE3.0之前没使用，还是使用上述的老方法，VUE3.0使用的Proxy, Reflect;
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+     <script>
+        /* 
+        devicemotion 监听设备速度的变化 
+        应用场景：“摇一摇” -> 判断设备的加速度, 设备长边为Y轴，短边为X轴，垂直屏幕为Z轴
+        (实际情况：即使设备保持静止状态，监听设备的加速度也有值，因为地球在运动) 
+        */
+        window.addEventListener('devicemotion',function(e){
+            console.log(e);
+        }) 
+        /* 
+        deviceorientation 监听设备方向上的变化
+        */
+        window.addEventListener('deviceorientation',function(e){
+        console.log(e);
+        })
+        
+
+    // 手机访问PC端自己写的网页的方法：(移动端与PC端最好处于同一局域网)
+    // cmd(window+R) -> ipconfig -> ipv4 -> 右键复制 -> 网页URL地址栏上粘贴IP地址 -> “草料二维码”网站把URL地址放上去 -> 生成二维码 -> 手机“扫一扫”即可常看网页
+  
+     </script>
+</body>
+</html>

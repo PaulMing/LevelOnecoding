@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 箭头函数
+        // 箭头函数中函数声明必须使用变量接收或者在数组中使用 -> 其不能单独使用
+
+        let sum = (a,b) => {
+            return a+b;
+        }
+        // 省略return情况
+        let sum = (a,b) => {
+            a+b;
+            // 若省略return,函数默认return undefined;若想要return a+b,可采取下列方式
+        }
+        // 直接省略return以及大括号{}
+        let sum = (a,b) => a+b;//return a+b;
+        let sum = (a,b) => [a,b];//return [a,b]
+       
+        // let sum = (a,b) => {a:a, b:b};//报错 -> 其不会return对象，不能有效识别
+        // 等同于下式
+        // let sum = (a,b) => {
+        //     a:a,
+        //     b:b;
+        //     return undefined;
+        // }
+        // 其不能有效识别 -> 将其变成表达式便可以识别，建议使用();
+        let sum = (a,b) => ({a:a, b:b});
+
+
+
+
+        // 箭头函数不能new对象，其没有构造函数，也就没有原型
+        let sum = ()=>{
+            this.a = 10;
+        }
+        new sum();//报错
+
+        // 箭头函数中arguments、this是由函数定义时外围最近一层非箭头函数决定的，this指向确认后，后续不能进行更改
+        function arrTest(a,b,c){
+            var arg = arguments;
+            return (a,b) => {
+                console.log(a,b,arg,arguments);
+            }
+        }
+        arrTest(1,2,3)();
+
+        // 箭头函数中this指向一旦确定，后续不能更改
+        var a = "name";
+        let sum = () =>{
+            console.log(this.a);//name;
+        }
+        let obj = {
+            a: 'kk',
+            fn: sum
+        };
+        obj.fn();
+
+        // 特殊案例
+        let sum = () => {
+            console.log(arguments);
+        }
+        sum();//报错，因为外围一层没有函数
+        let sum = () => {
+            console.log(this);
+        }
+        sum();//this指向window, 除了这点，其它场景arguments和this指向都相同
+
+
+
+        // 其它
+        let fn = () => {};//表示空函数 -> 不要let fn=  => ;
+        // 若函数只有一个形参,()可省略
+        let fn1 = a => a+3;
+        // 对象中函数可省略:function
+        let obj = {
+            a: 'name',
+            fn(){
+                console.log(a);
+            }
+        }
+
+        // 函数目的指向性更强，可读性更好，简化代码，提升开发效率
+        function sum (x) {
+            return function (y) {
+                return function (z) {
+                    return x + y + z;
+                }
+            }
+        };
+        sum(1)(2)(3);
+        // var sum1 = sum(1);
+        // var sum2 = sum1(2);
+        // console.log(sum2(3));
+
+        // 简写形式 -> 过程剖析
+        let sum = x => function(y){return function(z){return x+y+z}};
+        let sum = x => y => function(z){return x+y+z};
+        let sum = x => y => z => x+y+z
+
+
+                
+
+        // 高阶函数：1.函数接收参数，return函数；2.函数参数为函数；3.函数参数为函数，return函数；
+        // 例如数组中的高阶函数：forEach(); filter(); map(); reduce();
+    </script>
+</body>
+</html>

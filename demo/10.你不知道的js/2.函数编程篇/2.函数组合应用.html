@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 初期测试js代码：结合浏览器; 后期可直接在nodejs环境中测试js代码 -->
+    <script>
+        // 函数组合：多个函数组合实现新的功能
+        // demo: 以下函数组合，其会自右向左执行，称为“左倾”
+        function compose(f,g){
+            return function(x){
+                return f(g(x));
+            }
+        }
+        function toUpperCase(str){
+            return str.toUpperCase();
+        }
+        function add(str){
+            return str + '!';
+        }
+        var f = compose(add,toUpperCase);
+        f('hellojs');//"HELLOJS!"
+
+
+        // 封装“函数组合”函数 ->可传入多个函数
+        function compose(){
+            var args = Array.prototype.slice.call(arguments);
+            var len = args.length-1;
+            return function(x){
+                var result = args[len](x);
+                   while(len--){
+                       result = args[len](result)
+                   }
+                return result;
+            }
+        }
+        var f = compose(add,toUpperCase);
+        f('hellovue');
+
+        // 优化版
+        function compose1(){
+            var args = Array.prototype.slice.call(arguments);
+            return function(x){
+               return args.reduceRight(function(res,cb){
+                    return cb(res);
+                },x)
+            }
+        }
+        var f1 = compose1(add,toUpperCase);
+        f1('helloReact');
+
+        // 优化版 -> ES6箭头函数
+        const compose2 = (...args) => x => args.reduceRight((res,cb) => cb(res),x)
+        var f2 = compose1(add,toUpperCase);
+        f2('helloReact');
+         
+    </script>
+</body>
+</html>

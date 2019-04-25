@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 继承模式：函数都有原型，构造函数是由于对象产生关联；
+
+        // 继承发家史
+        // 第一种：原型链
+        // 2、构造函数覆盖了那个构造函数，完全可以直接使用这种方法，进行操作，工业优点的
+
+
+
+
+
+        // 共有原型：多个构造函数可以使用同一个原型；
+        Father.prototype.firstName = "chris";
+        function Father(){
+        }
+        function Son(){
+        }
+        Son.prototype = Father.prototype;
+        var son = new Son();//console.log('son.firstName');
+        var father = new Father();//console.log('father.firstName');
+
+        // ----> 封装函数
+        Father.prototype.firstName = "chris";
+        function Father(){
+        }
+        function Son(){
+        }
+        // extend();inherit()第一个参数继承第二个参数；
+        function inherit(Target,Origin){
+          Target.prototype = Origin.prototype;
+        }
+        inherit(Son,Father);
+        var son = new Son();//console.log('son.firstName');
+        var father = new Father();//console.log('father.firstName');
+        // inherit:css中表示继承，文字类属性有传递的特性，子元素不设置就会继承到父元素的属性/属性值font-size: inherit;
+
+
+
+
+
+
+        // 第四种：圣杯模型；
+        // 构造函数的原型，第一个参数是继承的，第二个参数是原型的；
+        // 方式一：
+        function inherit(Target,Origin){
+            Target.prototype = Origin.prototype;
+
+        }
+        inherit(Son,Father);
+        var son = new Son();
+         // 方式二：
+         function inherit(Target,Origin){
+            Target.prototype = Origin.prototype;
+
+        }
+        var son = new Son();
+        inherit(Son,Father);
+
+        // bug: son如果给自己加一个单独的属性，父亲也同样会加上
+        // Son.prototype.sex = "male";
+        console.log(son.sex);//male
+        console.log(father.sex);//male
+
+
+        // A继承B,A更改原型并不影响B原型内容；
+        // 圣杯模式：永恒的概念，解决共享原型的bug；
+        // extend(); inherit();  超类：uber/super[js中super是保留的关键字]
+        function inherit(Target,Origin){
+            function F(){};
+            F.prototype = Origin.prototype;
+            Target.prototype = new F(); 
+            Target.prototype.constructor = Target;//修改constructor的指向
+            Target.prototype.uber = Origin.prototype;//确认继承自谁
+        }
+        function Father(){
+
+        }
+        function Son(){
+
+        }
+        inherit(Son,Father);
+        var son = new Son();
+        var father = new Father();
+        // 分析：console.log(son.constructor);//Father(){}; 指向改变了，需要还原为原来的constructor指向
+        // 过程：son对象自己没有该属性，就沿着原型链寻找，son.__proto__----->Son.prototype---->new F(); ---->F.prototype ---->Father.prototype --->Father(){}
+        // 修改：Target.prototype.constructor = Target;
+
+        // 使功能更完善：确认继承自谁，Target.prototype.uber = Origin.prototype;
+
+        function inherit(Target,Origin){
+            function F(){};
+            Target.prototype = new F(); 
+            F.prototype = Origin.prototype;
+            Target.prototype.constructor = Target;//修改constructor的指向
+            Target.prototype.uber = Origin.prototype;//确认继承自谁
+        }
+        // 更换顺序后，new F()的过程中原型为F.prototype={};后期进行更改原型其又指向新存储空间
+
+
+
+
+
+
+
+    /*
+     Father.prototype.lastName = "deng"
+    function Father(){
+
+    }
+    function Son(){
+
+    }
+    function inherit(Target,Origin){
+        function F(){}
+        F.prototype = Origin.prototype;
+        Target.prototype = new F();
+        Target.prototype.constructor = Target;
+        Target.prototype.super = Origin.prototype;
+
+    }
+    inherit(Son,Father);
+    var son = new Son();
+    var father = new Father();
+    Son.prototype.lastName = 'wang';
+    */
+
+
+
+
+    
+    //YUI库：使用了立即执行函数;//写法更高端
+    //return 函数，此函数与立即执行函数形成闭包，所以依旧可以操作变量F，F称为此函数的私有化变量；
+    //形式1：   
+    var inherit = (function(){
+        var F = function(){};
+        return function(Target,Origin){
+            F.prototype = Origin.prototype;
+            Target.prototype = new F();
+            Target.prototype.constructor= Target;
+            Target.prototype.uber = Origin.prototype;
+        }
+    }());
+    //形式2：
+    var inherit = (function(){
+        var F = function(){};
+        function demo(Target,Origin){
+            F.prototype = Origin.prototype;
+            Target.prototype = new F();
+            Target.prototype.constructor= Target;
+            Target.prototype.uber = Origin.prototype;
+        }
+        return demo;
+    }());
+    
+
+    var inherit = function(Target,Origin){
+            F.prototype = Origin.prototype;
+            Target.prototype = new F();
+            Target.prototype.constructor= Target;
+            Target.prototype.uber = Origin.prototype;
+        }
+
+   
+
+    //闭包的第三点应用：可以实现封装、属性私有化
+    //属性私有化：创建的对象中的方法与构造函数形成闭包，其可以操作构造函数的变量；但是构造函数的过程是隐式三段论，此变量不是this对象中的属性，创建的对象wang.prepareWife//undefined; 自然没有该属性；
+    function Wang(name,wife){
+        //prepareWife 是对象的私有化属性；
+        var prepareWife = 'xiaohua';
+        this.name = name;
+        this.wife = wife;
+        this.divorce = function(){
+            this.wife = prepareWife;
+        }
+        this.changePrepareWife = function(target){
+            prepareWife = target;
+        }
+        this.sayPrepareWife = function(){
+            console.log(prepareWife);
+        }
+    }
+    var wang = new Wang('chris','zhao');
+
+
+
+
+    // 命名空间：管理变量，防止污染全局，适用于模块化开发第一种命名空间，第二种是闭包，
+    // 1、名字+变量名来区别  wangname zhaoname
+    
+    
+
+
+    //以下这种方法称为命名空间：对象之间的相互嵌套,然后放入属性；
+    //即使是同样的属性也可以很好的区分；
+    var org={
+        department1:{
+            wang:{
+                age: 18,
+                money: {},
+            },
+            zhao:{
+                age: 19,
+                money: {},
+            }      
+        },
+        department2:{
+            wang:{
+            }
+        },
+    }
+    //使用的过程就是org.department1,wang 后续进一步操作把该对象赋值给变量进行属性的操作，更便捷；
+    var wang = org.department1.wang;
+    wang.age/wang.money;
+  
+    
+    // 现在使用webpack,同步化开发软件；
+
+
+
+    // 利用闭包来防止污染全局变量；
+    // init：初始化，其表示程序入口，沿着init函数可以逐层找到其他函数；
+    // return 函数;此函数与立即执行函数形成闭包，name是此函数的私有化变量，其与全局并不冲突；
+    var name = 'bcd';
+    var init = (function(){
+        var name = 'abc';
+        function callName(){
+            console.log(name);
+        }
+        return function(){
+            callName();
+        }
+    }());
+    init();//'abc';
+    var tellinit = (function(){
+        var name = 123;
+        function callName(){
+            console.log(name);
+        }
+        return function(){
+            callName();
+        }
+    })
+    tellinit();//123; 
+    
+    
+    
+        // 小知识点1
+
+        // 函数的连续调用： return this 解决；
+        var wang = {
+            smoke: function(){
+                console.log("smoke is koo");
+                return this;
+            },
+            drink: function(){
+                console.log("drink is kklk");
+                return this;
+            },
+            perm: function(){
+                console.log("perm is unhealth");
+                return this;
+            }
+        }
+        //平时调用: wang.smoke(); wang.drink(); 
+        //如果不加return this; wang.smoke().drink();//报错;
+        wang.smoke().drink().perm().smoke().perm();//函数执行默认函数体内有return undefined语句;wang.smoke()默认返回的是undefined，所以后面的函数就无法执行，解决方案是return 对象； return wang; 这里可以巧妙使用return this;
+        
+       
+        
+
+
+
+
+        // 对象的调用方式 ./[]
+        var obj = {
+            name: 'abc',
+            drink: function(){
+                console.log('drink is unhealth');
+            }
+        }
+        // obj.drink ------>>> obj['drink']
+        // //obj.name 内部隐式调用的也是 obj['name'] []内是字符串，由于是字符串，所以可以进行拼接，可以解决很多问题，后续还有很多应用场景；
+        var wang = {
+            wife1: {name: "xiaoliu",},
+            wife2: {name: "xiaozhang"},
+            wife3: {name: "xiaomeng"},
+            wife4: {name: "xiaofen"},
+            sayWife: function(num){
+                  return this['wife'+num];
+            }//当然也可以使用switch case;
+        }
+        wang.sayWife(1);//传参数；
+
+
+
+
+
+
+
+
+        // 对象的枚举
+        // 遍历 枚举 enumeration    
+
+        //使用for...in...  遍历对象中的属性以及属性值；[目前所学：属性是我们自己设置，可以看到，有可能数据是后台传过来的，需要做一系列判断]
+        obj={
+            name: 'wang',
+            age: 13,
+            sex: 'male',
+            height: 180,
+            weight: 75,
+            // prop:123
+        }
+        for(var prop in obj){
+            console.log(prop);//遍历属性名，name,age,sex,height,weight;
+            console.log(obj[prop]);//遍历属性值；
+        }//用法：var xxx in 对象； xxx名字可以随意选取，把对象中的属性存放到xxx中来实现遍历属性/属性值的效果；
+        // bug:1、console.log(obj.prop);//结果是6个undefined,解释:obj.prop，系统认为是你要输出obj对象的属性，发现并没有定义，系统找不到返回undefined；console.log（obj.prop）等同于 obj['prop'] ;可以自行定义一个prop属性验证；
+        // 解决方案：console.log(obj[prop]); 系统认为这个prop是变量，里面存放的是对象的属性；
+        // 平时使用过程中对象.和对象[]都可以，建议第二种；对象枚举中一定要使用obj[]，注意里面的小bug;
+          
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //  console.log(obj.prop) ;这样打印出的居然是undefined，解释：,打印这个prop属性，系统中找不到，可不就返回undefined了吗；
+            console.log(obj[prop]);//prop就是字符串，代表着属性；
+            // 其他地方.可以，枚举这里必须要用[]
+        
+        // prop 可以随便定义， 指的是 obj中的属性都遍历到了prop中；
+        // 
+
+         hasOwnProperty();
+        //过滤性方法,  对象都可调用该方法，参数为属性名的字符串形式，验证传入的参数是否是自己定义的属性/属性值，返回值是布尔值，
+        obj={
+            name: 'wang',
+            age: 13,
+            sex: 'male',
+            height: 180,
+            weight: 75,
+            // prop:123
+            __proto__:{
+                lastName: "wang",//构造函数原型
+                // constructor:Obj(){}//构造函数原型（隐式也可以）
+                __proto__: Object.prototype//祖先原型
+            }
+        }
+        for(var prop in obj){
+            if(obj.hasOwnProperty(prop)){
+                console.log(obj[prop]);
+            }//如果输入的参数是obj对象的属性，boolean值为true,则进行输出；
+        }
+        // bug：for(var prop in obj){ console.log(obj[prop]);}//会把原型上的属性lastName也输出到控制台上(祖先原型不输出)，需要进行过滤操作；
+
+
+
+    //   instanceof :
+    // A instanceof B : A对象是不是B构造函数构造出来的，看A对象的原型链上有没有B的原型，判断结果为布尔值；
+    function Person(){
+
+    }
+    var person = new Person();
+    var obj = {};
+
+
+
+    
+
+
+
+        
+
+
+          
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 惰性函数：优化频繁使用的函数,常用于函数库的编写，单例模式
+        // demo1:实现“首次”并且之后每次函数执行都返回相同的“时间戳”
+        var t = null;
+        function test(){
+            if(t){
+                return t;
+            }
+            t = new Date().getTime();
+            return t;
+        }
+        test();
+        test();
+        //优化版 -> 利用闭包封闭“作用域”
+        var test = (function(){
+            var t = new Date().getTime();
+            return function(){
+                return t;
+            }
+        })()//此函数是立即执行函数：变量声明阶段，其会自执行，不满足首次执行返回时间戳
+        test();
+        // 改进：符合题目要求
+        var test = (function(){
+            var t = null
+            return function(){
+                if(t){
+                    return t;
+                }
+                t = new Date().getTime();
+                return t;
+            }
+        })();
+        test();
+        test();
+
+        // 惰性函数: 第二次test()执行 -> 内部会发生覆盖现象 ->这时候test=function(){return t}; ->return t ->t还是拿到之前的变量
+        var test = function(){
+            // console.log(1);//测试
+            var t = new Date().getTime();
+            test = function(){
+                // console.log(2);//测试
+                return t;
+            }
+            return test();
+        }
+        test();//1546423763785
+        test();//1546423763785
+        test();//1546423763785 
+    </script>  
+</body>
+</html>

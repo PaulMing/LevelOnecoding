@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 初始化 ->参数必须具备迭代接口：数组、字符串、arguments、NodeList、Map、Set等
+        // Map创建的对象属性名可以是任意数据类型，不局限于字符串 -> 原生对象中属性名必须是字符串，即使不传入字符串，其也会隐式调用toString();[类数组中的索引属性也是字符串,json数据格式要求属性名必须使用双引号包裹]
+        let oMpp = new Map([['name', 'curry'], ['age', 32], [true, 'man'], [{}, '----']]);
+        // 原生对象
+        let obj = {};
+        let oDiv = {type: 'small'};
+        obj[oDiv] = 'skr';
+        console.log(obj);//{[object Object]: "skr"}
+
+        // 调用接口 -> Map.prototype原型上的方法
+        let oMp = new Map();
+        oMp.set('type','small');
+        oMp.get('type');
+        oMp.set({},'objddd');
+        oMp.get({});//取不到 -> 其是引用值,可先使用变量接收
+        // var let = {};
+        // oMp.set(let,'objd');
+        // oMp.get(let);//'objd'
+        oMp.delete('name');
+        oMp.has();
+
+        // 遍历
+        oMp.forEach((ele,key,self) => {
+            console.log(ele,key,self);
+        })
+        for(let val of oMp){
+            console.log(val);//返回键值对集合
+            console.log(val[0],val[1]);
+        }
+
+        // Map底层实现：
+        // 链接链表：不同对象产生联系 -> next连接
+        // hash算法：将属性转换为特定范围的值，存储在特定的“区块”
+        // 桶：存储
+   
+    </script>
+</body>
+</html>

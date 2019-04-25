@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Set、Map兼容性不好
+
+        // new Set();//参数必须具备迭代接口->数组、字符串、arguments、NodeList、Map、Set等,常用的就是数组、字符串
+        // 初始化
+        let oS = new Set([1,2,3,2,3,4,[2,3],{a:2}]);
+        // 调用接口: add();clear();delete();等 -> Set.prototype原型上的方法
+        let oSet = new Set('abcdab');
+        oSet.add(1);
+        oSet.add([2,3]);
+        oSet.add('f');
+        oSet.delete('f');
+        oSet.has(2);//true
+        oSet.delete([2,3]);//数组是引用值，此方式删除不掉原数组，应该使用变量存储-> var arr = [2,3], let oS = new Set([1,2,arr]); oS.delete(arr);
+        // oSet.clear();//清空
+
+        // 遍历Set
+        // forEach();原型上的方法
+        oSet.forEach(val => {
+            console.log(val);//属性值
+        })
+        // ES6遍历新方法: for..of..;其遍历有迭代接口的值，不能是对象{}; for..in遍历对象
+        for(let prop of oSet){
+            console.log(prop);//属性值
+        }
+
+        //Set对象、数组的相互转换
+        // 数组转换为Set
+        let arr = [1,2,3,4,5];
+        let oS = new Set(arr);
+        // Set转换为数组 -> ...运算符、Array.from();//数组静态方法，其将有“遍历接口”的数据转换为数组   
+        console.log([...oS]);
+        console.log(Array.from(oS));
+    </script>
+</body>
+</html>

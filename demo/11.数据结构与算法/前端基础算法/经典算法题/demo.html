@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 一个整型数组里除了两个数字之外，其它的数字出现了偶数次，写程序找出这两个只出现一次的数字
+        // 方法1：借助对象
+        function appearOnce(arr){        
+            var obj = {};
+            var result =[];
+            for(var i=0; i<arr.length; i++){
+                if(obj[arr[i]]){
+                    obj[arr[i]]++;
+                }else{
+                    obj[arr[i]] = 1;
+                }
+            }
+            for(var prop in obj){
+                // 遍历找到对象属性值=1的便是只出现一次的数字
+                if(obj[prop] == 1){
+                    result.push(prop);
+                }
+                }
+            return result;
+        }
+        console.log(appearOnce([2,3,4,5,6,6,5,4,5]));
+
+       
+       // 方法2：利用数组原生方法indexOf();lastIndexOf();
+        function appearOnce(arr){
+            var result = [];
+            for(var i=0; i<arr.length; i++){
+                if(arr.indexOf(arr[i]) == arr.lastIndexOf(arr[i])){
+                    result.push(arr[i]);
+                }
+            }
+            return result;
+        }
+        console.log(appearOnce([2,3,4,5,6,6,5,4,5])); 
+
+
+
+        // 方法3：利用异或
+        /*
+            &&:并且，两1才为1；
+            ||：或者，有一个为1，另一个才为1；
+            非：除了，非0即1，非1即0；
+
+            同或：相同为1, 0 0 1；
+            异或：^ 相反为1；
+
+            3 ^ 4 ^ 3 = 3 ^ 3 ^ 4 = 4;//有交换律，3^3相同为0， 0^任何数=任何数；
+            000
+            100
+            010
+            010
+            利用异或的此特性，数组内的所有元素进行异或，偶数异或为0，最后只剩下一个数 
+        */
+        var arr1 = [2,3,4,5,6,6,5,4,3,];
+        function test(arr){
+            var result = 0;
+            for(var i=0; i<arr.length; i++){
+                result ^= arr[i];
+            }
+            return result;
+        }
+        console.log(test(arr1));
+    </script>
+</body>
+</html>

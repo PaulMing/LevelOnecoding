@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 展开、收集运算符
+
+        // 写入场景:  ... 收集 -> []
+        function sum(...arg){
+            let sumNumber = 0;
+            arg.forEach(function(ele){
+                sumNumber += ele;
+            })
+            return sumNumber;
+        }
+        sum(1,2,3);
+        // 实参传入函数中很多时候我们希望操作数组，方便调用数组的接口 -> 例如：计算系列数字，去掉最高分，最低分，顺序排列，求和，求平均数等，调用数组系列API即可:sort();pop();shift();
+       
+        // 原生写法：arguments转换为数组 ->不直接使用arguments类数组的原因：1.其没有数组的接口; 2.通过下标访问较复杂; 3.严格模式下arguments与形参的映射关系以及箭头函数中arguments含义有变化 
+        function sum(){
+            let sumNumber = 0;
+            let arg = [].slice.call(arguments,0);
+            // sort(); pop(); slift();
+            let arg1 = arg.sort(function(a,b){
+                return a-b;
+            })
+            let arg2 = arg1.pop();
+            let arg3 = arg2.shift();
+            for(let i=0; i<arg3.length; i++){
+                sumNumber += arg3[i]
+            }
+            return sumNumber;
+            // return sumNumber/arg3.length;
+        };
+        sum(1,2,3,4,5,6);
+
+
+        // 读取场景: ...arr -> 扒掉括号(),[],{},只扒掉最外层括号
+        let arr = [1,2,3,4,5];
+        console.log(...arr);//console.log(1,2,3,4,5);
+
+        let arr1 = [1,2,3,4];
+        let arr2 = [6,7,8];
+        let newArr = arr1.concat(arr2);
+        let newArr1 = [...arr1,...arr2];//等同原生数组的concat;
+
+        // ES6操作数组; ES7可操作对象：实现属性/属性值的克隆 ->浅克隆,而且该对象中若有方法,正则等，其不会进行克隆，所以局限性很大
+        var obj1 = {
+            name: 'hello',
+            height: 175,
+        }
+        var obj2 = {
+            name: 'vue',
+            height: 180,
+        }
+        var obj2 = {
+           ...obj1,
+           ...obj2,
+        }
+        // 原生js采取自行封装的“克隆”函数，jQuery采取extend();
+        // ES7可使用...运算符,ES6可使用Object.assign({},temeq,tem2);//浅克隆
+
+    </script>
+</body>
+</html>

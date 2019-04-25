@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <script>
+        var body = document.getElementsByTagName('body')[0];
+        var oBox = document.getElementsByClassName('box')[0];
+        // 封装拖拽函数
+        function bindEvent(ele,wrap){
+            var X,Y,boxT,boxL,disX,dixY;
+            var drag = false;
+            ele.onmousedown = function(e){
+                drag = true;
+                var event = e || window.event;
+                X = event.clientX;
+                Y = event.clientY;
+                boxL = ele.offsetLeft;
+                boxT = ele.offsetTop;
+                disX = X - boxL;
+                disY = Y - boxT;
+            };
+            body.onmousemove = function(e){
+                var event = e || window.event;
+                if(drag){
+                    ele.style.left = event.clientX - disX + 'px';
+                    ele.style.top = event.clientY - disY + 'px'; 
+                }
+            };
+            ele.onmouseup = function(e){
+                drag = false;
+            }
+        }
+        bindEvent(oBox,body);  
+    </script>
+</body>
+</html>
+
+
+
+
+
+// ele.style.left = ele.offsetLeft - disX + 'px';
+// ele.style.top = ele.offsetTop - disY + 'px';

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="jQuery3.3.1.js"></script>
+</head>
+<body>
+    <ul>
+        <li class="one" style="display:none">1</li>
+        <li class="one">2</li>
+        <li class="one">3</li>
+        <li class="one">4</li>
+        <li class="one">5</li>
+        <li class="one">6</li>
+        <li class="one">7</li>
+        <li class="one">8</li>
+        <li class="one two" data="nineli">9
+            <div>8</div>
+        </li>
+        <li class="one">10</li>
+        <div>dkdkdk</div>
+    </ul>
+    <input type="text" disabled>
+    <input type="text">
+    <input type="text">
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+    <script>
+        // jQuery可以和原生js混合使用(jQuery===工具库)
+        // jQuery === $;//$是jQuery的别名
+        // jQuery();和$();//类数组
+
+        // 基本选择器
+        $("*");//通配符(所有标签)
+        $("div");//标签
+        $("#demo");//id
+        $(".demodiv");//class
+        $("div,ul");//分组
+        $("ul li.two.one")//并列
+        // 区别于分组选择器
+        $('div',"ul");//ul下的div，第二个参数为父级，表示作用域;[如果不写，可理解为在全局下查找元素]
+
+        $(".uli li");//父子：查找class类名为uli下的所有li(多层嵌套也算)
+        $(".uli > li");//直接子元素选择器, uli下的直接子元素，孙子辈不算；
+        $(".uli + div");//亲弟弟元素节点，查找uli下的亲兄弟元素div；$(".uli+div+ul")//这样便可查找到ul；不能直接$(".uli++ul")
+        $(".uli ~ ul");//弟弟元素节点即可(不一定是亲弟弟),uli下的兄弟元素都可以；
+
+
+        // 选择器进行系列操作都是添加至行内样式
+        // 基础筛选器：
+        // :first :last :not(selector);(可理解为修饰)
+        $("ul li:first").css("background","red");//首个li
+        $("ul li:last").css("background","green");//最后li
+        $("ul li:not(li:first)").css("background","orange");//$("ul li:not(first)");不能识别first是什么;括号内为完整选择器
+        // :odd :even .eq(index); lt(index); gt(index);
+        $("ul li:odd").css("background","pink");//索引
+        $("ul li:even").css("background","yellow");//索引
+        $("ul li").eq(5).css("background","#ccc");//eq(index) 索引值
+        $("ul li").lt(5).css("background","#ccc");//lt(index) 索引值小于index的li
+
+        // 子元素筛选器：
+        $('ul li:first-child').css("background","pink");
+        $('ul li:last-child').css("background","yellow");
+        $("ul li:nth-child(5)").css("background","blue");//ul下的第5个孩子，并不是索引
+        // nth-child(index/odd/even/2n-1/2n+3);//2n:表示偶数，2n-1表示奇数
+        $('ul li:first-of-type').css("background","blue");//即使ul下首元素不是li，也可以选中ul下首个li
+        $('ul li:last-of-type').css("background","blue");
+        $("ul li:nth-of-type(5)").css();//此类型下的li
+        $("ul li:only-child");// ul下只有一个li
+        // 补充：$("ul li:first")等，若有多个ul>li集合，其会将所有元素看作大集合去筛选元素，只能选中整体ul下的首个li，其他的不能选中;$("ul li:first-child")系列等，若有多个ul>li,其会选中每个ul下的首个元素，但li必须作为ul下的首个孩子才能选中，否则不能选中
+
+        
+
+        // 筛选器：根据表单(聚焦点：表单元素的type类型)
+        // :input :text :password :radio :checkbox :submit :reset :button :file :hidden :checked :selected :disabled :enabled :image
+        $("*:input");//匹配所有input标签以及textarea select button(基本所有表单元素)
+        $(":text");//选中type为text;
+        $(":checkbox");//type为checkbox
+        $(":image");//type为image
+        // <input type="image" src="">点击该图片，也会提交数据    
+        // :disabled :enabled :checked :selected
+        // disabled属性表示input元素不可用(不能输入),input/textarea;
+        // <input disabled> //disabled是单属性，只写属性名即可
+        $("input:enabled");//可用的；
+        $("input:disabled");//不可用的；
+        $("input:checked");//选择默认选中的那个框
+        $("select option:selected");//选择下拉默认选中框
+        //补充：单属性：checked selected disabled/enabled  defer async
+
+
+
+        // 筛选器：根据内容
+        // :contains(value) :empty :has(selector) :parent
+        $("ul li:contains(8)").css("background","#bff");//元素下有此值便选中，即使是孙子辈也可以
+        $("ul li:empty").css("background","yellow");//li下的内容完全为空(没有任何节点)，换行/回车/空格代表着文字分隔符，都是文本节点
+        $("ul li:has(div)")//代表着有div的li;括号内为选择器(怎么选择元素都OK)，括号内千万不要加引号(并不是字符串)
+        $("ul li:has(div:contains(8))")
+        $("ul li:parent")//此li是作为父级元素存在的，但li下不是必须要有标签，有其他节点也是OK的，例如空格/换行等
+
+
+
+        // 筛选器：根据可见性
+        // :hidden :visible  
+        // $(":hidden")可把下列元素都选中,display:none; type=hidden(此形式只能用于input使用);两种在dom树结构中压根不存在，不占用存储空间，其他两种形式存在于dom树结构中，而且即使隐藏了，在页面结构中也可以审查到；
+        /*  <div style="display:none"></div>
+            <div style="visibility:hidden"></div>
+            <div style="opacity:0"></div>
+            <input type="hidden"> */
+        $("div:hidden").css("background","#bff");//隐藏的div加样式(由于元素隐藏，所以加样式依旧看不到哈)
+        $("div:visible");//非hidden上述四种情况，便是显示
+
+
+
+        // 筛选器：根据属性(冒号变为了[])
+        $("ul li[class=two]");//选中class类名完全是two的li(必须是完全等于,class中只有two)
+        $("ul li[class='two one']")//类名必须完全相同，同时注意单双引号
+        $("ul li[data=ontype]")//自定义属性也OK
+        $("ul *[class='two one']")//通配符的使用
+        // 补充：正则的规则来筛选
+        $("ul li[class!='one two']")
+        $("ul li[class^='t']")//以t开头的class类名的li
+        $("ul li[class$='e']")//以e结尾的class类名的li
+        $("ul li[class*='one']");//[attribute*=value]选中属性中包含该value值就可以(有该字符就OK)
+        $("ul li[class='one'][id='name'][]");//复合属性选择器(用以进一步缩小范围)
+
+
+
+
+
+
+    // 根据元素关系查找元素(系列方法)
+        // children(); find(); next()/nextAll(); prev()/prevAll();  parent()/parents()
+        $('ul').children();//ul下的子元素，不包含孙子辈
+        $("ul").children().children();//孙子辈
+      
+        $('ul').find("*");// 所有下级
+        $("ul").find("li:first");//find(selector)
+        
+        $("ul").next();//也可以为next(selector)
+        $("ul").nextAll();//所有后边的同辈元素
+
+        $("ul").prev();// 同辈元素前边的
+        $("ul").prevAll();// 所有的同辈元素前边的
+
+        $("ul").siblings();//同辈元素前边和后边的
+
+        $(".box").parent();//直接父元素
+        $(".box").parents();//所有父元素,包含嵌套元素
+
+        // add();表示串联
+        $("div").add("li");//选中所有的div和li
+        // end();回退一级
+        $("ul li").eq(0).css("background","red").end().css('color',"yellow");
+
+
+        
+
+    // 元素的基本操作：
+        // 创建元素
+        $("<div><ul><li>skr~</li></ul></div>")
+
+        // 内部插入元素 
+        // append(); appendTo();//插入内部元素后边   prepend(); prependTo();//插入内部元素前边
+        $("div").append($("<ul></ul>")).addClass("xxx");//链式调用，div添加class类名
+        $("<ul></ul>").appendTo("div").addClass("xxx");//ul添加class类名
+        $("div").prepend($("<div>new div</div>"))
+        $("<div>new div</div>").prependTo($("div"));
+        // 外部插入元素
+        // after();  before();  insertAfter(); insertBefore();
+        $("div").after($("<span></span>"));
+        $("div").before($("<span></span>"));
+        $("<div>new div</div>").insertAfter($("div"))
+        $("<div>new div</div>").insertBefore($("div"))
+
+        // 原生js中插入元素没有appendTo();也没有insertBefore();封装过此方法
+
+        // 删除元素
+        // empty(); remove();
+        $("div").empty();//删除div下的所有节点，回车/空格等文本节点也删除
+        $("div").remove();//删除自身
+        $("div").detach();//删除[了解]
+
+        // 替换元素
+        $("div").replaceWith("<p>Hello js</p>");
+        $("old").replaceWith(".new");//旧元素替换新元素，返回被替换的元素
+        $("div").replaceAll("<p>Hello js</p>");//
+        $('new').replaceAll("old");//new替换old；参数可以为选择器，dom元素，jquery对象;//返回新元素
+
+        // 包裹元素
+        wrap(); unwrap(); wrapAll();
+        $("p").wrap("<div class='wrap'></div>")//若有多个p标签，每个都用独立div包裹
+        $("p").wrapAll("<div class='wrap'></div>")//若有多个p标签，所有p标签被该div全包裹
+        $("p").wrap(function(){
+            return "<div>"+$(this)+"</div>"
+        })
+        $("p").unwrap();//移除元素的父元素
+
+        // 克隆
+        clone(true/false);//不写参数默认为false，true表示深度克隆，其会把事件监听等也进行克隆；
+        // 补充：原生js中也是如此 var cloneDiv = div.cloneNode(true/false);
+
+    </script> 
+</body>
+</html>

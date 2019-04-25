@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+        .wrapper .content{
+            width: 130px;
+            height: 130px;
+            background-color: green;
+        }
+        .wrapper .content .box{
+            width: 90px;
+            height: 90px;
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="content">
+            <div class="box"></div>
+        </div>
+    </div>
+    <script>
+        // 同一个对象一个事件可以绑定多个执行函数，若是绑定两个执行函数，一个冒泡、一个捕获，则先发生捕获、后冒泡，与代码书写顺序无关，即使冒泡代码写在捕获代码前面，也不影响；
+        var wrapper = document.getElementsByClassName("wrapper")[0];
+        var content = document.getElementsByClassName("content")[0];
+        var box = document.getElementsByClassName("box")[0];
+        // 冒泡
+        wrapper.addEventListener("click",function(){
+            console.log("wrapperBubble");
+        },false)
+        content.addEventListener("click",function(){
+            console.log("contentBubble");
+        },false)
+        box.addEventListener("click",function(){
+            console.log("boxBubble");
+        },false)
+        // 捕获
+        wrapper.addEventListener("click",function(){
+            console.log("wrapper");
+        },true)
+        content.addEventListener("click",function(){
+            console.log("content");
+        },true)
+        box.addEventListener("click",function(){
+            console.log("box");
+        },true)
+  
+    </script>
+</body>
+</html>

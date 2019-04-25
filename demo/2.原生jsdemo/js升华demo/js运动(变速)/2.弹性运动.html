@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            border-radius: 50%;
+        } 
+        span{
+            position: absolute;
+            left: 300px;
+            top: 0;
+            width: 1px;
+            height: 100px;
+            background: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <!-- 弹性运动 -->
+    <!-- 匀加速运动、匀减速运动中的加速度再进行变化，能量损耗==>>>弹性运动 -->
+    <div></div>
+    <span></span>
+    <script>
+        var oDiv = document.getElementsByTagName('div')[0];
+        oDiv.onclick = function(){
+            startMove(this);
+        }
+        function startMove(obj){
+            clearInterval(obj.timer);
+            var iSpeed = 20;
+            var a;
+            var u = 0.8;
+            obj.timer = setInterval(function(){
+                // 需要越靠近目标点，加速度越小；走的越慢；
+                a = (300 - obj.offsetLeft)/10;
+                iSpeed = iSpeed + a;
+                // 每次速度变化都没那么大，（模仿有阻力）
+                iSpeed = iSpeed * u;
+                // 判断停下来的点：速度接近0并且靠近目标点的位置（速度为0的判断条件不合适，两边和中间都有速度为0的时候）
+                if(Math.abs(iSpeed) < 1 && Math.abs(300-obj.offsetLeft)<1){
+                    clearInterval(obj.timer);
+                }else{
+                    obj.style.left = obj.offsetLeft + iSpeed + 'px';
+                } 
+            },30)
+        } 
+    </script> 
+</body>
+</html>

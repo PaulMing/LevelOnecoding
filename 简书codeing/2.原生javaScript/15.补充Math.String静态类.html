@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Math静态类，直接调用其的属性和方法就OK
+        Math.random();//[0~1),0到1之间的随机数
+        Math.ceil();//向上取整，取整数
+        Math.floor();//向下取整
+        alert(Math.ceil(3.10));//4
+        alert(Math.floor(3.99));//3
+        
+        Math.abs();//参数为数，返回绝对值
+        Math.round();//四舍五入返回整数
+        alert(Math.round(4.62));//5
+        Math.max(x,y);//取两者之间的最大值
+        Math.min(x,y);//取两者之间的最小值  
+        Math.pow(x,y);//x的y次幂
+        alert(Math.pow(2,3));//8
+        Math.sqrt(x);//x的平方根(开方)
+        alert(Math.sprt(4));//2
+
+        // 求12~36之间的随机数范围
+        12+ 24*Math.random();//求中间值36-12=24 -> [0~24) -> +12 -> [12~36)
+
+
+        // String也是js内置对象 -> 使用方法：str.属性/方法；
+        // 对象才有属性和方法 -> 字符串是原始值 -> 隐式调用包装类
+        var str = "helloJs";//var str = new String("helloJs"); 错误使用方法：String.toUpperCase("aaa");
+  
+        str.length;//7
+        str[3];//l 索引
+        str.toUpperCase();//"HELLOJS"
+        str.toLowerCase();//"hellojs"
+
+        str.substr(2,5);//"lloJs" 首个参数是索引，第二个参数是截取的长度,若不写默认截取所有
+        str.substring(2,5);//"llo" 首个参数是索引，第二个参数-第一个参数为截取的长度,截取从索引2开始，长度为3的字符串(包含索引2字符，不包含末尾字符)
+        str.slice(2);//同数组功能相同，索引截取，参数为负数的时候，倒着数(-1+length)
+        str.split('o');//['hell','JS']按照某字符进行分割(该字符便消失)
+
+        str.startWith('h');//判断字符串是否以某字符开头，返回布尔值
+        str.endsWith('s');//判断字符串是否以某字符结尾，返回布尔值
+
+        str.indexOf('o');//4 正向检索某字符在字符串中的索引位置，找不到返回-1
+        str.lastIndexOf('s');//6  反向检索，找不到返回-1
+        // str.concat(str1,str2..str3);//连接一个或多个字符串
+        str.charAt(5);//J index,查找字符
+        str.charCodeAt(index);//返回该索引对应字符的Unicode编码(0~65535),若是index为负数或者大于等于字符串长度，返回值NaN
+        str.fromCharCode();//参数为Unicode值，返回一个字符串；
+
+        str.search(regexp);//参数为正则对象，返回匹配到的起始位置(索引)，匹配不到返回-1
+        str.match();//参数可为字符串/正则对象，返回匹配到的值
+        // str.replace(old,new);//首参数为字符串或正则对象，第二个参数进行替换
+        
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        .box1,.box2{
+            width: 100px;
+            height: 100px;
+        }
+        .box1{
+            background: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+            cursor: pointer;
+            z-index: 999;
+        }
+        .box2{
+            background: black;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-top: -50px;
+            margin-left: -50px;
+        }   
+    </style>
+</head>
+<body>
+    <div class="box1"></div>
+    <div class="box2"></div>
+    <script>
+        // 计算两个div的覆盖面积
+        var oBox1 = document.getElementsByClassName('box1')[0];
+        var oBox2 = document.getElementsByClassName('box2')[0];
+        var body = document.getElementsByTagName('body')[0];
+        var eX,eY,box1L,box1T,disX,disY;
+        var drag = false;
+        var w = oBox1.offsetWidth;
+        var h = oBox1.offsetHeight;
+        var oBox2L = oBox2.offsetLeft;
+        var oBox2T = oBox2.offsetTop;
+        function bindEvent(){      
+            oBox1.onmousedown = function(e){
+                drag = true;
+                var event = e || window.event;
+                eX = event.clientX;
+                eY = event.clientY;
+                box1L = oBox1.offsetLeft;
+                box1T = oBox1.offsetTop;
+                disX = eX - box1L;
+                disY = eY - box1T;
+            }
+            body.onmousemove = function(e){
+                var event = e || window.event;
+                if(drag){
+                    oBox1.style.left = event.clientX - disX + 'px';
+                    oBox1.style.top = event.clientY - disY + 'px';
+
+                    var l = oBox1.offsetLeft;
+                    var t = oBox1.offsetTop;
+                    // 计算“重复覆盖”面积
+                    var coverHeight,coverWidth;
+                    // 计算宽
+                    if((l+w>=oBox2L)&&(l<=oBox2L)){
+                        coverWidth = 1 + w - oBox2L;
+                    }else if((oBox2L+ w > l)&&(oBox2L + w < l+w)){
+                        coverWidth = oBox2L + w - l;
+                    }
+                    // 计算高
+                    if((t+h>oBox2T) && (t<oBox2T)){
+                        coverHeight = t + h - oBox2T;
+                    }else if((oBox2T+h>t) && (oBox2T+h< t+h)){
+                        coverHeight = oBox2T + h - t ;
+                    }
+                    console.log(coverWidth*coverHeight);//测试覆盖算法是否正确，若出现100*100=10000 -> 便是完全覆盖
+                }
+            }
+            oBox1.onmouseup = function(e){
+                drag = false;
+            }
+        }
+        bindEvent();
+    </script>
+</body>
+</html>

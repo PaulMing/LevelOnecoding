@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* .demo{
+            height: 200px;
+        } */
+        /* .demo{
+           /* position: absolute; */
+           /* float: left; */ 
+           /* display: inline-block; */
+           /* overflow: hidden; */
+           /* overflow: auto;  
+        } */
+        .demo::after{
+            /* 伪元素是行元素 */
+            content: '';
+            display:block;
+            clear:both;
+        }
+        .box{
+            float: left;
+            width: 200px;
+            height: 100px;
+            background: red;
+            margin: 100px auto;
+        }   
+    </style>
+</head>
+<body>
+    <!-- 
+        清除浮动的方式：
+        1.父元素设置高度(非通用)
+        2.浮动元素后添加元素(使br/hr也可以<br class='clear'/> <hr class='clear'/>)设置clear:both；添加大量无语义的标签，后期难维护
+        3.父元素添加触发bfc模式的条件：position/float,display:inline-block,overflow:hidden/auto；灵活选择
+        4.父元素添加:after伪元素；推荐使用，文档结构更加清晰
+        补充： BFC：块级格式化上下文，它是指一个独立的块级渲染区域，只有Block-level BOX参与，该区域拥有一套渲染规则来约束块级盒子的布局，且与区域外部无关  https://www.cnblogs.com/dojo-lzz/p/3999013.html
+     -->
+    <div class="demo">
+        <div class="box"></div>
+        <!-- <div style="clear:both;"></div> -->
+    </div>
+</body>
+</html>

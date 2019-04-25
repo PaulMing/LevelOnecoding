@@ -1,0 +1,15 @@
+
+  gulpMusic第一版：没进行优化且项目不完整
+ 
+  gulpMusic第二版：优化过index且项目不完整
+
+  gulpMusic第三版：优化且项目完整，缺歌曲列表 -> 自己
+
+  gulpMusic优化版：项目最终版，歌曲列表完善
+
+
+   项目运行中若报错，删除node_modules包，重新npm install;即可成功运行；若还是报错，极有可能是gulp-uglify();关于ES6语法的错误 -> 解决方案：cnpm install --save-dev gulp-babel babel-preset-es2015， 如果还是报错，先注释掉即可；
+
+   参考网址:https://my.oschina.net/johnsken/blog/1796169?tdsourcetag=s_pctim_aiomsg
+
+ 

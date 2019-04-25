@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 数据结构 计算机中组织数据的方式，计算机中如何排布操作进来更方便，舒服，性能好-->
+    <!-- 其他语言早有了，js之前都是模拟实现，ES6进行了扩展，需要学习 -->
+    <script>
+        let arr = [1,2,3,3,4,4,5,6];
+        Array.prototype.unique = function(){
+            let itemIndex = {};
+            let resArr = [];
+            this.forEach(item => {
+                if(!itemIndex[item]){
+                    itemIndexp[item] = 1;
+                    resArr.push(item);
+                }
+            })
+        }
+        // 缺点 -> arr=[1,'1',1];//无法成功去重1与'1'
+        // arr = [1,'1',1,{}];//存在bug
+
+
+        // ES6新数据结构：Map Set
+        //  Map: 字典,加强的对象,由若干键值对组成
+        let map = new Map();
+        let obj = {};
+
+        map.set('1','skr');//obj['1'] = 'skr'
+        map.set('1','free');//obj['1'] = 'free'
+        map.set(true,1);
+        map.set({},2);//obj.{}=2;//报错
+        map.get('1');//obj['1'] 
+        // 区别1：map.set();//设置属性、属性值的时候，其可区分1和'1',对象直接赋值直接覆盖了，有bug
+
+        map.has('1');//返回true/false
+        map.delete(1);//删除该属性
+        map.clear();//删除所有属性、属性值
+        map.foreach()
+
+
+        // let map = new Map([['name','skr'],['age',18],[12,30]]);
+        
+        // 数组去重demo
+        let obj = {};
+        arr = [1,'1',1,obj,1,obj]
+        Array.prototype.unique = function(){
+            let itemIndex = new Map();
+            let resArr = [];
+            this.forEach(item => {
+                if(!itemIndex.has(item)){
+                    itemIndex.set(item,1);
+                    resArr.push(item);
+                }
+            })
+            return resArr;
+        }
+
+
+
+
+        // 对象是“完全hash”,每个值都对应一个“桶”，所以对象查找值是最快的，但也有范围，若是对象太大，也没办法“完全hash”       
+        // hash算法
+        // 解决问题：例如set();过程中放入key/value,首先需要查找对象中是否有该key值，若有进行替换，若没有就是添加，若是对象属性很多，上万条属性，遍历查找效率低下，耗费性能，使用hash算法进行“分桶操作”，首先把key值放到不同的桶中，然后取值的时候从不同的桶里去取到值，每个桶里都是通过指针链接的，每条线实际还会成“树型结构”，“红黑树”，这样就可以分为左边的是小数，右边是大数，查找更加便捷
+        // 邻接链表
+        function myMap(){
+            this._entries_ = [];
+
+        }
+        myMap.prototype.set = function(key,value){
+
+        }
+        myMap.prototype.get = function(key){
+
+        }
+        myMap.prototype.has = function(key){
+
+        }
+        myMap.prototype.delete = function(key){
+            
+        }
+        myMap.prototype.clear = function(){
+            
+        }
+
+
+        // 补充： weakMap();//弱引用，其只能set对象 weakMap({},1);同时其也没有foreach();方法
+        // 弱引用，会随着内存回收机制被释放
+        let weakmap = new WeakMap();
+
+
+        // Set：有序链表，包含相互独立且不相等的值
+        let set = new Set();
+        let set = new Set([1,2,3,4,5,6,6,6,5,4])
+        set.add(1);//若添加是已经存在的值，忽略，不会添加进去
+        let obj = {};
+        set.add(obj);
+        set.delete();
+        set.clear();
+        set.has();
+        set.forEach((item,index,set) => console.log(item,i,set))
+
+    //    实现数组去重超简单
+    let set = new Set([1,1,1,2,3,4,5,6,6]);//最快的，但是涉及到引用值不能去重
+    let set = new Set([1,1,1,2,3,4,5,6,{},{}]);
+    set.add({});
+    set.add({});//这两个对象都能添加进去，原因：{}对象地址不同，就是不同对象
+
+     var ws = new WeakSet();//只能放入引用值
+     ws.add(1);//报错
+     
+
+    
+    </script>
+</body>
+</html>

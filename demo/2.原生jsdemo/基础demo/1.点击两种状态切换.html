@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <!-- 点击切换背景色：实现原理：计时器，两种状态的转换%2;三种状态模3，n种状态模n，一般就是两种状态的切换 -->
+    <div class="box"></div>
+    <script>
+        // 入门级易错点1：获取的dom对象时数组(类数组);
+        var div = document.getElementsByClassName("box")[0];
+        // 入门级易错点2：count声明为全局变量，若是写在局部，每次点击都回归到count = 0;显然不合适，
+        var count = 0;
+        div.onclick = function(){   
+            count ++;
+            if(count %2 == 0){
+                // div.style获取样式的注意点：获取到的是字符串；即使颜色值为rgb();函数，也必须为字符串；
+                div.style.backgroundColor = "red";
+            }else{
+                div.style.backgroundColor = "yellow";
+            }
+        }
+        // 三种状态的切换
+        // div.onclick = function(){
+        //     count ++;
+        //     if(count %3 == 0){
+        //         div.style.backgroundColor = "red";
+        //     }else if(count %3 ==1){
+        //         div.style.backgroundColor = "yellow";
+        //     }else{
+        //         div.style.backgroundColor =" rgb(255,255,255)";
+        //     }
+        // }
+    </script>
+</body>
+</html>

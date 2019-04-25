@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            opacity: 0.3
+        }    
+    </style>
+</head>
+<body>
+    <!-- offsetLeft:元素位置发生缓冲运动;offsetWidth:元素的宽、高发生缓冲运动;但是类似于opacity，没有任何对象.的方式可以获取可通过封装函数getStyle(obj,prop);获取-->
+    <!-- target: 缓冲点、目标点 -->
+    <div></div>
+    <script>
+        var oDiv = document.getElementsByTagName('div')[0];
+        oDiv.onclick = function(){
+            startMove(this,80);
+        }  
+        var timer = null;
+        function getStyle(obj,attr){
+            if(obj.currentStyle){
+                return obj.currentStyle[attr];
+            }else{
+                return window.getComputedStyle(obj,false)[attr];
+            }
+        }
+        // 使用封装的兼容性方法可以获取任何属性的样式值，使用typeof可以判断返回的值是什么类型，这些都是细节；获取到的都是字符串，希望直接操作数字，使用parseInt(); parseFloat;
+        // console.log(getStyle(oDiv,'width'),typeof getStyle(oDiv,'width') );
+        // console.log(getStyle(oDiv,'opacity'),typeof getStyle(oDiv,'opacity'))       
+        function startMove(obj, target){
+            clearInterval(timer);
+            var iSpeed, iCur;       
+            timer = setInterval(function(){
+                // 有bug,解决方案：扩大100倍，后/100即可，传入的参数也是opacity扩大100倍的值；
+                iCur = parseFloat(getStyle(obj,'opacity')) * 100;
+                iSpeed = (target - iCur)/7;
+                iSpeed = iSpeed > 0 ? Math.ceil(iSpeed) : Math.floor(iSpeed);
+                if(iCur == target){
+                    clearInterval(timer);
+                }else{
+                    obj.style.opacity = (iCur + iSpeed)/100;
+
+                }
+            },30)
+        }     
+    </script> 
+</body>
+</html>

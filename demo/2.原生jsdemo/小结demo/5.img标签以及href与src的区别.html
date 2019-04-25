@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .demo{
+            width: 550px;
+            margin: 100px auto;
+        }
+        .demo img{
+            width: 120px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+     <img src="" alt="">
+     <!-- 
+         url、href、src、alt、title的区别：
+         1.url：统一资源定位器，其不是属性,应用场景多为地址栏、background-image:url();
+         2.href:Hypertext Reference,表示"超链接",类似于建立"通道",目的并不是为了进行内容的替换，并且其是异步操作过程，不会阻塞页面加载；a标签、link引入外部css文件中常使用;(还有一类应用场景：<input type="button" onclick="window.location.href('#')")/>
+         3.src:source，表示源，其表示的是将资源直接引入到页面中，script中的src引入js文件，若不写defer/async属性，其是同步操作，会阻塞dom元素解析，img中的src以及iframe中的src是异步执行，jsonp中使用的script中的src属性也是异步操作
+         4.alt:img标签的属性，作用：1.图片未能成功加载时的提示文字；2.网页爬虫爬取图片时需要用到该属性
+         5.title:提示信息，应用场景：inpu输入框以及a标签、abbr标签中使用
+      -->
+      <div class="demo">
+          <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2942529582,926731604&fm=26&gp=0.jpg" alt="">
+
+
+
+
+          <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2942529582,926731604&fm=26&gp=0.jpg" alt="">
+
+          
+          <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2942529582,926731604&fm=26&gp=0.jpg" alt="">
+          <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2942529582,926731604&fm=26&gp=0.jpg" alt="">
+      </div>
+
+      <!-- 
+          link标签和@import引入css文件的区别：
+          1.<link>是html标签，在html页面中使用，其是异步加载：<link href="" rel="stylesheet" type="text/css">
+          2.@import可当作是css样式,在嵌入样式中使用或直接在css文件中使用，其引入的css会等到页面被加载完成后再加载
+           <style type='text/css'>
+                @import url();//URL中无引号，直接写地址即可
+           </style>
+          3.link属于XHTML标签，除了加载CSS外，还能用于定义RSS, 定义rel连接属性等作用；而@import是CSS提供的，只能用于加载CSS
+          4.import是CSS2.1 提出的，只在IE5以上才能被识别，而link是XHTML标签，无兼容问题;
+       -->
+</body>
+</html>

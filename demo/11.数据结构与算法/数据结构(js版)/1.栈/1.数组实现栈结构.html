@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 栈/堆、队列都是数据结构 ->内存中数据存储的方式，不同存储方式在不同的应用场景中有更好的性能体现
+
+        // 栈：后进先出 ->可使用js数组来模拟实现
+        var Stack = function(){
+            var items = [];
+            // 入栈(栈顶添加元素)
+            this.push = function(ele){
+                items.push(ele);
+            };
+            // 出栈(栈顶拿出元素)
+            this.pop = function(){
+                return items.pop();
+            };
+            // 栈顶(查看栈顶元素)
+            this.peek = function(){
+                return items[items.length - 1]
+            };
+            // 查看栈是否为空
+            this.isEmpty = function(){
+                return items.length == 0
+            };
+            // 清除栈
+            this.clear = function(){
+                items = []
+            };
+            // 获取栈的大小
+            this.size = function(){
+                return items.length
+            };
+            // 检查items
+            this.getItems = function(){
+                return items
+            }
+        }
+
+
+
+        // 补充
+        // 代码执行底层也是“入栈出栈”，执行的时候先入栈，执行时出栈
+        // 入栈：fn2();fn1(); 出栈：fn1();fn2(); -> 因此先执行fn1();再执行fn2();
+        var fn1 = function(){
+            return console.log('fn1 finish')
+        }
+        var fn2 = function(){
+            fn1()
+            return console.log('fn2 finish')
+        }
+        fn2();
+
+        // 递归中一定要有出口，否则函数会一直执行即入栈，没有出栈 -> 导致栈溢出
+        var app = function(){
+            app()
+        }
+        app()
+    </script>
+</body>
+</html>

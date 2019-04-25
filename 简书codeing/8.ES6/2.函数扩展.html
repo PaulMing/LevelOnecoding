@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // ES6.0 -> 都是严格模式
+
+        // ES5.0关于函数
+        function fide(){};//函数声明
+        var person = function(){};//函数表达式
+        function Person(name){this.name = name}//构造函数
+        var p = new Person('hua');
+        Person.call(window,'name');//call();apply();bind();改变this指向
+        // 闭包
+        var arr = [];
+        for(var i=0; i<10; i++){
+            arr[i] = function(){
+                console.log(i);
+            }
+        }
+        arr[6]();//10; -> 形成闭包
+
+
+
+
+        // ES6.0函数: 可选参数/默认参数、不定参数
+        // 1.函数默认参数
+         function Person(name){
+            //  this.name = name || 'none';
+            this.name = name === undefined ? 'none': name;
+         }
+         let p = new Person('huahua');
+         let p1 = new Person();//不传入参数，便使用默认值
+         let p3 = new Person(undefined);
+
+        // 默认参数 -> 升华版
+        function Person(name = 'none'){
+             this.name = name 
+         }
+         let p7 = new Person();
+         console.log(p7.name);//'none'
+
+        // 若函数有多个参数：默认参数不是形参最后一位,若想取到默认参数,实参需要写入undefined;避免语法错误；(底层原理：参数为undefined时，其才会取到默认值)
+        function Person(name,age=0,height=180){
+             this.name = name;
+             this.age = age;
+             this.height = height;
+         }
+        let p8 = new Person('huahua');
+        // console.log(p8.age);//0
+        function Person(name,age=0,height){
+             this.name = name;
+             this.age = age;
+             this.height = height;
+         }
+        // let p8 = new Person('huahua',,'80g');//语法错误，不符合语法规范
+        let p8 = new Person('huahua',undefiend,170);
+
+
+        // arguments对默认参数的影响
+        // (1)arguments和形参“一一映射”关系 -> 非严格模式下
+        function max(num1,num2){
+            console.log(num1,arguments[0]);
+            console.log(num2,arguments[1]);
+            num1 = 4;
+            console.log(num1,arguments[0]);
+        }
+        max(1,2);
+        // (2)严格模式下，arguments实参列表开始可取到形参的值，但后续两者没有“映射”关系，改变后互不影响
+        function max(num1,num2){
+            "use strict"
+            console.log(num1,arguments[0]);
+            console.log(num2,arguments[1]);
+            num1 = 4;
+            console.log(num1,arguments[0]);//4,1
+            arguments[0] = 6;
+            console.log(num2,arguments[0]);//2,6
+        }
+        max(1,2);
+        // (3)ES6采取严格模式，所以默认参数也遵循严格模式，后续两者没有“映射”关系
+         function max(num1 = 0,num2){
+            console.log(num1,arguments[0]);
+            console.log(num2,arguments[1]);
+            num1 = 4;
+            console.log(num1,arguments[0]);//4,1
+            arguments[0] = 6;
+            console.log(num2,arguments[0]);//2,6
+        }
+        max(1,2);
+
+
+        // TDZ与默认参数的关系
+        function add(m, n=m){
+            console.log(m+n);
+        }
+        add(1,2);//3;
+        add(1);//2
+        // TDZ = [m,n];
+        // let m; TDZ = [n];
+        // let n = m; TDZ = [];//清空
+
+        function add(m=n,n){
+            console.log(m+n);
+        }
+        add(undefined,2);//ReferenceError: n is not defined
+        // TDZ = [m,n];
+        // 当传入undefined时，此时m=n;n还在TDZ中，所以其会报错
+      
+
+        // 惰性求值
+        function getValue(){
+            return 1;
+        }
+        function count(n,m = getValue()){
+            console.log(n+m);
+        }
+        console.log(count(6));//7
+
+
+
+      
+        // 不定参数：聚焦点为函数定义阶段的参数
+        // 使用其的原因：1.默认值的问题;2.参数不定的时候，通过arguments访问或者通过下标访问，不直接，不方便;3.箭头函数arguments含义有变化
+
+        // 每个函数有且只有一个不定参数，而且不定参数不可有默认值，必须是最后一个参数
+        function fn(a,...arg,...arg1){};//没什么使用意义
+        function fn(first,...arg,last){
+            }
+        fn(1,2,3,4,5,6);//报错(其不能有效识别) -> function fn(first,last,...arg){}
+
+        // demo: 把若干数字+1, 添加到指定数组当中
+        function count(arg,...arg){
+            console.log(arg);
+            console.log(argumens);
+            for(let i=0; i<arg.length; i++){
+                arr[i] = arg[i] + 1;
+            }
+        }
+        count(arr,1,2,3,3,4,5);//arg整合成数组，arguments是类数组，其是对象
+       
+
+        // 扩展运算符
+        // ...arr -> 扒掉括号(),[],{},只扒掉最外层括号
+        // ...(1,2,3,[5]) = 1,2,3,[5];//直接操作报错，应用场景几乎都是在函数参数中使用
+        // ...arg ,这就是不定参数的逆操作
+        var arr1 = [1,2,3,4,5];
+        var arr2 = [4,5,6,7,7,8,9];
+        arr1.concat(arr2);//拼接数组 -> 原生方法
+        var arr3 = [...arr1,...arr2];//拼接数组
+
+
+
+
+
+
+        // 箭头函数 -> 聚焦点：常用于计算中使用，表示数据的流向，方便js引擎优化代码
+        // 基本结构: () => {};//函数参数有且只有一个，可省略();函数体中有且只有一条语句，可省略{};当然可以不省略，都写上
+        let getName = name => name;//函数体 -> return 值
+        let getName1 = function(name){
+            return name
+        }
+        // 特殊：
+        let getName = name => {return name};//报错
+        let fn = () => {};//表示空函数 -> 不要let fn=  => ;
+        let returnObj = (name)=>({name:name});//返回对象时,使用()包裹一下
+        // 立即执行箭头函数
+        let fn = (name => name)('huahua');
+        
+        // 箭头函数中没有this、arguments、super(class类)、prototype;//没有原型，其就不能被new操作符操作，就不能new对象
+        // 箭头函数中虽没有this,但其有绑定this的能力 -> this指向(绑定)离自己最近的非箭头函数的作用域,对象的{}可不是作用域
+        var name = 'two';
+        var obj1 = {
+            name: 'obj1',
+            prow: () => console.log(this.name)
+        }
+        obj1.prow();//'two'
+        var newprow = obj1.prow.bind(obj1);
+        nowprow();//'two'
+        
+        // demo -> bind();改变this指向，其只能绑定一次
+        var name = 'hellojs';
+        var obj = {
+            name: 'two',
+            prow: function(){
+                console.log(this.name)
+            }
+        }
+        obj.prow();//'two'
+        var newprow = obj.prow.bind(window);
+        var newprowprow = newprow.bind(obj);
+        newprow();//'hellojs'
+        newprowprow();//'hellojs' -> bind();只能绑定一次
+
+        // 补充ES5.0this绑定 -> 四种绑定方式
+        // 默认绑定(this指向window)：空执行函数，简单函数执行
+        // 隐式绑定：谁调用this指向谁
+        // 显示绑定：call();  apply();  bind();
+        // new绑定： this指向对象   
+    </script>   
+</body>
+</html>

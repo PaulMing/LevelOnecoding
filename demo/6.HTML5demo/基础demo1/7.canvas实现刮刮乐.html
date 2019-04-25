@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas{
+            border: 1px solid #000;
+            background-image: url(http://img1.imgtn.bdimg.com/it/u=3497256392,628411289&fm=26&gp=0.jpg);
+            background-repeat: no-repeat;
+            background-position: center;
+            /* 宽/高为父元素的100% -> 为什么有bug尼 */
+            background-size: 100%,100%;
+            /* background-size: 100%; */
+        }  
+    </style>
+</head>
+<body>
+    <canvas width='500' height='500'></canvas>
+    <script>
+        var oCanvas = document.getElementsByTagName('canvas')[0];
+        var ctx = oCanvas.getContext('2d');
+        // 制作图层
+        var width = oCanvas.width;
+        var height = oCanvas.height;
+        ctx.fillStyle = "#ccc";
+        ctx.fillRect(0,0,width,height);
+        // 事件绑定
+        oCanvas.addEventListener('mousedown',down,false);
+        var lateX, lateY;
+        // 合并 -> 新像素与之前像素重复的地方消失
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 10;
+        ctx.lineCap = 'round';//线段两头圆滑些
+        function down(e){
+            lastX = e.offsetX;//e.offsetX/Y属性是相对于画布的距离 -> 区别于clientX/Y; pageX/Y;(其是相对于文档body的距离)
+            lastY = e.offsetY;
+            document.addEventListener('mousemove',move,false);
+            document.addEventListener('mouseup',up,false);
+        }
+        function move(e){
+            var nowX = e.offsetX;
+            var nowY = e.offsetY;
+            ctx.moveTo(lastX,lastY);
+            ctx.lineTo(nowX, nowY);
+            // 设置全局、局部都OK -> 建议属性设置到全局
+            // ctx.strokeStyle = "red";
+            // ctx.lineWidth = 10;
+            ctx.stroke();
+            lastX = nowX;//此种做法 -> 其可以做到每次'划线'都从上一点开始
+            lastY = nowY;
+        }
+        function up(e){
+            document.removeEventListener('mousemove',move,false);
+            clearAll();
+        }
+
+        // 优化 -> 当用户刮到60%~70%的时候，图层消失 -> 获取到的每个像素包括rgba四个值，聚焦点是透明度a为0
+        function clearAll(){
+            var pixel = ctx.getImageData(0,0,width,height);//获取像素点
+            var data = pixel.data;
+            var col = pixel.width;
+            var row = pixel.height;
+            var count = 0;
+            for(var i=0; i<row; i++){
+                // 获取上一行所有数据的个数
+                var c = i * col *4;
+                for(var j=0; j<col; j++){
+                    if(data[c+j*4+3] == 0){
+                        count ++;
+                    }
+                }
+            }
+            if(count > col*row*0.5){
+              ctx.clearRect(0,0,width,height);
+            }
+
+        }
+        /* 
+            小结：制作图层(矩形覆盖即可) -> 事件绑定(巧妙利用事件对象e.offsetX/Y -> 绘制线段) -> 设置"合并"属性 -> 实现“刮刮乐”效果 -> 优化(当用户刮到60%~70%的时候，图层消失即可)
+        */
+    </script>
+</body>
+</html>

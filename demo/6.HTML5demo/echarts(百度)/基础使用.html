@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box{
+            width: 600px;
+            height: 600px;
+            border: 1px solid #000;
+        } 
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script src="https://cdn.bootcss.com/echarts/4.2.0-rc.2/echarts.min.js"></script>
+    <script>
+        // echarts.init 方法初始化一个echarts实例并通过 setOption 方法生成一个简单的柱状图
+        // 初始化echarts实例
+        var myChart = echarts.init(document.getElementById('box'));
+        // 配置对象
+        var option = {
+            title: {
+                text: 'ECharts 入门示例'
+            },
+            tooltip: {},
+            legend: {
+                data:['销量']
+            },
+            xAxis: {
+                data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+            },
+            yAxis: {},//纵向单位 不写根据data自适应(系统识别)，可自定义：yAxis:{data:[0,20,40,60,80]}
+            series: [{
+                name: '销量',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20]
+            }]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
